@@ -1,4 +1,5 @@
 ﻿using System;
+using UWPHelper;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -50,6 +51,9 @@ namespace Test
 
                 // Ensure the current window is active
                 Window.Current.Activate();
+
+                ApplicationViewExtension.SetTitleBarColors(ElementTheme.Dark, Current.RequestedTheme);
+                ApplicationViewExtension.SetStatusBarColors(ElementTheme.Dark, Current.RequestedTheme);
             }
         }
 
