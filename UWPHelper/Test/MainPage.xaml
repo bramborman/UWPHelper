@@ -1,0 +1,56 @@
+﻿<Page x:Class="Test.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:Test"
+      xmlns:converters="using:UWPHelper.Converters"
+      xmlns:triggers="using:UWPHelper.Triggers"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      >
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                Padding="10"
+                >
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <triggers:IsTypePresentTrigger Type="Windows.UI.ViewManagement.StatusBar"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PhoneButt.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <CheckBox x:Name="WatBox"
+                  Content="Wat"
+                  />
+        <CheckBox x:Name="WutBox"
+                  Content="Wut"
+                  IsChecked="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource InvertedBoolConverter}}"
+                  />
+
+        <ComboBox SelectedIndex="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToIntConverter}}">
+            <ComboBoxItem Content="0"/>
+            <ComboBoxItem Content="1"/>
+        </ComboBox>
+
+        <ComboBox SelectedIndex="{x:Bind TestEnum, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+            <ComboBoxItem Content="0"/>
+            <ComboBoxItem Content="1"/>
+            <ComboBoxItem Content="2"/>
+            <ComboBoxItem Content="3"/>
+        </ComboBox>
+
+        <Rectangle Fill="Red"
+                   Width="50"
+                   Height="50"
+                   HorizontalAlignment="Left"
+                   Visibility="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                   />
+
+        <Button x:Name="PhoneButt" Content="Mobile" Visibility="Collapsed"/>
+    </StackPanel>
+</Page>

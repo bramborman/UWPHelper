@@ -1,0 +1,14 @@
+﻿<Application x:Class="Test.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Test"
+             xmlns:converters="using:UWPHelper.Converters"
+             RequestedTheme="Dark"
+             >
+    <Application.Resources>
+        <converters:BoolToIntConverter x:Key="BoolToIntConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
+        <converters:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+    </Application.Resources>
+</Application>
