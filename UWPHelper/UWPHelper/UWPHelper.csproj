@@ -114,6 +114,7 @@
     <Compile Include="ApplicationViewExtension.cs" />
     <Compile Include="Converters\InvertedNullableBoolToBoolConverter.cs" />
     <Compile Include="Converters\NullableBoolToBoolConverter.cs" />
+    <Compile Include="DisplayRequestManager.cs" />
     <Compile Include="NotifyPropertyChanged.cs" />
     <Compile Include="Triggers\IsTypePresentTrigger.cs" />
     <Compile Include="Delayer.cs" />
