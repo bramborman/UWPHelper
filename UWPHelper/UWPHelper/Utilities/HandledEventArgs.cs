@@ -1,4 +1,4 @@
-﻿namespace UWPHelper
+﻿namespace UWPHelper.Utilities
 {
     public class HandledEventArgs
     {

@@ -1,4 +1,7 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System.Collections.ObjectModel;
+using UWPHelper;
+using UWPHelper.Utilities;
+using Windows.UI.Xaml.Controls;
 
 namespace Test
 {

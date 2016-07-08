@@ -4,7 +4,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace UWPHelper
+namespace UWPHelper.Utilities
 {
     public static class ApplicationViewExtension
     {

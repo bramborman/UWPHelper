@@ -1,14 +1,14 @@
 ﻿using Windows.System.Display;
 
-namespace UWPHelper
+namespace UWPHelper.Utilities
 {
-    public class DisplayRequestManager
+    public static class DisplayRequestManager
     {
-        DisplayRequest displayRequest;
+        static DisplayRequest displayRequest;
 
-        bool _isActive;
+        static bool _isActive;
 
-        public bool IsActive
+        public static bool IsActive
         {
             get { return _isActive; }
             set

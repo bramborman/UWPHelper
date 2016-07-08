@@ -1,5 +1,7 @@
 ﻿using System;
-using UWPHelper;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using UWPHelper.Utilities;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -8,15 +10,88 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Test
 {
+    public class AppData : AppDataBase
+    {
+        const string FILE = "Settings.json";
+
+        public static AppData Current { get; set; }
+
+        int _foo;
+        bool _bar;
+
+        public int Foo
+        {
+            get { return _foo; }
+            set
+            {
+                if (_foo != value)
+                {
+                    _foo = value;
+                    OnPropertyChanged(nameof(Foo));
+                }
+            }
+        }
+        public bool Bar
+        {
+            get { return _bar; }
+            set
+            {
+                if (_bar != value)
+                {
+                    _bar = value;
+                    OnPropertyChanged(nameof(Bar));
+                }
+            }
+        }
+
+        public AppData()
+        {
+            Foo = 0;
+            Bar = false;
+        }
+
+        public async Task SaveAsync()
+        {
+
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine(DebugMessages.OperationInfo("AppData", Operation.Saving, await SaveAsync(FILE)));
+#else
+            await SaveAsync(FILE);
+#endif
+        }
+
+        public static async Task<AppData> LoadAsync()
+        {
+            LoadAsyncResult<AppData> loadAsyncResult = await LoadAsync<AppData>(FILE);
+
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine(DebugMessages.OperationInfo("AppData", Operation.Loading, loadAsyncResult.Success));
+#endif
+
+            loadAsyncResult.AppData.PropertyChanged += async delegate
+            {
+                await loadAsyncResult.AppData.SaveAsync();
+            };
+
+            return loadAsyncResult.AppData;
+        }
+    }
+
     sealed partial class App : Application
     {
+        public static AppData appData;
+
+        Task<AppData> loadAppDataTask;
+
         public App()
         {
+            loadAppDataTask = AppData.LoadAsync();
+
             InitializeComponent();
             Suspending += OnSuspending;
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -55,6 +130,9 @@ namespace Test
                 ApplicationViewExtension.SetTitleBarColors(ElementTheme.Dark, Current.RequestedTheme);
                 ApplicationViewExtension.SetStatusBarColors(ElementTheme.Dark, Current.RequestedTheme);
             }
+            
+            appData = await loadAppDataTask;
+            appData.Foo++;
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)

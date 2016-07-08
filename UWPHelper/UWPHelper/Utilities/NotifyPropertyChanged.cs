@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace UWPHelper
+namespace UWPHelper.Utilities
 {
     public abstract class NotifyPropertyChanged : INotifyPropertyChanged
     {

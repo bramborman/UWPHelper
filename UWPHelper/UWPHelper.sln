@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPHelper", "UWPHelper\UWPHelper.csproj", "{8590E934-A543-4E77-9DE9-737BF6B2E4F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{EC59601C-7EB3-4A00-B00D-FA3B85F96183}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8590E934-A543-4E77-9DE9-737BF6B2E4F0} = {8590E934-A543-4E77-9DE9-737BF6B2E4F0}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

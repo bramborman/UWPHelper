@@ -5,7 +5,7 @@ namespace UWPHelper.Triggers
 {
     public class IsTypePresentTrigger : StateTriggerBase
     {
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(string), typeof(IsTypePresentTrigger), new PropertyMetadata(null, OnDeviceFamilyPropertyChanged));
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(string), typeof(IsTypePresentTrigger), new PropertyMetadata(null, OnTypePropertyChanged));
 
         public string Type
         {
@@ -13,7 +13,7 @@ namespace UWPHelper.Triggers
             set { SetValue(TypeProperty, value); }
         }
 
-        private static void OnDeviceFamilyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnTypePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             IsTypePresentTrigger isTypePresentTrigger = (IsTypePresentTrigger)d;
             isTypePresentTrigger.SetActive(ApiInformation.IsTypePresent(isTypePresentTrigger.Type));

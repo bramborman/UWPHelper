@@ -17,6 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>Test_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>568C98767E5959BB31899623DD31CB387387BA75</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -127,9 +128,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="UWPHelper">
-      <HintPath>..\UWPHelper\bin\Debug\UWPHelper.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\UWPHelper\UWPHelper.csproj">
+      <Project>{8590e934-a543-4e77-9de9-737bf6b2e4f0}</Project>
+      <Name>UWPHelper</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
