@@ -16,8 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToIntConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedBoolConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedNullableBoolToBoolConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\NullableBoolToBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LoadingErrorDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsTypePresentTrigger.cs" />
@@ -32,6 +30,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)AboutApp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Resources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

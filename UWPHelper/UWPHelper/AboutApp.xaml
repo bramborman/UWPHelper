@@ -14,7 +14,7 @@
     </StackPanel.Resources>
 
     <TextBlock Text="About"
-               Style="{ThemeResource TitleTextBlockStyle}"
+               Style="{StaticResource TitleTextBlockStyle}"
                Margin="0,36,0,0"
                    />
 

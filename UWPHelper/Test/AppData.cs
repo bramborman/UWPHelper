@@ -52,10 +52,9 @@ namespace Test
 
         public static async Task LoadAsync()
         {
-            Storage.LoadObjectAsyncResult<AppData> loadObjectAsyncResult = await Storage.LoadObjectAsync<AppData>(FILE, ApplicationData.Current.LocalFolder);
-
-            Current = loadObjectAsyncResult.Object;
-            ShowLoadingError = !loadObjectAsyncResult.Success;
+            var loadObjectAsyncResult = await Storage.LoadObjectAsync<AppData>(FILE, ApplicationData.Current.LocalFolder);
+            Current             = loadObjectAsyncResult.Object;
+            ShowLoadingError    = !loadObjectAsyncResult.Success;
 
             Current.PropertyChanged += async (sender, e) => await Current.SaveAsync();
         }

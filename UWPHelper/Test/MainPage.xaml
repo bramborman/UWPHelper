@@ -3,15 +3,17 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="using:Test"
       xmlns:uwph="using:UWPHelper"
-      xmlns:converters="using:UWPHelper.Converters"
       xmlns:triggers="using:UWPHelper.Triggers"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       >
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                Padding="10"
-                >
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
@@ -24,36 +26,43 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
-        <CheckBox x:Name="WatBox"
-                  Content="Wat"
-                  />
-        <CheckBox x:Name="WutBox"
-                  Content="Wut"
-                  IsChecked="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource InvertedBoolConverter}}"
-                  />
 
-        <ComboBox SelectedIndex="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToIntConverter}}">
-            <ComboBoxItem Content="0"/>
-            <ComboBoxItem Content="1"/>
-        </ComboBox>
+        <ContentPresenter Content="TEST"
+                          Style="{StaticResource PageTitle}"
+                          Grid.Row="0"
+                          />
 
-        <ComboBox SelectedIndex="{x:Bind TestEnum, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-            <ComboBoxItem Content="0"/>
-            <ComboBoxItem Content="1"/>
-            <ComboBoxItem Content="2"/>
-            <ComboBoxItem Content="3"/>
-        </ComboBox>
+        <StackPanel Padding="25" Grid.Row="1">
+            <CheckBox x:Name="WatBox"
+                      Content="Wat"
+                      />
+            <CheckBox x:Name="WutBox"
+                      Content="Wut"
+                      IsChecked="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource InvertedBoolConverter}}"
+                      />
 
-        <Rectangle Fill="Red"
-                   Width="50"
-                   Height="50"
-                   HorizontalAlignment="Left"
-                   Visibility="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                   />
+            <ComboBox SelectedIndex="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToIntConverter}}">
+                <ComboBoxItem Content="0"/>
+                <ComboBoxItem Content="1"/>
+            </ComboBox>
 
-        <Button x:Name="PhoneButt" Content="Mobile" Visibility="Collapsed"/>
+            <ComboBox SelectedIndex="{x:Bind TestEnum, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                <ComboBoxItem Content="0"/>
+                <ComboBoxItem Content="1"/>
+                <ComboBoxItem Content="2"/>
+                <ComboBoxItem Content="3"/>
+            </ComboBox>
 
-        <uwph:AboutApp/>
-    </StackPanel>
+            <Rectangle Fill="Red"
+                       Width="50"
+                       Height="50"
+                       HorizontalAlignment="Left"
+                       Visibility="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                       />
+
+            <Button x:Name="PhoneButt" Content="Mobile" Visibility="Collapsed"/>
+
+            <uwph:AboutApp/>
+        </StackPanel>
+    </Grid>
 </Page>
