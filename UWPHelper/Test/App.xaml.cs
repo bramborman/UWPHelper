@@ -1,16 +1,16 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using UWPHelper.Utilities;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Test
 {
-    public class AppData : AppDataBase
+    public class AppData : NotifyPropertyChanged
     {
         const string FILE = "Settings.json";
 
@@ -50,38 +50,25 @@ namespace Test
             Bar = false;
         }
 
-        public async Task SaveAsync()
+        public Task SaveAsync()
         {
-
-#if DEBUG
-            System.Diagnostics.Debug.WriteLine(DebugMessages.OperationInfo("AppData", Operation.Saving, await SaveAsync(FILE)));
-#else
-            await SaveAsync(FILE);
-#endif
+            return Storage.SaveObjectAsync(this, FILE, ApplicationData.Current.LocalFolder);
         }
 
-        public static async Task<AppData> LoadAsync()
+        public static async Task LoadAsync()
         {
-            LoadAsyncResult<AppData> loadAsyncResult = await LoadAsync<AppData>(FILE);
+            Current = await Storage.LoadObjectAsync<AppData>(FILE, ApplicationData.Current.LocalFolder);
 
-#if DEBUG
-            System.Diagnostics.Debug.WriteLine(DebugMessages.OperationInfo("AppData", Operation.Loading, loadAsyncResult.Success));
-#endif
-
-            loadAsyncResult.AppData.PropertyChanged += async delegate
+            Current.PropertyChanged += async delegate
             {
-                await loadAsyncResult.AppData.SaveAsync();
+                await Current.SaveAsync();
             };
-
-            return loadAsyncResult.AppData;
         }
     }
 
     sealed partial class App : Application
     {
-        public static AppData appData;
-
-        Task<AppData> loadAppDataTask;
+        Task loadAppDataTask;
 
         public App()
         {
@@ -131,8 +118,8 @@ namespace Test
                 ApplicationViewExtension.SetStatusBarColors(ElementTheme.Dark, Current.RequestedTheme);
             }
             
-            appData = await loadAppDataTask;
-            appData.Foo++;
+            await loadAppDataTask;
+            AppData.Current.Foo++;
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)

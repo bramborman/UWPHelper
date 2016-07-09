@@ -8,32 +8,32 @@
              d:DesignWidth="300"
              d:DesignHeight="350"
              >
-    <StackPanel>
-        <StackPanel.Resources>
-            <Style TargetType="HyperlinkButton" BasedOn="{StaticResource TextBlockButtonStyle}"/>
-        </StackPanel.Resources>
-        
-        <TextBlock Text="About"
-                   Style="{ThemeResource TitleTextBlockStyle}"
-                   Margin="0,36,0,0"
+  <StackPanel>
+    <StackPanel.Resources>
+      <Style TargetType="HyperlinkButton" BasedOn="{StaticResource TextBlockButtonStyle}"/>
+    </StackPanel.Resources>
+
+    <TextBlock Text="About"
+               Style="{ThemeResource TitleTextBlockStyle}"
+               Margin="0,36,0,0"
                    />
 
-        <StackPanel Orientation="Horizontal">
-            <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}" Margin="0,10,10,10">
-                <Image Source="ms-appx:Assets/Square71x71Logo.scale-100.png" Width="71" Height="71"/>
-            </Border>
+    <StackPanel Orientation="Horizontal">
+      <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}" Margin="0,10,10,10">
+        <Image Source="ms-appx:Assets/Square71x71Logo.scale-100.png" Width="71" Height="71"/>
+      </Border>
 
-            <StackPanel Padding="5,10">
-                <TextBlock Text="{x:Bind AppName}"/>
-                <TextBlock Text="{x:Bind AppVersion}"/>
-                <TextBlock Text="&#x00A9; 2016 Marian Dolinský"/>
-            </StackPanel>
-        </StackPanel>
+      <StackPanel Padding="5,10">
+        <TextBlock Text="{x:Bind AppName}"/>
+        <TextBlock Text="{x:Bind AppVersion}"/>
+        <TextBlock Text="&#x00A9; 2016 Marian Dolinský"/>
+      </StackPanel>
+    </StackPanel>
 
-        <HyperlinkButton Content="{x:Bind AppStoreLink}" Click="Hyperlink_Click"/>
-        <HyperlinkButton Content="Rate this app" Click="Hyperlink_Click"/>
-        <HyperlinkButton Content="More apps by this publisher" Click="Hyperlink_Click"/>
-<!--
+    <HyperlinkButton Content="{x:Bind AppStoreLink}" Click="Hyperlink_Click"/>
+    <HyperlinkButton Content="Rate this app" Click="Hyperlink_Click"/>
+    <HyperlinkButton Content="More apps by this publisher" Click="Hyperlink_Click"/>
+    <!--
         <Button Click="Feedback">
             <StackPanel Orientation="Horizontal">
                 <FontIcon Glyph="&#xE939;" FontSize="18"/>
@@ -41,5 +41,5 @@
             </StackPanel>
         </Button>
 -->
-    </StackPanel>
+  </StackPanel>
 </UserControl>

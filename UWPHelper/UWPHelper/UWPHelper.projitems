@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>c6e52f0f-39a1-4417-907e-20b85040d1dd</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>UWPHelper</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AboutApp.xaml.cs">
+      <DependentUpon>AboutApp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToIntConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToIntConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedNullableBoolToBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\NullableBoolToBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LoadingErrorDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Triggers\DeviceFamilyTrigger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsTypePresentTrigger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Triggers\OrientationTrigger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Storage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ApplicationViewExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\DebugMessages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Delayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\DisplayRequestManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\HandledEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\NotifyPropertyChanged.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)AboutApp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>
