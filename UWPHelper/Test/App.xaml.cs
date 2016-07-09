@@ -14,7 +14,7 @@ namespace Test
     {
         const string FILE = "Settings.json";
 
-        public static AppData Current { get; set; }
+        public static AppData Current { get; private set; }
 
         int _foo;
         bool _bar;
@@ -50,19 +50,15 @@ namespace Test
             Bar = false;
         }
 
-        public Task SaveAsync()
+        public async Task SaveAsync()
         {
-            return Storage.SaveObjectAsync(this, FILE, ApplicationData.Current.LocalFolder);
+            await Storage.SaveObjectAsync(this, FILE, ApplicationData.Current.LocalFolder);
         }
 
         public static async Task LoadAsync()
         {
             Current = await Storage.LoadObjectAsync<AppData>(FILE, ApplicationData.Current.LocalFolder);
-
-            Current.PropertyChanged += async delegate
-            {
-                await Current.SaveAsync();
-            };
+            Current.PropertyChanged += async (sender, e) => await Current.SaveAsync();
         }
     }
 
