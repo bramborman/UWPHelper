@@ -3,65 +3,12 @@ using System.Threading.Tasks;
 using UWPHelper.Utilities;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Test
 {
-    public class AppData : NotifyPropertyChanged
-    {
-        const string FILE = "Settings.json";
-
-        public static AppData Current { get; private set; }
-
-        int _foo;
-        bool _bar;
-
-        public int Foo
-        {
-            get { return _foo; }
-            set
-            {
-                if (_foo != value)
-                {
-                    _foo = value;
-                    OnPropertyChanged(nameof(Foo));
-                }
-            }
-        }
-        public bool Bar
-        {
-            get { return _bar; }
-            set
-            {
-                if (_bar != value)
-                {
-                    _bar = value;
-                    OnPropertyChanged(nameof(Bar));
-                }
-            }
-        }
-
-        public AppData()
-        {
-            Foo = 0;
-            Bar = false;
-        }
-
-        public async Task SaveAsync()
-        {
-            await Storage.SaveObjectAsync(this, FILE, ApplicationData.Current.LocalFolder);
-        }
-
-        public static async Task LoadAsync()
-        {
-            Current = await Storage.LoadObjectAsync<AppData>(FILE, ApplicationData.Current.LocalFolder);
-            Current.PropertyChanged += async (sender, e) => await Current.SaveAsync();
-        }
-    }
-
     sealed partial class App : Application
     {
         Task loadAppDataTask;

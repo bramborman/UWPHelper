@@ -8,12 +8,9 @@ namespace UWPHelper.Utilities
 {
     public static class Storage
     {
-        public static async Task SaveObjectAsync(object obj, string fileName, StorageFolder folder)
+        public static async Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder)
         {
-
-#if DEBUG
             bool success = true;
-#endif
 
             try
             {
@@ -24,30 +21,16 @@ namespace UWPHelper.Utilities
             }
             catch
             {
-
-#if DEBUG
                 success = false;
-#endif
-
             }
 
-#if DEBUG
-            finally
-            {
-                DebugMessages.OperationInfo(fileName, Operation.Saving, success);
-            }
-#endif
-
+            DebugMessages.OperationInfo(fileName, "saving", success);
+            return success;
         }
 
-        public static async Task<T> LoadObjectAsync<T>(string fileName, StorageFolder folder) where T : class, new()
+        public static async Task<LoadObjectAsyncResult<T>> LoadObjectAsync<T>(string fileName, StorageFolder folder) where T : class, new()
         {
-
-#if DEBUG
-            bool success = true;
-#endif
-
-            T output = null;
+            LoadObjectAsyncResult<T> output = new LoadObjectAsyncResult<T>();
 
             try
             {
@@ -56,31 +39,33 @@ namespace UWPHelper.Utilities
 
                 if (string.IsNullOrWhiteSpace(json))
                 {
-                    output = new T();
+                    output.Object = new T();
                 }
                 else
                 {
-                    output = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(json));
+                    output.Object = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(json));
                 }
             }
             catch (Exception ex)
             {
-                output = new T();
-
-#if DEBUG
-                success = ex is FileNotFoundException;
-#endif
-
+                output.Object  = new T();
+                output.Success = ex is FileNotFoundException;
             }
 
-#if DEBUG
-            finally
-            {
-                DebugMessages.OperationInfo(fileName, Operation.Loading, success);
-            }
-#endif
-
+            DebugMessages.OperationInfo(fileName, "loading", output.Success);
             return output;
+        }
+
+        public class LoadObjectAsyncResult<T> where T : class, new()
+        {
+            public T Object { get; set; }
+            public bool Success { get; set; }
+
+            public LoadObjectAsyncResult()
+            {
+                Object  = null;
+                Success = true;
+            }
         }
     }
 }
