@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Services.Store.Engagement;
+using System;
 using Windows.ApplicationModel;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -9,16 +10,22 @@ namespace UWPHelper
     public sealed partial class AboutApp : UserControl
     {
         public static readonly DependencyProperty AppStoreIdProperty = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), new PropertyMetadata(null));
-
-        readonly PackageVersion version = Package.Current.Id.Version;
-
+        
+        private PackageVersion Version
+        {
+            get { return Package.Current.Id.Version; }
+        }
+        private bool FeedbackSupported
+        {
+            get { return Feedback.IsSupported; }
+        }
         private string AppName
         {
             get { return Package.Current.DisplayName; }
         }
         private string AppVersion
         {
-            get { return $"Version {version.Major}.{version.Minor}.{version.Build}.{version.Revision}"; }
+            get { return $"Version {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision}"; }
         }
         private string AppStoreLink
         {
@@ -53,11 +60,10 @@ namespace UWPHelper
                 await Launcher.LaunchUriAsync(new Uri("ms-windows-store://publisher/?name=Marian Dolinský"));
             }
         }
-        /*
-        private void Feedback(object sender, RoutedEventArgs e)
+        
+        private async void Bt_Feedback_Click(object sender, RoutedEventArgs e)
         {
-            open feedback hub
+            await Feedback.LaunchFeedbackAsync();
         }
-        */
     }
 }
