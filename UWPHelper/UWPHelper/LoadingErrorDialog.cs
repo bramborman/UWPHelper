@@ -14,7 +14,7 @@ namespace UWPHelper
             CD_Dialog.Content = $"{title} were not successfully loaded. You can restart this app to try again or continue using this app with{(useDefault ? " default" : "out Your")} {title.ToLower()}.\nWould You like to close the app now?";
 
             CD_Dialog.PrimaryButtonText = "Yes";
-            CD_Dialog.PrimaryButtonClick += delegate
+            CD_Dialog.PrimaryButtonClick += (sender, args) =>
             {
                 Application.Current.Exit();
             };

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="3b5d711a-758f-4a5e-a919-d81f77d05389" Publisher="CN=marian" Version="1.0.0.0" />
+  <Identity Name="Test" Publisher="CN=marian" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="3b5d711a-758f-4a5e-a919-d81f77d05389" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Test</DisplayName>
-    <PublisherDisplayName>marian</PublisherDisplayName>
+    <PublisherDisplayName>Marian Dolinský</PublisherDisplayName>
     <Logo>Assets\NewStoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -25,6 +25,11 @@
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="md-test" />
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 </Package>

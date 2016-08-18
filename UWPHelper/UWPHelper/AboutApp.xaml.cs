@@ -1,6 +1,7 @@
 ﻿using Microsoft.Services.Store.Engagement;
 using System;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -10,6 +11,7 @@ namespace UWPHelper
     public sealed partial class AboutApp : UserControl
     {
         public static readonly DependencyProperty AppStoreIdProperty = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), new PropertyMetadata(null));
+        public static readonly DependencyProperty AppUriProperty     = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), new PropertyMetadata(null));
         
         private PackageVersion Version
         {
@@ -17,7 +19,7 @@ namespace UWPHelper
         }
         private bool FeedbackSupported
         {
-            get { return Feedback.IsSupported; }
+            get { return StoreServicesFeedbackLauncher.IsSupported(); }
         }
         private string AppName
         {
@@ -37,6 +39,11 @@ namespace UWPHelper
             get { return (string)GetValue(AppStoreIdProperty); }
             set { SetValue(AppStoreIdProperty, value); }
         }
+        public string AppUri
+        {
+            get { return (string)GetValue(AppUriProperty); }
+            set { SetValue(AppUriProperty, value); }
+        }
 
         public AboutApp()
         {
@@ -49,21 +56,38 @@ namespace UWPHelper
 
             if (content == AppStoreLink)
             {
-                await Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/?ProductId=" + AppStoreId));
+                await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store://pdp/?ProductId=" + AppStoreId));
             }
             else if (content == "Rate this app")
             {
-                await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=" + AppStoreId));
+                await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store://review/?ProductId=" + AppStoreId));
             }
-            else if (content == "More apps by this publisher")
+            else if (content == "Share this app")
             {
-                await Launcher.LaunchUriAsync(new Uri("ms-windows-store://publisher/?name=Marian Dolinský"));
+                DataTransferManager.GetForCurrentView().DataRequested += SharingDataRequested;
+                DataTransferManager.ShowShareUI();
+            }
+            else// if (content == "More apps by this publisher")
+            {
+                await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store://publisher/?name=Marian Dolinský"));
             }
         }
-        
-        private async void Bt_Feedback_Click(object sender, RoutedEventArgs e)
+
+        private void SharingDataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
-            await Feedback.LaunchFeedbackAsync();
+            string description = $"{AppName} in Windows Store";
+
+            args.Request.Data.Properties.Title = AppName;
+            args.Request.Data.Properties.Description = description;
+            args.Request.Data.SetText(description + @" - https://www.microsoft.com/store/apps/" + AppStoreId);
+            args.Request.Data.SetApplicationLink(new Uri(AppUri));
+
+            DataTransferManager.GetForCurrentView().DataRequested += SharingDataRequested;
+        }
+
+        private async void OpenFeedbackHub(object sender, RoutedEventArgs e)
+        {
+            await StoreServicesFeedbackLauncher.GetDefault().LaunchAsync();
         }
     }
 }

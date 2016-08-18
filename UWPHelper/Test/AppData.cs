@@ -6,13 +6,14 @@ namespace Test
 {
     public class AppData : NotifyPropertyChanged
     {
-        const string FILE = "Settings.json";
+        const string FILE = "AppData.json";
 
         public static AppData Current { get; private set; }
         public static bool ShowLoadingError { get; set; }
 
         int _foo;
-        bool _bar;
+        bool? _watBoxChecked;
+        TestEnum _testEnum;
 
         public int Foo
         {
@@ -26,15 +27,27 @@ namespace Test
                 }
             }
         }
-        public bool Bar
+        public bool? WatBoxChecked
         {
-            get { return _bar; }
+            get { return _watBoxChecked; }
             set
             {
-                if (_bar != value)
+                if (_watBoxChecked != value)
                 {
-                    _bar = value;
-                    OnPropertyChanged(nameof(Bar));
+                    _watBoxChecked = value;
+                    OnPropertyChanged(nameof(WatBoxChecked));
+                }
+            }
+        }
+        public TestEnum TestEnum
+        {
+            get { return _testEnum; }
+            set
+            {
+                if (_testEnum != value)
+                {
+                    _testEnum = value;
+                    OnPropertyChanged(nameof(TestEnum));
                 }
             }
         }
@@ -42,7 +55,8 @@ namespace Test
         public AppData()
         {
             Foo = 0;
-            Bar = false;
+            WatBoxChecked = true;
+            TestEnum = TestEnum._0;
         }
 
         public async Task SaveAsync()

@@ -2,20 +2,16 @@
 
 namespace Test
 {
-    public enum TestEnum
-    {
-        _0,
-        _1,
-        _2,
-        _3
-    }
-
     public sealed partial class MainPage : Page
     {
-        public TestEnum TestEnum { get; set; }
-
+        private AppData AppData
+        {
+            get { return AppData.Current; }
+        }
+        public static MainPage m;
         public MainPage()
         {
+            m = this;
             InitializeComponent();
         }
     }

@@ -13,56 +13,100 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <triggers:IsTypePresentTrigger Type="Windows.UI.ViewManagement.StatusBar"/>
+                        <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Desktop"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PhoneButt.Visibility" Value="Visible"/>
+                        <Setter Target="DesktopButt.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Mobile"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MobileButt.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <ContentPresenter Content="TEST"
+        <ContentPresenter x:Name="CP_PageTitle"
+                          Content="TEST"
                           Style="{StaticResource PageTitle}"
                           Grid.Row="0"
                           />
 
-        <StackPanel Padding="25" Grid.Row="1">
-            <CheckBox x:Name="WatBox"
-                      Content="Wat"
+        <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+              Width="{Binding ElementName=CP_PageTitle, Path=ActualHeight}"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Stretch"
+              Grid.Row="0"
+              >
+            <FontIcon Glyph="&#xE003;"/>
+            <FontIcon Glyph="&#xE001;"
+                      Visibility="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
                       />
-            <CheckBox x:Name="WutBox"
-                      Content="Wut"
-                      IsChecked="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource InvertedBoolConverter}}"
-                      />
+        </Grid>
 
-            <ComboBox SelectedIndex="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToIntConverter}}">
-                <ComboBoxItem Content="0"/>
-                <ComboBoxItem Content="1"/>
-            </ComboBox>
+        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      Grid.Row="1"
+                      >
+            <StackPanel Padding="{StaticResource PageContentMargin}">
+                <CheckBox x:Name="WatBox"
+                          IsChecked="{x:Bind AppData.WatBoxChecked, Mode=TwoWay}"
+                          Content="Wat"
+                          />
+                <CheckBox x:Name="WutBox"
+                          Content="Wut"
+                          IsChecked="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource InvertedBoolConverter}}"
+                          Margin="{StaticResource CheckBoxGapMargin}"
+                          />
 
-            <ComboBox SelectedIndex="{x:Bind TestEnum, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                <ComboBoxItem Content="0"/>
-                <ComboBoxItem Content="1"/>
-                <ComboBoxItem Content="2"/>
-                <ComboBoxItem Content="3"/>
-            </ComboBox>
+                <ComboBox Header="Wat"
+                          SelectedIndex="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToIntConverter}}"
+                          Margin="{StaticResource ComboBoxGapMargin}"
+                          Width="120"
+                          >
+                    <ComboBoxItem Content="Collapsed"/>
+                    <ComboBoxItem Content="Visible"/>
+                </ComboBox>
 
-            <Rectangle Fill="Red"
-                       Width="50"
-                       Height="50"
-                       HorizontalAlignment="Left"
-                       Visibility="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                       />
+                <ComboBox SelectedIndex="{x:Bind AppData.TestEnum, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}"
+                          Margin="{StaticResource ComboBoxGapMargin}"
+                          Width="120"
+                          >
+                    <ComboBoxItem Content="0"/>
+                    <ComboBoxItem Content="1"/>
+                    <ComboBoxItem Content="2"/>
+                    <ComboBoxItem Content="3"/>
+                </ComboBox>
 
-            <Button x:Name="PhoneButt" Content="Mobile" Visibility="Collapsed"/>
+                <TextBlock Margin="{StaticResource PanelGapMargin}">
+                    Foo: <Run Text="{x:Bind AppData.Foo}"/>
+                </TextBlock>
 
-            <uwph:AboutApp/>
-        </StackPanel>
+                <Button x:Name="DesktopButt"
+                        x:DeferLoadStrategy="Lazy"
+                        Visibility="Collapsed"
+                        Content="Desktop only button"
+                        Margin="{StaticResource ButtonGapMargin}"
+                        />
+                <Button x:Name="MobileButt"
+                        x:DeferLoadStrategy="Lazy"
+                        Visibility="Collapsed"
+                        Content="Mobile only button"
+                        Margin="{StaticResource ButtonGapMargin}"
+                        />
+
+                <uwph:AboutApp AppUri="md-test:"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

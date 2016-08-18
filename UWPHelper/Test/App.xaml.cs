@@ -11,69 +11,80 @@ namespace Test
 {
     sealed partial class App : Application
     {
-        Task loadAppDataTask;
-
         public App()
         {
-            loadAppDataTask = AppData.LoadAsync();
-
             InitializeComponent();
             Suspending += OnSuspending;
         }
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        private async Task Initialize(IActivatedEventArgs args)
         {
+            bool loadAppData = AppData.Current == null;
+            Task loadAppDataTask = null;
+
+            if (loadAppData)
+            {
+                loadAppDataTask = AppData.LoadAsync();
+            }
+
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 DebugSettings.EnableFrameRateCounter = false;
+                DebugSettings.IsTextPerformanceVisualizationEnabled = false;
             }
 #endif
+
+            LaunchActivatedEventArgs launchArgs = args as LaunchActivatedEventArgs;
             Frame rootFrame = Window.Current.Content as Frame;
 
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
             if (rootFrame == null)
             {
                 rootFrame = new Frame();
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
-
-                // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
+            if (loadAppData)
+            {
+                await loadAppDataTask;
+                AppData.Current.Foo++;
+            }
+
+            if (launchArgs?.PrelaunchActivated != true)
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(MainPage), launchArgs?.Arguments);
                 }
-
-                // Ensure the current window is active
+                
                 Window.Current.Activate();
 
-                ApplicationViewExtension.SetTitleBarColors(ElementTheme.Dark, Current.RequestedTheme);
-                ApplicationViewExtension.SetStatusBarColors(ElementTheme.Dark, Current.RequestedTheme);
+                ApplicationViewExtension.SetTitleBarColors(ElementTheme.Dark);
+                ApplicationViewExtension.SetStatusBarColors(ElementTheme.Dark, RequestedTheme);
             }
-            
-            await loadAppDataTask;
-            AppData.Current.Foo++;
         }
 
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        protected override async void OnActivated(IActivatedEventArgs args)
+        {
+            await Initialize(args);
+        }
+
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        {
+            await Initialize(e);
+        }
+
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+
+            await AppData.Current?.SaveAsync();
             deferral.Complete();
         }
     }
