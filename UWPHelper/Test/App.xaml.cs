@@ -5,6 +5,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
+using Windows.System.Profile;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -54,6 +55,17 @@ namespace Test
             if (loadAppData)
             {
                 await loadAppDataTask;
+
+                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                {
+                    Window.Current.VisibilityChanged += (sender2, e2) =>
+                    {
+                        if (AppData.Current.Theme == ElementTheme.Default && e2.Visible)
+                        {
+                            ApplicationViewExtension.SetStatusBarColors(AppData.Current.Theme, RequestedTheme);
+                        }
+                    };
+                }
             }
 
             if (launchArgs?.PrelaunchActivated != true)

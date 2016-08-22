@@ -8,10 +8,9 @@ namespace Test
         {
             get { return AppData.Current; }
         }
-        public static MainPage m;
+
         public MainPage()
         {
-            m = this;
             InitializeComponent();
         }
     }
