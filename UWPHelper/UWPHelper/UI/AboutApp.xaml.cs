@@ -6,7 +6,7 @@ using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace UWPHelper
+namespace UWPHelper.UI
 {
     public sealed partial class AboutApp : UserControl
     {

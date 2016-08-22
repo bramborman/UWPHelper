@@ -2,8 +2,8 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="using:Test"
-      xmlns:uwph="using:UWPHelper"
       xmlns:triggers="using:UWPHelper.Triggers"
+      xmlns:ui="using:UWPHelper.UI"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
@@ -98,7 +98,7 @@
                     Foo: <Run Text="{x:Bind AppData.Foo}"/>
                 </TextBlock>
 
-                <uwph:ThemeSelector Theme="{x:Bind AppData.Theme, Mode=TwoWay}"/>
+                <ui:ThemeSelector Theme="{x:Bind AppData.Theme, Mode=TwoWay}"/>
 
                 <Button x:Name="DesktopButt"
                         x:DeferLoadStrategy="Lazy"
@@ -113,7 +113,7 @@
                         Margin="{StaticResource ButtonGapMargin}"
                         />
 
-                <uwph:AboutApp AppUri="md-test:"/>
+                <ui:AboutApp AppUri="md-test:"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

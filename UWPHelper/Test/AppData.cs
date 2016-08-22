@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using UWPHelper;
+using UWPHelper.UI;
 using UWPHelper.Utilities;
 using Windows.Storage;
 using Windows.UI.Xaml;

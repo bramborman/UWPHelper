@@ -3,7 +3,7 @@ using Windows.System.Profile;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace UWPHelper
+namespace UWPHelper.UI
 {
     public sealed partial class ThemeSelector : UserControl
     {
