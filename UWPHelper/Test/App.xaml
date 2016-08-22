@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:Test"
              xmlns:uwph="using:UWPHelper"
-             RequestedTheme="Dark"
              >
     <Application.Resources>
         <ResourceDictionary>

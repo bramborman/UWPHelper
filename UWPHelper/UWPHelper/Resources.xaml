@@ -8,6 +8,7 @@
     <converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
     <converters:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
 
+    <Thickness x:Key="WordsSpaceMargin">0,0,3,0</Thickness>
     <Thickness x:Key="PageContentMargin">25</Thickness>
     <Thickness x:Key="TitleGapMargin">0,11,0,14</Thickness>
     <Thickness x:Key="TitleGapBottomMargin">0,0,0,14</Thickness>
@@ -19,7 +20,8 @@
     <Thickness x:Key="PanelGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="RadioButtonGapMargin">0,0,0,14</Thickness>
     <Thickness x:Key="ToggleSwitchGapMargin">0,0,0,10</Thickness>
-
+    
+    <SolidColorBrush x:Key="LightTextForegroundBrush" Color="{ThemeResource SystemBaseMediumColor}"/>
     <SolidColorBrush x:Key="PageTitleBackgroundBrush" Color="{ThemeResource SystemChromeMediumColor}"/>
     
     <Style x:Key="PageTitle" TargetType="ContentPresenter">

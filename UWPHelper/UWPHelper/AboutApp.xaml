@@ -14,7 +14,7 @@
         </StackPanel.Resources>
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <VisualStateGroup x:Name="Bt_Feedback_States">
                 <VisualState>
                     <VisualState.StateTriggers>
                         <StateTrigger IsActive="{x:Bind FeedbackSupported}"/>
@@ -33,9 +33,9 @@
 
         <StackPanel Orientation="Horizontal">
             <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-                    Margin="{StaticResource TitleGapBottomMargin}"
+                    Margin="0,0,0,10"
                     >
-                <Image Source="ms-appx:Assets/Square71x71Logo.scale-100.png" Width="71" Height="71"/>
+                <Image Source="Assets/Square71x71Logo.scale-100.png" Width="71" Height="71"/>
             </Border>
 
             <StackPanel Padding="15,0,0,0">
@@ -44,6 +44,15 @@
                 <TextBlock Text="&#x00A9; 2016 Marian Dolinský"/>
             </StackPanel>
         </StackPanel>
+
+        <TextBlock Foreground="{StaticResource LightTextForegroundBrush}"
+                   FontSize="12"
+                   Margin="{StaticResource TitleGapBottomMargin}"
+                   >
+            This app uses
+            <Hyperlink UnderlineStyle="None" NavigateUri="http://www.newtonsoft.com/json">Json.NET</Hyperlink>
+            to store Your app data.
+        </TextBlock>
 
         <HyperlinkButton Content="{x:Bind AppStoreLink}" Click="Hyperlink_Click"/>
         <HyperlinkButton Content="Rate this app" Click="Hyperlink_Click"/>

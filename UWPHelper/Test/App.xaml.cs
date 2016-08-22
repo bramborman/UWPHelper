@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using UWPHelper.Utilities;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.Foundation.Metadata;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -11,13 +14,17 @@ namespace Test
 {
     sealed partial class App : Application
     {
+        public static new App Current { get; private set; }
+
         public App()
         {
+            Current = this;
+
             InitializeComponent();
             Suspending += OnSuspending;
         }
 
-        private async Task Initialize(IActivatedEventArgs args)
+        private async void Initialize(IActivatedEventArgs args)
         {
             bool loadAppData = AppData.Current == null;
             Task loadAppDataTask = null;
@@ -27,28 +34,26 @@ namespace Test
                 loadAppDataTask = AppData.LoadAsync();
             }
 
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                DebugSettings.EnableFrameRateCounter = false;
-                DebugSettings.IsTextPerformanceVisualizationEnabled = false;
-            }
-#endif
-
-            LaunchActivatedEventArgs launchArgs = args as LaunchActivatedEventArgs;
             Frame rootFrame = Window.Current.Content as Frame;
 
             if (rootFrame == null)
             {
                 rootFrame = new Frame();
                 rootFrame.NavigationFailed += OnNavigationFailed;
+
                 Window.Current.Content = rootFrame;
+
+                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+                {
+                    ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(330, 460));
+                }
             }
+
+            LaunchActivatedEventArgs launchArgs = args as LaunchActivatedEventArgs;
 
             if (loadAppData)
             {
                 await loadAppDataTask;
-                AppData.Current.Foo++;
             }
 
             if (launchArgs?.PrelaunchActivated != true)
@@ -59,20 +64,17 @@ namespace Test
                 }
                 
                 Window.Current.Activate();
-
-                ApplicationViewExtension.SetTitleBarColors(ElementTheme.Dark);
-                ApplicationViewExtension.SetStatusBarColors(ElementTheme.Dark, RequestedTheme);
             }
         }
 
-        protected override async void OnActivated(IActivatedEventArgs args)
+        protected override void OnActivated(IActivatedEventArgs args)
         {
-            await Initialize(args);
+            Initialize(args);
         }
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            await Initialize(e);
+            Initialize(e);
         }
 
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)

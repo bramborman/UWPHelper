@@ -17,7 +17,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToIntConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LoadingErrorDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ThemeSelector.xaml.cs">
+      <DependentUpon>ThemeSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\DeviceFamilyTrigger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsApiContractPresentTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsTypePresentTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\OrientationTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\Storage.cs" />
@@ -34,6 +38,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Resources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)ThemeSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

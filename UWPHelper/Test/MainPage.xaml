@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <VisualStateGroup x:Name="Bt_DesktopButt_States">
                 <VisualState>
                     <VisualState.StateTriggers>
                         <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Desktop"/>
@@ -25,7 +25,7 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-            <VisualStateGroup>
+            <VisualStateGroup x:Name="Bt_MobileButt_States">
                 <VisualState>
                     <VisualState.StateTriggers>
                         <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Mobile"/>
@@ -49,6 +49,12 @@
               VerticalAlignment="Stretch"
               Grid.Row="0"
               >
+            <Grid.Resources>
+                <Style TargetType="FontIcon">
+                    <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundChromeWhiteBrush}"/>
+                </Style>
+            </Grid.Resources>
+            
             <FontIcon Glyph="&#xE003;"/>
             <FontIcon Glyph="&#xE001;"
                       Visibility="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
@@ -91,6 +97,8 @@
                 <TextBlock Margin="{StaticResource PanelGapMargin}">
                     Foo: <Run Text="{x:Bind AppData.Foo}"/>
                 </TextBlock>
+
+                <uwph:ThemeSelector Theme="{x:Bind AppData.Theme, Mode=TwoWay}"/>
 
                 <Button x:Name="DesktopButt"
                         x:DeferLoadStrategy="Lazy"

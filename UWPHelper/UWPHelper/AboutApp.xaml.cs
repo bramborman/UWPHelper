@@ -10,8 +10,8 @@ namespace UWPHelper
 {
     public sealed partial class AboutApp : UserControl
     {
-        public static readonly DependencyProperty AppStoreIdProperty = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), new PropertyMetadata(null));
-        public static readonly DependencyProperty AppUriProperty     = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), new PropertyMetadata(null));
+        public static readonly DependencyProperty AppStoreIdProperty = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppUriProperty     = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
         
         private PackageVersion Version
         {

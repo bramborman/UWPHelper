@@ -1,6 +1,9 @@
 ﻿using System.Threading.Tasks;
+using UWPHelper;
 using UWPHelper.Utilities;
 using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Test
 {
@@ -11,9 +14,12 @@ namespace Test
         public static AppData Current { get; private set; }
         public static bool ShowLoadingError { get; set; }
 
+        #region Backing stores
         int _foo;
         bool? _watBoxChecked;
         TestEnum _testEnum;
+        ElementTheme _theme;
+        #endregion
 
         public int Foo
         {
@@ -51,12 +57,32 @@ namespace Test
                 }
             }
         }
+        public ElementTheme Theme
+        {
+            get { return _theme; }
+            set
+            {
+                if (_theme != value)
+                {
+                    _theme = value;
+                    OnPropertyChanged(nameof(Theme));
+
+                    if (Current != null)
+                    {
+                        ((Frame)Window.Current.Content).RequestedTheme = value;
+                        ApplicationViewExtension.SetTitleBarColors(value);
+                        ApplicationViewExtension.SetStatusBarColors(value, App.Current.RequestedTheme);
+                    }
+                }
+            }
+        }
 
         public AppData()
         {
-            Foo = 0;
-            WatBoxChecked = true;
-            TestEnum = TestEnum._0;
+            Foo             = 0;
+            WatBoxChecked   = true;
+            TestEnum        = TestEnum._0;
+            Theme           = ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark;
         }
 
         public async Task SaveAsync()
@@ -70,7 +96,15 @@ namespace Test
             Current             = loadObjectAsyncResult.Object;
             ShowLoadingError    = !loadObjectAsyncResult.Success;
 
-            Current.PropertyChanged += async (sender, e) => await Current.SaveAsync();
+            Current.PropertyChanged += async (sender, e) =>
+            {
+                await Current.SaveAsync();
+            };
+
+            Current.Foo++;
+            ((Frame)Window.Current.Content).RequestedTheme = Current.Theme;
+            ApplicationViewExtension.SetTitleBarColors(Current.Theme);
+            ApplicationViewExtension.SetStatusBarColors(Current.Theme, App.Current.RequestedTheme);
         }
     }
 }
