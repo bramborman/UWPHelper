@@ -19,6 +19,7 @@ namespace Test
         bool? _watBoxChecked;
         TestEnum _testEnum;
         ElementTheme _theme;
+        string _uri;
         #endregion
 
         public int Foo
@@ -67,12 +68,19 @@ namespace Test
                     _theme = value;
                     OnPropertyChanged(nameof(Theme));
 
-                    if (Current != null)
-                    {
-                        ((Frame)Window.Current.Content).RequestedTheme = value;
-                        ApplicationViewExtension.SetTitleBarColors(value);
-                        ApplicationViewExtension.SetStatusBarColors(value, App.Current.RequestedTheme);
-                    }
+                    Current?.SetTheme();
+                }
+            }
+        }
+        public string Uri
+        {
+            get { return _uri; }
+            set
+            {
+                if (_uri != value)
+                {
+                    _uri = value;
+                    OnPropertyChanged(nameof(Uri));
                 }
             }
         }
@@ -83,6 +91,14 @@ namespace Test
             WatBoxChecked   = true;
             TestEnum        = TestEnum._0;
             Theme           = ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark;
+            Uri             = "";
+        }
+
+        public void SetTheme()
+        {
+            ((Frame)Window.Current.Content).RequestedTheme = Theme;
+            ApplicationViewExtension.SetTitleBarColors(Theme);
+            ApplicationViewExtension.SetStatusBarColors(Theme, App.Current.RequestedTheme);
         }
 
         public async Task SaveAsync()
@@ -102,9 +118,6 @@ namespace Test
             };
 
             Current.Foo++;
-            ((Frame)Window.Current.Content).RequestedTheme = Current.Theme;
-            ApplicationViewExtension.SetTitleBarColors(Current.Theme);
-            ApplicationViewExtension.SetStatusBarColors(Current.Theme, App.Current.RequestedTheme);
         }
     }
 }

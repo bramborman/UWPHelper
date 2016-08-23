@@ -55,6 +55,7 @@ namespace Test
             if (loadAppData)
             {
                 await loadAppDataTask;
+                AppData.Current.SetTheme();
 
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {

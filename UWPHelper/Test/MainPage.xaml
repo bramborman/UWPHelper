@@ -100,6 +100,51 @@
 
                 <ui:ThemeSelector Theme="{x:Bind AppData.Theme, Mode=TwoWay}"/>
 
+                <Grid Margin="{StaticResource PanelGapMargin}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox x:Name="TX_Uri"
+                             Text="{x:Bind AppData.Uri, Mode=TwoWay}"
+                             PlaceholderText="Uri"
+                             Header="Launcher"
+                             Grid.Column="0"
+                             Grid.Row="0"
+                             KeyDown="TX_Uri_KeyDown"
+                             />
+
+                    <Button x:Name="Bt_Launch"
+                            Content="Launch"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Bottom"
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Click="LaunchUri"
+                            />
+
+                    <ListView Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                              BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
+                              BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}"
+                              SelectionMode="None"
+                              IsItemClickEnabled="True"
+                              ItemsSource="{x:Bind Suggestions}"
+                              Height="125"
+                              Grid.Column="0"
+                              Grid.Row="1"
+                              ItemClick="ListView_ItemClick"
+                              >
+                        <ListView.ItemContainerTransitions>
+                            <TransitionCollection/>
+                        </ListView.ItemContainerTransitions>
+                    </ListView>
+                </Grid>
+
                 <Button x:Name="DesktopButt"
                         x:DeferLoadStrategy="Lazy"
                         Visibility="Collapsed"

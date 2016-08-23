@@ -19,8 +19,9 @@
     <Thickness x:Key="CheckBoxGapMargin">0,0,0,14</Thickness>
     <Thickness x:Key="PanelGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="RadioButtonGapMargin">0,0,0,14</Thickness>
+    <Thickness x:Key="TextBoxGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="ToggleSwitchGapMargin">0,0,0,10</Thickness>
-    
+
     <SolidColorBrush x:Key="LightTextForegroundBrush" Color="{ThemeResource SystemBaseMediumColor}"/>
     <SolidColorBrush x:Key="PageTitleBackgroundBrush" Color="{ThemeResource SystemChromeMediumColor}"/>
     

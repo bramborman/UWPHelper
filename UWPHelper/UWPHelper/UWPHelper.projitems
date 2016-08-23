@@ -21,6 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\AboutApp.xaml.cs">
       <DependentUpon>AboutApp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\RadioButtonBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\ThemeSelector.xaml.cs">
       <DependentUpon>ThemeSelector.xaml</DependentUpon>
     </Compile>
@@ -33,11 +34,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\NotifyPropertyChanged.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)UI\AboutApp.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Resources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)UI\Resources.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)UI\AboutApp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
