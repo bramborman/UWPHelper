@@ -25,7 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\ThemeSelector.xaml.cs">
       <DependentUpon>ThemeSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Storage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\StorageFileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ApplicationViewExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DebugMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\Delayer.cs" />

@@ -6,7 +6,7 @@ using Windows.Storage;
 
 namespace UWPHelper.Utilities
 {
-    public static class Storage
+    public static class StorageFileHelper
     {
         public static async Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder)
         {
@@ -14,7 +14,12 @@ namespace UWPHelper.Utilities
 
             try
             {
-                StorageFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+                StorageFile file = await folder.TryGetItemAsync(fileName) as StorageFile;
+
+                if (file == null)
+                {
+                    file = await folder.CreateFileAsync(fileName);
+                }
 
                 string json = await Task.Factory.StartNew(() => JsonConvert.SerializeObject(obj));
                 await FileIO.WriteTextAsync(file, json);

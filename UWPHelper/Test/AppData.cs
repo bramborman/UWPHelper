@@ -103,12 +103,12 @@ namespace Test
 
         public async Task SaveAsync()
         {
-            await Storage.SaveObjectAsync(this, FILE, ApplicationData.Current.LocalFolder);
+            await StorageFileHelper.SaveObjectAsync(this, FILE, ApplicationData.Current.LocalFolder);
         }
 
         public static async Task LoadAsync()
         {
-            var loadObjectAsyncResult = await Storage.LoadObjectAsync<AppData>(FILE, ApplicationData.Current.LocalFolder);
+            var loadObjectAsyncResult = await StorageFileHelper.LoadObjectAsync<AppData>(FILE, ApplicationData.Current.LocalFolder);
             Current             = loadObjectAsyncResult.Object;
             ShowLoadingError    = !loadObjectAsyncResult.Success;
 
