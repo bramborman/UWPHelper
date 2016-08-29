@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace UWPHelper
+namespace UWPHelper.UI
 {
     public class LoadingErrorDialog
     {
-        public static async Task<ContentDialogResult> ShowAsync(string title, bool useDefault)
+        public static IAsyncOperation<ContentDialogResult> ShowAsync(string title, bool useDefault)
         {
             ContentDialog CD_Dialog = new ContentDialog();
             CD_Dialog.Title = $"{title} not loaded";
@@ -21,7 +20,7 @@ namespace UWPHelper
 
             CD_Dialog.SecondaryButtonText = "No";
 
-            return await CD_Dialog.ShowAsync();
+            return CD_Dialog.ShowAsync();
         }
     }
 }

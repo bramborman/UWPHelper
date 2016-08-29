@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UWPHelper.Utilities;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,6 +17,12 @@ namespace Test
             "md-xcalculator:",
             "metronome:",
             "md-mytronome:",
+            "insideten:",
+            "md-insideten:",
+            "http://insideten.xyz",
+            "http://www.insideten.xyz",
+            "https://insideten.xyz",
+            "https://www.insideten.xyz",
             "md-test:",
             @"ms-windows-store://pdp/?ProductId=",
             @"ms-windows-store://review/?ProductId=",
@@ -35,12 +42,25 @@ namespace Test
         public MainPage()
         {
             InitializeComponent();
+
+            Loaded += async (sender, e) =>
+            {
+                if (AppData.ShowLoadingError)
+                {
+                    AppData.ShowLoadingError = false;
+                    await UWPHelper.UI.LoadingErrorDialog.ShowAsync("Settings", true);
+
+                    // If it gets there it means that PrimaryButton weren't pressed so rewrite maybe corrupted appData file
+                    await AppData.Current.SaveAsync();
+                }
+            };
         }
 
         private void TX_Uri_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
             {
+                e.Handled = true;
                 LaunchUri(this, new RoutedEventArgs());
             }
         }
@@ -49,16 +69,15 @@ namespace Test
         {
             try
             {
-                await Launcher.LaunchUriAsync(new Uri(TX_Uri.Text));
+                await TX_Uri.Text.LaunchAsUriAsync();
             }
             catch (Exception ex)
             {
-                ContentDialog CD_Popup = new ContentDialog();
-
-                CD_Popup.Content = ex;
-                CD_Popup.SecondaryButtonText = "Cancel";
-
-                await CD_Popup.ShowAsync();
+                await new ContentDialog()
+                {
+                    Content = ex,
+                    SecondaryButtonText = "Cancel"
+                }.ShowAsync();
             }
         }
 

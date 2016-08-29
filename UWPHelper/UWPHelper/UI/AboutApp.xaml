@@ -41,7 +41,9 @@
             <StackPanel Padding="15,0,0,0">
                 <TextBlock Text="{x:Bind AppName}"/>
                 <TextBlock Text="{x:Bind AppVersion}"/>
-                <TextBlock Text="&#x00A9; 2016 Marian Dolinský"/>
+                <TextBlock>
+                    &#x00A9; 2016 <Run Text="{x:Bind AppPublisher}"/>
+                </TextBlock>
             </StackPanel>
         </StackPanel>
 

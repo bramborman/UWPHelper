@@ -101,9 +101,9 @@ namespace Test
             ApplicationViewExtension.SetStatusBarColors(Theme, App.Current.RequestedTheme);
         }
 
-        public async Task SaveAsync()
+        public Task SaveAsync()
         {
-            await StorageFileHelper.SaveObjectAsync(this, FILE, ApplicationData.Current.LocalFolder);
+            return StorageFileHelper.SaveObjectAsync(this, FILE, ApplicationData.Current.LocalFolder);
         }
 
         public static async Task LoadAsync()

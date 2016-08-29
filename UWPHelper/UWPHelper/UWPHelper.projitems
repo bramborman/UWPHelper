@@ -13,7 +13,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToIntConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedBoolConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LoadingErrorDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsApiContractPresentTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsTypePresentTrigger.cs" />
@@ -21,10 +20,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\AboutApp.xaml.cs">
       <DependentUpon>AboutApp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\LoadingErrorDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\RadioButtonBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\ThemeSelector.xaml.cs">
       <DependentUpon>ThemeSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\LauncherHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\StorageFileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ApplicationViewExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DebugMessages.cs" />

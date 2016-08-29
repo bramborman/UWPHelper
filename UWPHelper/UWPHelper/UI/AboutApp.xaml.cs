@@ -1,8 +1,8 @@
 ﻿using Microsoft.Services.Store.Engagement;
 using System;
+using UWPHelper.Utilities;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -28,6 +28,10 @@ namespace UWPHelper.UI
         private string AppVersion
         {
             get { return $"Version {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision}"; }
+        }
+        private string AppPublisher
+        {
+            get { return Package.Current.PublisherDisplayName; }
         }
         private string AppStoreLink
         {
@@ -56,11 +60,11 @@ namespace UWPHelper.UI
 
             if (content == AppStoreLink)
             {
-                await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store://pdp/?ProductId=" + AppStoreId));
+                await $@"ms-windows-store://pdp/?ProductId={AppStoreId}".LaunchAsUriAsync();
             }
             else if (content == "Rate this app")
             {
-                await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store://review/?ProductId=" + AppStoreId));
+                await $@"ms-windows-store://review/?ProductId={AppStoreId}".LaunchAsUriAsync();
             }
             else if (content == "Share this app")
             {
@@ -69,7 +73,7 @@ namespace UWPHelper.UI
             }
             else// if (content == "More apps by this publisher")
             {
-                await Launcher.LaunchUriAsync(new Uri(@"ms-windows-store://publisher/?name=Marian Dolinský"));
+                await $@"ms-windows-store://publisher/?name={AppPublisher}".LaunchAsUriAsync();
             }
         }
 
@@ -79,7 +83,7 @@ namespace UWPHelper.UI
 
             args.Request.Data.Properties.Title = AppName;
             args.Request.Data.Properties.Description = description;
-            args.Request.Data.SetText(description + @" - https://www.microsoft.com/store/apps/" + AppStoreId);
+            args.Request.Data.SetText($@"{description} - https://www.microsoft.com/store/apps/{AppStoreId}");
             args.Request.Data.SetApplicationLink(new Uri(AppUri));
 
             DataTransferManager.GetForCurrentView().DataRequested += SharingDataRequested;
