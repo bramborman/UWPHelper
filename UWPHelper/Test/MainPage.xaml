@@ -134,7 +134,7 @@
                               SelectionMode="None"
                               IsItemClickEnabled="True"
                               ItemsSource="{x:Bind Suggestions}"
-                              Height="125"
+                              Height="200"
                               Grid.Column="0"
                               Grid.Row="1"
                               ItemClick="ListView_ItemClick"
