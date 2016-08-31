@@ -27,10 +27,10 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
+
         <ComboBoxItem x:Name="CBI_Default"
-                      Visibility="Collapsed"
                       x:DeferLoadStrategy="Lazy"
+                      Visibility="Collapsed"
                       Content="Use system setting"
                       />
         <ComboBoxItem Content="Light"/>
