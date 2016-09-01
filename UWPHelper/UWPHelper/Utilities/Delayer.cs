@@ -8,7 +8,7 @@ namespace UWPHelper.Utilities
     {
         DispatcherTimer timer;
 
-        public event EventHandler<HandledEventArgs> Tick;
+        public event EventHandler Tick;
 
         public Delayer(double seconds) : this(TimeSpan.FromSeconds(seconds))
         {
@@ -25,7 +25,7 @@ namespace UWPHelper.Utilities
         private void Timer_Tick(object sender, object e)
         {
             timer.Stop();
-            Tick?.Invoke(this, new HandledEventArgs());
+            Tick?.Invoke(this, new EventArgs());
         }
 
         public void Stop()

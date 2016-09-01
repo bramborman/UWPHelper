@@ -10,9 +10,10 @@
              d:DesignHeight="100"
              >
     <ComboBox Header="Theme"
-              Width="{x:Bind ComboBoxWidth, Mode=OneWay}"
-              SelectedIndex="{x:Bind ThemeIndex, Mode=TwoWay}"
+              SelectedIndex="{x:Bind Theme, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
               Margin="{StaticResource ComboBoxGapMargin}"
+              Width="{x:Bind ComboBoxWidth, Mode=OneWay}"
+              Style="{x:Bind ComboBoxStyle, Mode=OneWay}"
               >
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="CBI_Default_States">
@@ -29,7 +30,6 @@
         </VisualStateManager.VisualStateGroups>
 
         <ComboBoxItem x:Name="CBI_Default"
-                      x:DeferLoadStrategy="Lazy"
                       Visibility="Collapsed"
                       Content="Use system setting"
                       />
