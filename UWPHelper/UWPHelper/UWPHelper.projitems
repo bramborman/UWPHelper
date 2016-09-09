@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToIntConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToUpperCaseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsApiContractPresentTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsTypePresentTrigger.cs" />
@@ -25,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\ThemeSelector.xaml.cs">
       <DependentUpon>ThemeSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\NotifyPropertyChangedBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DelegateCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\LauncherHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\StorageFileHelper.cs" />
@@ -32,7 +34,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DebugMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\Delayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DisplayRequestManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utilities\NotifyPropertyChanged.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Resources.xaml">

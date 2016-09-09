@@ -7,91 +7,46 @@ using Windows.UI.Xaml.Controls;
 
 namespace Test
 {
-    public class AppData : NotifyPropertyChanged
+    public class AppData : NotifyPropertyChangedBase
     {
         const string FILE = "AppData.json";
 
         public static AppData Current { get; private set; }
         public static bool ShowLoadingError { get; set; }
 
-        #region Backing stores
-        int _foo;
-        bool? _watBoxChecked;
-        TestEnum _testEnum;
-        ElementTheme _theme;
-        string _uri;
-        #endregion
-
         public int Foo
         {
-            get { return _foo; }
-            set
-            {
-                if (_foo != value)
-                {
-                    _foo = value;
-                    OnPropertyChanged(nameof(Foo));
-                }
-            }
+            get { return GetValue<int>(nameof(Foo)); }
+            set { SetValue(nameof(Foo), ref value); }
         }
         public bool? WatBoxChecked
         {
-            get { return _watBoxChecked; }
-            set
-            {
-                if (_watBoxChecked != value)
-                {
-                    _watBoxChecked = value;
-                    OnPropertyChanged(nameof(WatBoxChecked));
-                }
-            }
+            get { return GetValue<bool?>(nameof(WatBoxChecked)); }
+            set { SetValue(nameof(WatBoxChecked), ref value); }
         }
         public TestEnum TestEnum
         {
-            get { return _testEnum; }
-            set
-            {
-                if (_testEnum != value)
-                {
-                    _testEnum = value;
-                    OnPropertyChanged(nameof(TestEnum));
-                }
-            }
+            get { return GetValue<TestEnum>(nameof(TestEnum)); }
+            set { SetValue(nameof(TestEnum), ref value); }
         }
         public ElementTheme Theme
         {
-            get { return _theme; }
-            set
-            {
-                if (_theme != value)
-                {
-                    _theme = value;
-                    OnPropertyChanged(nameof(Theme));
-
-                    Current?.SetTheme();
-                }
-            }
+            get { return GetValue<ElementTheme>(nameof(Theme)); }
+            set { SetValue(nameof(Theme), ref value); }
         }
         public string Uri
         {
-            get { return _uri; }
-            set
-            {
-                if (_uri != value)
-                {
-                    _uri = value;
-                    OnPropertyChanged(nameof(Uri));
-                }
-            }
+            get { return GetValue<string>(nameof(Uri)); }
+            set { SetValue(nameof(Uri), ref value); }
         }
 
         public AppData()
         {
-            Foo             = 0;
-            WatBoxChecked   = true;
-            TestEnum        = TestEnum._0;
-            Theme           = ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark;
-            Uri             = "";
+            RegisterProperty(nameof(Foo),           typeof(int), 0);
+            RegisterProperty(nameof(WatBoxChecked), typeof(bool?), true);
+            RegisterProperty(nameof(TestEnum),      typeof(TestEnum), TestEnum._0);
+            RegisterProperty(nameof(Theme),         typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark);
+            RegisterProperty(nameof(Uri),           typeof(string), "");
         }
 
         public void SetTheme()
