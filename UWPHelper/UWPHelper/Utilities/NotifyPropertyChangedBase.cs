@@ -61,7 +61,7 @@ namespace UWPHelper.Utilities
 
         private void CheckPropertyName(string propertyName)
         {
-            if (!backingStore.ContainsKey(propertyName))
+            if (backingStore?.ContainsKey(propertyName) != true)
             {
                 throw new ArgumentException($"There is no such property called {propertyName}.");
             }
