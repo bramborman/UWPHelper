@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 
 namespace UWPHelper.Utilities
 {
-    public static class ApplicationViewExtension
+    public static class ApplicationViewHelper
     {
         public static void SetTitleBarColors(ElementTheme requestedTheme)
         {
@@ -23,9 +23,9 @@ namespace UWPHelper.Utilities
                             titleBar.ForegroundColor = null;
                             titleBar.InactiveForegroundColor = null;
 
-                            titleBar.ButtonHoverBackgroundColor = null;
-                            titleBar.ButtonInactiveForegroundColor = null;
-                            titleBar.ButtonPressedBackgroundColor = null;
+                            titleBar.ButtonHoverBackgroundColor     = null;
+                            titleBar.ButtonInactiveForegroundColor  = null;
+                            titleBar.ButtonPressedBackgroundColor   = null;
 
                             break;
                         

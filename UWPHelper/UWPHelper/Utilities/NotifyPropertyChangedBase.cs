@@ -63,7 +63,7 @@ namespace UWPHelper.Utilities
         {
             if (backingStore?.ContainsKey(propertyName) != true)
             {
-                throw new ArgumentException($"There is no such property called {propertyName}.");
+                throw new ArgumentException($"There is no registered property called {propertyName}.");
             }
         }
         

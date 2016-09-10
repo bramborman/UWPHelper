@@ -63,7 +63,7 @@ namespace Test
                     {
                         if (AppData.Current.Theme == ElementTheme.Default && e2.Visible)
                         {
-                            ApplicationViewExtension.SetStatusBarColors(AppData.Current.Theme, RequestedTheme);
+                            ApplicationViewHelper.SetStatusBarColors(AppData.Current.Theme, RequestedTheme);
                         }
                     };
                 }

@@ -2,7 +2,7 @@
 
 namespace UWPHelper.Utilities
 {
-    public static class DisplayRequestManager
+    public static class DisplayRequestHelper
     {
         static DisplayRequest displayRequest;
 

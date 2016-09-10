@@ -52,8 +52,8 @@ namespace Test
         public void SetTheme()
         {
             ((Frame)Window.Current.Content).RequestedTheme = Theme;
-            ApplicationViewExtension.SetTitleBarColors(Theme);
-            ApplicationViewExtension.SetStatusBarColors(Theme, App.Current.RequestedTheme);
+            ApplicationViewHelper.SetTitleBarColors(Theme);
+            ApplicationViewHelper.SetStatusBarColors(Theme, App.Current.RequestedTheme);
         }
 
         public Task SaveAsync()
