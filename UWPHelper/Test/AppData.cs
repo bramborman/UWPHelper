@@ -42,11 +42,11 @@ namespace Test
 
         public AppData()
         {
-            RegisterProperty(nameof(Foo),           typeof(int), 0);
+            RegisterProperty(nameof(Foo), typeof(int), 0);
             RegisterProperty(nameof(WatBoxChecked), typeof(bool?), true);
-            RegisterProperty(nameof(TestEnum),      typeof(TestEnum), TestEnum._0);
-            RegisterProperty(nameof(Theme),         typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark);
-            RegisterProperty(nameof(Uri),           typeof(string), "");
+            RegisterProperty(nameof(TestEnum), typeof(TestEnum), TestEnum._0);
+            RegisterProperty(nameof(Theme), typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark);
+            RegisterProperty(nameof(Uri), typeof(string), "");
         }
 
         public void SetTheme()
