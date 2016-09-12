@@ -26,7 +26,7 @@ namespace UWPHelper.Utilities
                 throw new ArgumentException($"This class already contains property named {name}.");
             }
             
-            backingStore.Add(name, new PropertyInfo(Convert.ChangeType(defaultValue, type), type, onValueChangedAction));
+            backingStore.Add(name, new PropertyInfo(type.Name == "Nullable`1" ? defaultValue : Convert.ChangeType(defaultValue, type), type, onValueChangedAction));
         }
 
         protected void ChangeOnChangedAction(string propertyName, Action onValueChangedAction)

@@ -59,9 +59,9 @@ namespace Test
 
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 {
-                    Window.Current.VisibilityChanged += (sender2, e2) =>
+                    Window.Current.VisibilityChanged += (sender, e) =>
                     {
-                        if (AppData.Current.Theme == ElementTheme.Default && e2.Visible)
+                        if (AppData.Current.Theme == ElementTheme.Default && e.Visible)
                         {
                             ApplicationViewHelper.SetStatusBarColors(AppData.Current.Theme, RequestedTheme);
                         }

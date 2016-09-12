@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UWPHelper.UI;
 using UWPHelper.Utilities;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -48,7 +49,7 @@ namespace Test
                 if (AppData.ShowLoadingError)
                 {
                     AppData.ShowLoadingError = false;
-                    await UWPHelper.UI.LoadingErrorDialog.ShowAsync("Settings", true);
+                    await LoadingErrorDialog.ShowAsync("Settings", true);
 
                     // If it gets there it means that PrimaryButton weren't pressed so rewrite maybe corrupted appData file
                     await AppData.Current.SaveAsync();
