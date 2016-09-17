@@ -7,13 +7,18 @@ namespace UWPHelper.UI
 {
     public sealed partial class ThemeSelector : UserControl
     {
-        private static readonly bool _isDefaultThemeAvailable = AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile" || ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 3, 0);
+        private static readonly bool _isDefaultThemeAvailable =  AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile" || (AnalyticsInfo.VersionInfo.DeviceFamily != "Windows.Holographic" && ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 3, 0));
 
         public static readonly DependencyProperty ComboBoxWidthProperty = DependencyProperty.Register(nameof(ComboBoxWidth), typeof(double), typeof(ThemeSelector), new PropertyMetadata(180.0));
         public static readonly DependencyProperty ComboBoxStyleProperty = DependencyProperty.Register(nameof(ComboBoxStyle), typeof(Style), typeof(ThemeSelector), null);
         public static readonly DependencyProperty ThemeProperty         = DependencyProperty.Register(nameof(Theme), typeof(ElementTheme), typeof(ThemeSelector), null);
 
         public static bool IsDefaultThemeAvailable
+        {
+            get { return _isDefaultThemeAvailable; }
+        }
+
+        private bool _IsDefaultThemeAvailable
         {
             get { return _isDefaultThemeAvailable; }
         }

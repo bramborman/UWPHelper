@@ -63,7 +63,7 @@
 
         <Button x:Name="Bt_Feedback"
                 x:DeferLoadStrategy="Lazy"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Margin="{StaticResource ButtonGapMargin}"
                 Click="OpenFeedbackHub"
                 >

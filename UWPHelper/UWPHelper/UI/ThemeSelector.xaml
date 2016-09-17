@@ -19,8 +19,7 @@
             <VisualStateGroup x:Name="CBI_Default_States">
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Mobile"/>
-                        <triggers:IsApiContractPresentTrigger ContractName="Windows.Foundation.UniversalApiContract" MajorVersion="3" MinorVersion="0"/>
+                        <StateTrigger IsActive="{x:Bind _IsDefaultThemeAvailable}"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="CBI_Default.Visibility" Value="Visible"/>
