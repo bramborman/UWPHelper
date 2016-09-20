@@ -51,7 +51,7 @@
               >
             <Grid.Resources>
                 <Style TargetType="FontIcon">
-                    <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundChromeWhiteBrush}"/>
+                    <Setter Property="Foreground" Value="White"/>
                 </Style>
             </Grid.Resources>
             

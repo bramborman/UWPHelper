@@ -10,7 +10,6 @@
     <converters:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
     <converters:StringToUpperCaseConverter x:Key="StringToUpperCaseConverter"/>
 
-    <Thickness x:Key="HeaderPadding">12,0,0,0</Thickness>
     <Thickness x:Key="PageContentMargin">25</Thickness>
     <Thickness x:Key="RadioButtonHeaderMargin">0,0,0,4</Thickness>
     <Thickness x:Key="TitleGapMargin">0,11,0,14</Thickness>
@@ -26,7 +25,9 @@
     <Thickness x:Key="ToggleSwitchGapMargin">0,0,0,10</Thickness>
 
     <x:Double x:Key="PageTitleFontSize">15</x:Double>
+    <x:Double x:Key="PageTitleHeight">48</x:Double>
     <text:FontWeight x:Key="PageTitleFontWeight">Bold</text:FontWeight>
+    <Thickness x:Key="PageTitlePadding">12,0,0,0</Thickness>
 
     <SolidColorBrush x:Key="LightTextForegroundBrush" Color="{ThemeResource SystemBaseMediumColor}"/>
     <SolidColorBrush x:Key="PageTitleBackgroundBrush" Color="{ThemeResource SystemChromeMediumColor}"/>
@@ -37,8 +38,8 @@
         <Setter Property="FontSize" Value="{StaticResource PageTitleFontSize}"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Height" Value="48"/>
-        <Setter Property="Padding" Value="{StaticResource HeaderPadding}"/>
+        <Setter Property="Height" Value="{StaticResource PageTitleHeight}"/>
+        <Setter Property="Padding" Value="{StaticResource PageTitlePadding}"/>
     </Style>
 
     <Style TargetType="ui:ColoredPivot">

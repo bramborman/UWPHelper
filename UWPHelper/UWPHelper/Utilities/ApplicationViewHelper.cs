@@ -24,7 +24,6 @@ namespace UWPHelper.Utilities
                             titleBar.InactiveForegroundColor = null;
 
                             titleBar.ButtonHoverBackgroundColor     = null;
-                            titleBar.ButtonInactiveForegroundColor  = null;
                             titleBar.ButtonPressedBackgroundColor   = null;
 
                             break;
@@ -35,7 +34,6 @@ namespace UWPHelper.Utilities
                             titleBar.InactiveForegroundColor = Color.FromArgb(0xFF, 0x99, 0x99, 0x99);
 
                             titleBar.ButtonHoverBackgroundColor     = Color.FromArgb(0xFF, 0xE6, 0xE6, 0xE6);
-                            titleBar.ButtonInactiveForegroundColor  = Color.FromArgb(0xFF, 0x99, 0x99, 0x99);
                             titleBar.ButtonPressedBackgroundColor   = Color.FromArgb(0xFF, 0xCC, 0xCC, 0xCC);
 
                             break;
@@ -46,7 +44,6 @@ namespace UWPHelper.Utilities
                             titleBar.InactiveForegroundColor = Color.FromArgb(0xFF, 0x66, 0x66, 0x66);
 
                             titleBar.ButtonHoverBackgroundColor     = Color.FromArgb(0xFF, 0x19, 0x19, 0x19);
-                            titleBar.ButtonInactiveForegroundColor  = Color.FromArgb(0xFF, 0x66, 0x66, 0x66);
                             titleBar.ButtonPressedBackgroundColor   = Color.FromArgb(0xFF, 0x33, 0x33, 0x33);
 
                             break;
@@ -59,6 +56,7 @@ namespace UWPHelper.Utilities
 
                     titleBar.ButtonHoverForegroundColor     = titleBar.ButtonForegroundColor;
                     titleBar.ButtonInactiveBackgroundColor  = titleBar.InactiveBackgroundColor;
+                    titleBar.ButtonInactiveForegroundColor  = titleBar.InactiveForegroundColor;
                     titleBar.ButtonPressedForegroundColor   = titleBar.ButtonForegroundColor;
                 }
             }

@@ -24,7 +24,7 @@ namespace UWPHelper.UI
 
         public event SelectionChangedEventHandler SelectionChanged;
 
-        public RadioButtonBox() : base()
+        public RadioButtonBox()
         {
             foreach (UIElement uIElement in Children)
             {

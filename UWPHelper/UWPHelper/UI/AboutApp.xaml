@@ -35,7 +35,7 @@
             <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}"
                     Margin="0,0,0,10"
                     >
-                <Image Source="ms-appx:Assets/Square71x71Logo.scale-100.png" Width="71" Height="71"/>
+                <Image Source="{x:Bind AppLogoPath, Mode=OneWay}" Width="71" Height="71"/>
             </Border>
 
             <StackPanel Padding="15,0,0,0">

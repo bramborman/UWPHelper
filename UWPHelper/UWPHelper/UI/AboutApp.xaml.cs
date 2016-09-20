@@ -10,8 +10,9 @@ namespace UWPHelper.UI
 {
     public sealed partial class AboutApp : UserControl
     {
-        public static readonly DependencyProperty AppStoreIdProperty = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppUriProperty     = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppStoreIdProperty    = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppUriProperty        = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppLogoPathProperty   = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets\Small\Small71x71Logo.scale-400.png"));
         
         private PackageVersion Version
         {
@@ -47,6 +48,11 @@ namespace UWPHelper.UI
         {
             get { return (string)GetValue(AppUriProperty); }
             set { SetValue(AppUriProperty, value); }
+        }
+        public string AppLogoPath
+        {
+            get { return (string)GetValue(AppLogoPathProperty); }
+            set { SetValue(AppLogoPathProperty, value); }
         }
 
         public AboutApp()

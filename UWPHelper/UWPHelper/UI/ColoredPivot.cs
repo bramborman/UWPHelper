@@ -14,7 +14,7 @@ namespace UWPHelper.UI
             set { SetValue(HeaderBackgroundProperty, value); }
         }
 
-        public ColoredPivot() : base()
+        public ColoredPivot()
         {
             DefaultStyleKey = typeof(ColoredPivot);
         }
