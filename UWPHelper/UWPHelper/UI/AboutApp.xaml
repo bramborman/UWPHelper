@@ -26,7 +26,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <TextBlock Text="About"
+        <TextBlock x:Uid="About"
                    Style="{StaticResource TitleTextBlockStyle}"
                    Margin="{StaticResource TitleGapMargin}"
                    />
@@ -51,15 +51,15 @@
                    FontSize="12"
                    Margin="{StaticResource TitleGapBottomMargin}"
                    >
-            This app uses
+            <Run x:Uid="JsonNETLinkStart"/>
             <Hyperlink UnderlineStyle="None" NavigateUri="http://www.newtonsoft.com/json">Json.NET</Hyperlink>
-            to store Your app data.
+            <Run x:Uid="JsonNETLinkEnd"/>
         </TextBlock>
 
         <HyperlinkButton Content="{x:Bind AppStoreLink}" Click="Hyperlink_Click"/>
-        <HyperlinkButton Content="Rate this app" Click="Hyperlink_Click"/>
-        <HyperlinkButton Content="Share this app" Click="Hyperlink_Click"/>
-        <HyperlinkButton Content="More apps by this publisher" Margin="0,0,0,10" Click="Hyperlink_Click"/>
+        <HyperlinkButton x:Uid="RateApp" Click="Hyperlink_Click"/>
+        <HyperlinkButton x:Uid="ShareApp" Click="Hyperlink_Click"/>
+        <HyperlinkButton x:Uid="MoreAppsByPublisher" Margin="0,0,0,10" Click="Hyperlink_Click"/>
 
         <Button x:Name="Bt_Feedback"
                 x:DeferLoadStrategy="Lazy"
@@ -69,7 +69,7 @@
                 >
             <StackPanel Orientation="Horizontal">
                 <FontIcon Glyph="&#xE939;" FontSize="18"/>
-                <TextBlock Text="Feedback" Margin="8,0,0,0"/>
+                <TextBlock x:Uid="Feedback" Margin="8,0,0,0"/>
             </StackPanel>
         </Button>
     </StackPanel>

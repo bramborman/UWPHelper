@@ -9,7 +9,7 @@ namespace UWPHelper.UI
     {
         private static readonly bool _isDefaultThemeAvailable =  AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile" || (AnalyticsInfo.VersionInfo.DeviceFamily != "Windows.Holographic" && ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 3, 0));
 
-        public static readonly DependencyProperty ComboBoxWidthProperty = DependencyProperty.Register(nameof(ComboBoxWidth), typeof(double), typeof(ThemeSelector), new PropertyMetadata(180.0));
+        public static readonly DependencyProperty ComboBoxWidthProperty = DependencyProperty.Register(nameof(ComboBoxWidth), typeof(double), typeof(ThemeSelector), new PropertyMetadata(double.NaN));
         public static readonly DependencyProperty ComboBoxStyleProperty = DependencyProperty.Register(nameof(ComboBoxStyle), typeof(Style), typeof(ThemeSelector), null);
         public static readonly DependencyProperty ThemeProperty         = DependencyProperty.Register(nameof(Theme), typeof(ElementTheme), typeof(ThemeSelector), null);
 

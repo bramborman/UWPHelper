@@ -9,7 +9,7 @@
              d:DesignWidth="100"
              d:DesignHeight="100"
              >
-    <ComboBox Header="Theme"
+    <ComboBox x:Uid="Theme"
               SelectedIndex="{x:Bind Theme, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
               Margin="{StaticResource ComboBoxGapMargin}"
               Width="{x:Bind ComboBoxWidth, Mode=OneWay}"
@@ -29,10 +29,10 @@
         </VisualStateManager.VisualStateGroups>
 
         <ComboBoxItem x:Name="CBI_Default"
+                      x:Uid="SystemTheme"
                       Visibility="Collapsed"
-                      Content="Use system setting"
                       />
-        <ComboBoxItem Content="Light"/>
-        <ComboBoxItem Content="Dark"/>
+        <ComboBoxItem x:Uid="LightTheme"/>
+        <ComboBoxItem x:Uid="DarkTheme"/>
     </ComboBox>
 </UserControl>

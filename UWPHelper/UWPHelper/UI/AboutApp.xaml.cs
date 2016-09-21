@@ -3,6 +3,7 @@ using System;
 using UWPHelper.Utilities;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -28,7 +29,7 @@ namespace UWPHelper.UI
         }
         private string AppVersion
         {
-            get { return $"Version {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision}"; }
+            get { return $"{GetLocalizedString("Version")} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision}"; }
         }
         private string AppPublisher
         {
@@ -36,7 +37,7 @@ namespace UWPHelper.UI
         }
         private string AppStoreLink
         {
-            get { return AppName + " in Windows Store"; }
+            get { return $"{AppName} {GetLocalizedString("InWindowsStore")}"; }
         }
 
         public string AppStoreId
@@ -68,11 +69,11 @@ namespace UWPHelper.UI
             {
                 await $@"ms-windows-store://pdp/?ProductId={AppStoreId}".LaunchAsUriAsync();
             }
-            else if (content == "Rate this app")
+            else if (content == GetLocalizedString("RateApp/Content"))
             {
                 await $@"ms-windows-store://review/?ProductId={AppStoreId}".LaunchAsUriAsync();
             }
-            else if (content == "Share this app")
+            else if (content == GetLocalizedString("ShareApp/Content"))
             {
                 DataTransferManager.GetForCurrentView().DataRequested += SharingDataRequested;
                 DataTransferManager.ShowShareUI();
@@ -85,16 +86,19 @@ namespace UWPHelper.UI
 
         private void SharingDataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
-            string description = $"{AppName} in Windows Store";
-
             args.Request.Data.Properties.Title = AppName;
-            args.Request.Data.Properties.Description = description;
-            args.Request.Data.SetText($@"{description} - https://www.microsoft.com/store/apps/{AppStoreId}");
+            args.Request.Data.Properties.Description = AppStoreLink;
+            args.Request.Data.SetText($@"{AppStoreLink} - https://www.microsoft.com/store/apps/{AppStoreId}");
             args.Request.Data.SetApplicationLink(new Uri(AppUri));
 
-            DataTransferManager.GetForCurrentView().DataRequested += SharingDataRequested;
+            DataTransferManager.GetForCurrentView().DataRequested -= SharingDataRequested;
         }
 
+        private string GetLocalizedString(string key)
+        {
+            return ResourceLoader.GetForCurrentView().GetString(key);
+        }
+        
         private async void OpenFeedbackHub(object sender, RoutedEventArgs e)
         {
             await StoreServicesFeedbackLauncher.GetDefault().LaunchAsync();
