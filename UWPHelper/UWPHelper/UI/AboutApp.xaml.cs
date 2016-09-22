@@ -13,7 +13,7 @@ namespace UWPHelper.UI
     {
         public static readonly DependencyProperty AppStoreIdProperty    = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty AppUriProperty        = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppLogoPathProperty   = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets\AppLogo.png"));
+        public static readonly DependencyProperty AppLogoPathProperty   = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
         
         private PackageVersion Version
         {
@@ -88,7 +88,8 @@ namespace UWPHelper.UI
         {
             args.Request.Data.Properties.Title = AppName;
             args.Request.Data.Properties.Description = AppStoreLink;
-            args.Request.Data.SetText($@"{AppStoreLink} - https://www.microsoft.com/store/apps/{AppStoreId}");
+            args.Request.Data.SetText($@"{AppStoreLink} (https://www.microsoft.com/store/apps/{AppStoreId})");
+            args.Request.Data.SetWebLink(new Uri($"https://www.microsoft.com/store/apps/{AppStoreId}"));
             args.Request.Data.SetApplicationLink(new Uri(AppUri));
 
             DataTransferManager.GetForCurrentView().DataRequested -= SharingDataRequested;
