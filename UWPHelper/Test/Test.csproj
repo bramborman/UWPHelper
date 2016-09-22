@@ -132,6 +132,7 @@
     <Content Include="Assets\AppList\AppList44x44Logo.targetsize-72_altform-unplated.png" />
     <Content Include="Assets\AppList\AppList44x44Logo.targetsize-80_altform-unplated.png" />
     <Content Include="Assets\AppList\AppList44x44Logo.targetsize-96_altform-unplated.png" />
+    <Content Include="Assets\AppLogo.png" />
     <Content Include="Assets\Large\Large310x310Logo.scale-100.png" />
     <Content Include="Assets\Large\Large310x310Logo.scale-125.png" />
     <Content Include="Assets\Large\Large310x310Logo.scale-150.png" />

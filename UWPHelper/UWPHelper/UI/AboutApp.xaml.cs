@@ -13,7 +13,7 @@ namespace UWPHelper.UI
     {
         public static readonly DependencyProperty AppStoreIdProperty    = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty AppUriProperty        = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppLogoPathProperty   = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets\Small\Small71x71Logo.scale-400.png"));
+        public static readonly DependencyProperty AppLogoPathProperty   = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets\AppLogo.png"));
         
         private PackageVersion Version
         {
