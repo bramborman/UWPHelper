@@ -6,7 +6,9 @@ namespace UWPHelper.Utilities
 {
     public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
-        private Dictionary<string, PropertyInfo> backingStore;
+        const string PROPERTY_NOT_REGISTERED_EXCEPTION_FORMAT = "There is no registered property called {0}.";
+
+        Dictionary<string, PropertyInfo> backingStore;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -17,45 +19,73 @@ namespace UWPHelper.Utilities
 
         protected void RegisterProperty(string name, Type type, object defaultValue, Action onValueChangedAction)
         {
-            if (backingStore == null)
+            try
             {
-                backingStore = new Dictionary<string, PropertyInfo>();
-            }
-            else if (backingStore.ContainsKey(name))
-            {
-                throw new ArgumentException($"This class already contains property named {name}.");
-            }
-            
-            backingStore.Add(name, new PropertyInfo(type.Name == "Nullable`1" ? defaultValue : Convert.ChangeType(defaultValue, type), type, onValueChangedAction));
-        }
+                if (backingStore == null)
+                {
+                    backingStore = new Dictionary<string, PropertyInfo>();
+                }
 
-        protected void ChangeOnChangedAction(string propertyName, Action onValueChangedAction)
-        {
-            CheckPropertyName(propertyName);
-            backingStore[propertyName].OnValueChangedAction = onValueChangedAction;
+                backingStore.Add(name, new PropertyInfo(type.Name == "Nullable`1" ? defaultValue : Convert.ChangeType(defaultValue, type), type, onValueChangedAction));
+            }
+            catch (Exception ex)
+            {
+                if (backingStore?.ContainsKey(name) == true)
+                {
+                    throw new ArgumentException($"This class already contains property named {name}.");
+                }
+
+                throw ex;
+            }
         }
 
         protected T GetValue<T>(string propertyName)
         {
-            CheckPropertyName(propertyName);
-            return (T)backingStore[propertyName].Value;
+            try
+            {
+                return (T)backingStore[propertyName].Value;
+            }
+            catch (Exception ex)
+            {
+                CheckPropertyName(propertyName);
+                throw ex;
+            }
         }
 
         protected void SetValue<T>(string propertyName, ref T newValue)
         {
-            CheckPropertyName(propertyName);
-
-            if (backingStore[propertyName].Type != typeof(T))
+            try
             {
-                throw new ArgumentException($"The type of {nameof(newValue)} is not the same as the type of {propertyName}.");
+                if (backingStore[propertyName].Type != typeof(T))
+                {
+                    throw new ArgumentException($"The type of {nameof(newValue)} is not the same as the type of {propertyName}.");
+                }
+
+                if (!EqualityComparer<T>.Default.Equals((T)backingStore[propertyName].Value, newValue))
+                {
+                    backingStore[propertyName].Value = newValue;
+                    backingStore[propertyName].OnValueChangedAction?.Invoke();
+
+                    OnPropertyChanged(propertyName);
+                }
             }
-
-            if (!EqualityComparer<T>.Default.Equals((T)backingStore[propertyName].Value, newValue))
+            catch (Exception ex)
             {
-                backingStore[propertyName].Value = newValue;
-                backingStore[propertyName].OnValueChangedAction?.Invoke();
+                CheckPropertyName(propertyName);
+                throw ex;
+            }
+        }
 
-                OnPropertyChanged(propertyName);
+        protected void ChangeOnValueChangedAction(string propertyName, Action onValueChangedAction)
+        {
+            try
+            {
+                backingStore[propertyName].OnValueChangedAction = onValueChangedAction;
+            }
+            catch (Exception ex)
+            {
+                CheckPropertyName(propertyName);
+                throw ex;
             }
         }
 
@@ -66,7 +96,7 @@ namespace UWPHelper.Utilities
                 throw new ArgumentException($"There is no registered property called {propertyName}.");
             }
         }
-        
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
