@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DelegateCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\NotifyPropertyChangedBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\LauncherHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ResourceLoaderHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\StorageFileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ApplicationViewHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DebugMessages.cs" />
