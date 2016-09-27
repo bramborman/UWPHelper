@@ -20,7 +20,7 @@
                         <StateTrigger IsActive="{x:Bind FeedbackSupported}"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="Bt_Feedback.Visibility" Value="Visible"/>
+                        <Setter Target="SP_Feedback.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -61,16 +61,20 @@
         <HyperlinkButton x:Uid="ShareApp" Click="Hyperlink_Click"/>
         <HyperlinkButton x:Uid="MoreAppsByPublisher" Margin="0,0,0,10" Click="Hyperlink_Click"/>
 
-        <Button x:Name="Bt_Feedback"
-                x:DeferLoadStrategy="Lazy"
-                Visibility="Collapsed"
-                Margin="{StaticResource ButtonGapMargin}"
-                Click="OpenFeedbackHub"
-                >
-            <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE939;" FontSize="18"/>
-                <TextBlock x:Uid="Feedback" Margin="8,0,0,0"/>
-            </StackPanel>
-        </Button>
+        <StackPanel x:Name="SP_Feedback" x:DeferLoadStrategy="Lazy" Visibility="Collapsed">
+            <Button Margin="0,0,0,8" Click="OpenFeedbackHub">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE939;" FontSize="18"/>
+                    <TextBlock x:Uid="Feedback" Margin="8,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <TextBlock x:Uid="FeedbackText"
+                       Foreground="{StaticResource LightTextForegroundBrush}"
+                       FontSize="12"
+                       TextWrapping="WrapWholeWords"
+                       Margin="{StaticResource PanelGapMargin}"
+                       />
+        </StackPanel>
     </StackPanel>
 </UserControl>
