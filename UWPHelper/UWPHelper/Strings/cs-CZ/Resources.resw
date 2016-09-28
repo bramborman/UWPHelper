@@ -161,7 +161,7 @@
 Zašlete mi zpětnou vazbu a já ji použiji při budoucím vývoji aplikace ;-)</value>
   </data>
   <data name="LoadingErrorDialog.Title" xml:space="preserve">
-    <value>Nelze načíst Vaše</value>
+    <value>Vaše {0} nelze načíst</value>
   </data>
   <data name="LoadingErrorDialog.PrimaryButtonText" xml:space="preserve">
     <value>Ano</value>
@@ -169,14 +169,8 @@ Zašlete mi zpětnou vazbu a já ji použiji při budoucím vývoji aplikace ;-)
   <data name="LoadingErrorDialog.SecondaryButtonText" xml:space="preserve">
     <value>Ne</value>
   </data>
-  <data name="LoadingErrorDialog.Default" xml:space="preserve">
-    <value>a použít výchozí</value>
-  </data>
-  <data name="LoadingErrorDialog.NotDefault" xml:space="preserve">
-    <value>bez Vašeho</value>
-  </data>
   <data name="LoadingErrorDialog.Content" xml:space="preserve">
-    <value>{0} nelze načíst. Můžeme se o to pokusit znovu při příštím spuštění aplikace, nebo můžete pokračovat {1}.
+    <value>Můžeme se o to pokusit znovu při příštím spuštění aplikace, nebo můžete pokračovat{0}.
 Přejete si aplikaci nyní zavřít?</value>
   </data>
 </root>
