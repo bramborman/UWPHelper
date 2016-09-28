@@ -1,4 +1,5 @@
-﻿using Windows.Foundation;
+﻿using UWPHelper.Utilities;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -6,19 +7,19 @@ namespace UWPHelper.UI
 {
     public class LoadingErrorDialog
     {
-        public static IAsyncOperation<ContentDialogResult> ShowAsync(string title, bool useDefault)
+        public static IAsyncOperation<ContentDialogResult> ShowAsync(string title, string continueWith)
         {
             ContentDialog CD_Dialog = new ContentDialog();
-            CD_Dialog.Title = $"{title} not loaded";
-            CD_Dialog.Content = $"{title} were not successfully loaded. You can restart this app to try again or continue using this app with{(useDefault ? " default" : "out Your")} {title.ToLower()}.\nWould You like to close the app now?";
+            CD_Dialog.Title = $"{ResourceLoaderHelper.GetString("LoadingErrorDialog/Title")} {title.ToLower()}";
+            CD_Dialog.Content = string.Format(ResourceLoaderHelper.GetString("LoadingErrorDialog/Content"), title, continueWith);
 
-            CD_Dialog.PrimaryButtonText = "Yes";
+            CD_Dialog.PrimaryButtonText = ResourceLoaderHelper.GetString("LoadingErrorDialog/PrimaryButtonText");
             CD_Dialog.PrimaryButtonClick += (sender, args) =>
             {
                 Application.Current.Exit();
             };
 
-            CD_Dialog.SecondaryButtonText = "No";
+            CD_Dialog.SecondaryButtonText = ResourceLoaderHelper.GetString("LoadingErrorDialog/SecondaryButtonText");
 
             return CD_Dialog.ShowAsync();
         }

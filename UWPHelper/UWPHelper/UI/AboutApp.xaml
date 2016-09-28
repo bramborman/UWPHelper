@@ -14,7 +14,7 @@
         </StackPanel.Resources>
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="Bt_Feedback_States">
+            <VisualStateGroup x:Name="FeedbackStates">
                 <VisualState>
                     <VisualState.StateTriggers>
                         <StateTrigger IsActive="{x:Bind FeedbackSupported}"/>

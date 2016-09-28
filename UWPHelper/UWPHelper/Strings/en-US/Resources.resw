@@ -160,4 +160,23 @@
     <value>Got any ideas, suggestions or the app's not working like it should?
 Please submit a feedback, tell me what You want and I'll use it for further development ;-)</value>
   </data>
+  <data name="LoadingErrorDialog.Title" xml:space="preserve">
+    <value>Cannot load Your</value>
+  </data>
+  <data name="LoadingErrorDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="LoadingErrorDialog.SecondaryButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="LoadingErrorDialog.Default" xml:space="preserve">
+    <value>with default</value>
+  </data>
+  <data name="LoadingErrorDialog.NotDefault" xml:space="preserve">
+    <value>without Your</value>
+  </data>
+  <data name="LoadingErrorDialog.Content" xml:space="preserve">
+    <value>{0} were not successfully loaded. You can restart the app to try again or continue using it {1}.
+Would You like to close the app now?</value>
+  </data>
 </root>
