@@ -89,7 +89,7 @@ namespace UWPHelper.UI
             }
             else
             {
-                await $"mailto:{AppDevContact}".LaunchAsUriAsync();
+                await AppDevContact.LaunchAsUriAsync();
             }
         }
 

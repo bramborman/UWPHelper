@@ -94,7 +94,7 @@
         <StackPanel x:Name="SP_Feedback" x:DeferLoadStrategy="Lazy" Visibility="Collapsed">
             <Button Margin="0,0,0,8" Click="OpenFeedbackHub">
                 <TextBlock>
-                    <Run Text="&#xE939;" FontFamily="Segoe MDL2 Assets" FontSize="15"/>
+                    <Run Text="&#xE939;" FontFamily="Segoe MDL2 Assets"/>
                     <Run x:Uid="Feedback"/>
                 </TextBlock>
             </Button>
