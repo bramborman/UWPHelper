@@ -13,6 +13,7 @@ namespace UWPHelper.UI
         public static readonly DependencyProperty AppStoreIdProperty    = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty AppUriProperty        = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty AppLogoPathProperty   = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
+        public static readonly DependencyProperty AppDevContactProperty = DependencyProperty.Register(nameof(AppDevContact), typeof(string), typeof(AboutApp), null);
         
         private PackageVersion Version
         {
@@ -54,6 +55,11 @@ namespace UWPHelper.UI
             get { return (string)GetValue(AppLogoPathProperty); }
             set { SetValue(AppLogoPathProperty, value); }
         }
+        public string AppDevContact
+        {
+            get { return (string)GetValue(AppDevContactProperty); }
+            set { SetValue(AppDevContactProperty, value); }
+        }
 
         public AboutApp()
         {
@@ -62,24 +68,28 @@ namespace UWPHelper.UI
 
         private async void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            string content = ((HyperlinkButton)sender).Content.ToString();
+            string content = ((TextBlock)((HyperlinkButton)sender).Content).Text;
 
-            if (content == AppStoreLink)
+            if (content.Contains(AppStoreLink))
             {
                 await $@"ms-windows-store://pdp/?ProductId={AppStoreId}".LaunchAsUriAsync();
             }
-            else if (content == ResourceLoaderHelper.GetString("RateApp/Content"))
+            else if (content.Contains(ResourceLoaderHelper.GetString("RateApp/Text")))
             {
                 await $@"ms-windows-store://review/?ProductId={AppStoreId}".LaunchAsUriAsync();
             }
-            else if (content == ResourceLoaderHelper.GetString("ShareApp/Content"))
+            else if (content.Contains(ResourceLoaderHelper.GetString("ShareApp/Text")))
             {
                 DataTransferManager.GetForCurrentView().DataRequested += SharingDataRequested;
                 DataTransferManager.ShowShareUI();
             }
-            else// if (content == "More apps by this publisher")
+            else if (content.Contains(ResourceLoaderHelper.GetString("MoreAppsByPublisher/Text")))
             {
                 await $@"ms-windows-store://publisher/?name={AppPublisher}".LaunchAsUriAsync();
+            }
+            else
+            {
+                await $"mailto:{AppDevContact}".LaunchAsUriAsync();
             }
         }
 

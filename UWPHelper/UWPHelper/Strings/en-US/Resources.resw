@@ -126,13 +126,13 @@
   <data name="InWindowsStore" xml:space="preserve">
     <value>in Windows Store</value>
   </data>
-  <data name="MoreAppsByPublisher.Content" xml:space="preserve">
+  <data name="MoreAppsByPublisher.Text" xml:space="preserve">
     <value>More apps by this publisher</value>
   </data>
-  <data name="RateApp.Content" xml:space="preserve">
+  <data name="RateApp.Text" xml:space="preserve">
     <value>Rate this app</value>
   </data>
-  <data name="ShareApp.Content" xml:space="preserve">
+  <data name="ShareApp.Text" xml:space="preserve">
     <value>Share this app</value>
   </data>
   <data name="Version" xml:space="preserve">
@@ -172,5 +172,8 @@ Please submit a feedback, tell me what You want and I'll use it for further deve
   <data name="LoadingErrorDialog.Content" xml:space="preserve">
     <value>You can restart the app to try again or continue using it{0}.
 Would You like to close the app now?</value>
+  </data>
+  <data name="ContactDeveloper.Text" xml:space="preserve">
+    <value>Contact app developer</value>
   </data>
 </root>
