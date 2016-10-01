@@ -6,12 +6,12 @@ namespace UWPHelper.Utilities
     {
         public static string GetString(string key)
         {
-            return ResourceLoader.GetForCurrentView().GetString(key);
+            return ResourceLoader.GetForViewIndependentUse().GetString(key);
         }
 
         public static string GetString(string fileName, string key)
         {
-            return ResourceLoader.GetForCurrentView(fileName).GetString(key);
+            return ResourceLoader.GetForViewIndependentUse(fileName).GetString(key);
         }
     }
 }

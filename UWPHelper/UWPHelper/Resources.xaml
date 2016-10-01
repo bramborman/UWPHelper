@@ -4,10 +4,12 @@
                     xmlns:ui="using:UWPHelper.UI"
                     xmlns:text="using:Windows.UI.Text"
                     >
+    <converters:BoolToBoolConverter x:Key="BoolToBoolConverter"/>
+    <converters:BoolToBoolInvertedConverter x:Key="BoolToBoolInvertedConverter"/>
     <converters:BoolToIntConverter x:Key="BoolToIntConverter"/>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
-    <converters:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+    <converters:ResourceLoader x:Key="ResourceLoader"/>
     <converters:StringToUpperCaseConverter x:Key="StringToUpperCaseConverter"/>
 
     <Thickness x:Key="PageContentMargin">20</Thickness>

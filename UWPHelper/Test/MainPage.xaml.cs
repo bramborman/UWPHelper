@@ -49,9 +49,13 @@ namespace Test
                 if (AppData.ShowLoadingError)
                 {
                     AppData.ShowLoadingError = false;
-                    await LoadingErrorDialog.ShowAsync("settings", " with default settings");
+                    ContentDialogResult contentDialogResult = await LoadingErrorDialog.ShowAsync("settings", " with default settings");
 
-                    // If it gets there it means that PrimaryButton weren't pressed so rewrite maybe corrupted appData file
+                    if (contentDialogResult == ContentDialogResult.Primary)
+                    {
+                        return;
+                    }
+
                     await AppData.Current.SaveAsync();
                 }
             };

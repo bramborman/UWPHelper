@@ -71,7 +71,7 @@
                           />
                 <CheckBox x:Name="WutBox"
                           Content="Wut"
-                          IsChecked="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource InvertedBoolConverter}}"
+                          IsChecked="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToBoolInvertedConverter}}"
                           Margin="{StaticResource CheckBoxGapMargin}"
                           />
 

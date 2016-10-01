@@ -54,7 +54,7 @@ namespace UWPHelper.Utilities
             catch (Exception ex)
             {
                 output.Object  = new T();
-                output.Success = ex is FileNotFoundException;
+                output.Success = ex.GetType() == typeof(FileNotFoundException);
             }
 
             DebugMessages.OperationInfo(fileName, "loading", output.Success);

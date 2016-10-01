@@ -10,9 +10,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToIntConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToIntConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToBoolInvertedConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ResourceLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToUpperCaseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsApiContractPresentTrigger.cs" />
