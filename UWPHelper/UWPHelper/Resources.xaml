@@ -10,6 +10,7 @@
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
     <converters:ResourceLoader x:Key="ResourceLoader"/>
+    <converters:StringIsNullOrWhiteSpaceInvertedConverter x:Key="StringIsNullOrWhiteSpaceInvertedConverter"/>
     <converters:StringToUpperCaseConverter x:Key="StringToUpperCaseConverter"/>
 
     <Thickness x:Key="PageContentMargin">20</Thickness>

@@ -35,11 +35,16 @@ namespace UWPHelper.Utilities
 
         public static async Task<LoadObjectAsyncResult<T>> LoadObjectAsync<T>(string fileName, StorageFolder folder) where T : class, new()
         {
+            StorageFile file = await folder.TryGetItemAsync(fileName) as StorageFile;
+            return file != null ? await LoadObjectAsync<T>(file) : new LoadObjectAsyncResult<T>() { Object = new T() };
+        }
+
+        public static async Task<LoadObjectAsyncResult<T>> LoadObjectAsync<T>(StorageFile file) where T : class, new()
+        {
             LoadObjectAsyncResult<T> output = new LoadObjectAsyncResult<T>();
 
             try
             {
-                StorageFile file = await folder.GetFileAsync(fileName);
                 string json = await FileIO.ReadTextAsync(file);
 
                 if (string.IsNullOrWhiteSpace(json))
@@ -51,13 +56,13 @@ namespace UWPHelper.Utilities
                     output.Object = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(json));
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                output.Object  = new T();
-                output.Success = ex.GetType() == typeof(FileNotFoundException);
+                output.Object = new T();
+                output.Success = false;
             }
 
-            DebugMessages.OperationInfo(fileName, "loading", output.Success);
+            DebugMessages.OperationInfo(file.Name, "loading", output.Success);
             return output;
         }
 
