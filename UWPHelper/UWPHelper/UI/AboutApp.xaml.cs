@@ -10,10 +10,10 @@ namespace UWPHelper.UI
 {
     public sealed partial class AboutApp : UserControl
     {
-        public static readonly DependencyProperty AppStoreIdProperty    = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppUriProperty        = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppLogoPathProperty   = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
-        public static readonly DependencyProperty AppDevContactProperty = DependencyProperty.Register(nameof(AppDevContact), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppStoreIdProperty        = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppUriProperty            = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppLogoPathProperty       = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
+        public static readonly DependencyProperty AppDeveloperMailProperty  = DependencyProperty.Register(nameof(AppDeveloperMail), typeof(string), typeof(AboutApp), null);
         
         private PackageVersion Version
         {
@@ -55,10 +55,10 @@ namespace UWPHelper.UI
             get { return (string)GetValue(AppLogoPathProperty); }
             set { SetValue(AppLogoPathProperty, value); }
         }
-        public string AppDevContact
+        public string AppDeveloperMail
         {
-            get { return (string)GetValue(AppDevContactProperty); }
-            set { SetValue(AppDevContactProperty, value); }
+            get { return (string)GetValue(AppDeveloperMailProperty); }
+            set { SetValue(AppDeveloperMailProperty, value); }
         }
 
         public AboutApp()
@@ -89,7 +89,14 @@ namespace UWPHelper.UI
             }
             else
             {
-                await AppDevContact.LaunchAsUriAsync();
+                string mailContent = $@"mailto:{AppDeveloperMail}?subject={AppName} app: &body=
+
+Device family: {DeviceInfo.SystemFamily}
+Windows version: {DeviceInfo.SystemVersion}
+Device info: {DeviceInfo.DeviceManufacturer} {DeviceInfo.DeviceModel}
+App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision} ({DeviceInfo.PackageArchitecture})
+".Replace(" ", "%20").Replace("\r\n", "%0A");
+                await mailContent.LaunchAsUriAsync();
             }
         }
 

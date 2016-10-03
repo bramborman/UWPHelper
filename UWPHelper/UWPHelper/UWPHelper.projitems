@@ -31,6 +31,7 @@
       <DependentUpon>ThemeSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DelegateCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\DeviceInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\NotifyPropertyChangedBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\LauncherHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ResourceLoaderHelper.cs" />
