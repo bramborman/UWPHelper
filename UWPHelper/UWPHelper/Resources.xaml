@@ -33,7 +33,7 @@
     <Thickness x:Key="PageTitlePadding">12,0,0,0</Thickness>
 
     <SolidColorBrush x:Key="LightTextForegroundBrush" Color="{ThemeResource SystemBaseMediumColor}"/>
-    <SolidColorBrush x:Key="PageTitleBackgroundBrush" Color="{ThemeResource SystemChromeMediumColor}"/>
+    <SolidColorBrush x:Key="PageTitleBackgroundBrush" Color="{ThemeResource SystemChromeLowColor}"/>
 
     <Style x:Key="PageTitle" TargetType="ContentPresenter">
         <Setter Property="Background" Value="{StaticResource PageTitleBackgroundBrush}"/>
