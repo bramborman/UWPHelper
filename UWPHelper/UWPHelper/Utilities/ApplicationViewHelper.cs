@@ -1,4 +1,5 @@
 ﻿using Windows.Foundation.Metadata;
+using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -60,8 +61,13 @@ namespace UWPHelper.Utilities
                 }
             }
         }
-        
+
         public static void SetStatusBarColors(ElementTheme requestedTheme, ApplicationTheme applicationTheme)
+        {
+            SetStatusBarColors(requestedTheme, applicationTheme, DisplayOrientations.Portrait);
+        }
+
+        public static void SetStatusBarColors(ElementTheme requestedTheme, ApplicationTheme applicationTheme, DisplayOrientations currentOrientation)
         {
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
@@ -73,14 +79,35 @@ namespace UWPHelper.Utilities
 
                     statusBar.BackgroundOpacity = 1;
 
+                    if (currentOrientation == DisplayOrientations.Landscape || currentOrientation == DisplayOrientations.LandscapeFlipped)
+                    {
+                        if (finalTheme == ElementTheme.Light)
+                        {
+                            statusBar.BackgroundColor = Color.FromArgb(0xFF, 0xF2, 0xF2, 0xF2);
+                        }
+                        else
+                        {
+                            statusBar.BackgroundColor = Color.FromArgb(0xFF, 0x17, 0x17, 0x17);
+                        }
+                    }
+                    else
+                    {
+                        if (finalTheme == ElementTheme.Light)
+                        {
+                            statusBar.BackgroundColor = Color.FromArgb(0xFF, 0xE6, 0xE6, 0xE6);
+                        }
+                        else
+                        {
+                            statusBar.BackgroundColor = Color.FromArgb(0xFF, 0x1F, 0x1F, 0x1F);
+                        }
+                    }
+
                     if (finalTheme == ElementTheme.Light)
                     {
-                        statusBar.BackgroundColor = Color.FromArgb(0xFF, 0xF2, 0xF2, 0xF2);
                         statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x5C, 0x5C, 0x5C);
                     }
                     else
                     {
-                        statusBar.BackgroundColor = Color.FromArgb(0xFF, 0x17, 0x17, 0x17);
                         statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xC7, 0xC7, 0xC7);
                     }
                 }
