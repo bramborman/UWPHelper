@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace UWPHelper.Utilities
 {
@@ -8,9 +9,14 @@ namespace UWPHelper.Utilities
     {
         const string PROPERTY_NOT_REGISTERED_EXCEPTION_FORMAT = "There is no registered property called {0}.";
 
-        Dictionary<string, PropertyInfo> backingStore;
+        static Dictionary<PropertyIdentifier, PropertyData> backingStore;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        static NotifyPropertyChangedBase()
+        {
+            backingStore = new Dictionary<PropertyIdentifier, PropertyData>();
+        }
 
         protected void RegisterProperty(string name, Type type, object defaultValue)
         {
@@ -19,18 +25,15 @@ namespace UWPHelper.Utilities
 
         protected void RegisterProperty(string name, Type type, object defaultValue, Action onValueChangedAction)
         {
+            PropertyIdentifier propertyIdentifier = new PropertyIdentifier(this, name);
+
             try
             {
-                if (backingStore == null)
-                {
-                    backingStore = new Dictionary<string, PropertyInfo>();
-                }
-
-                backingStore.Add(name, new PropertyInfo(type.Name == "Nullable`1" ? defaultValue : Convert.ChangeType(defaultValue, type), type, onValueChangedAction));
+                backingStore.Add(propertyIdentifier, new PropertyData(type.Name == "Nullable`1" ? defaultValue : Convert.ChangeType(defaultValue, type), type, onValueChangedAction));
             }
             catch (Exception ex)
             {
-                if (backingStore?.ContainsKey(name) == true)
+                if (backingStore.ContainsKey(propertyIdentifier))
                 {
                     throw new ArgumentException($"This class already contains property named {name}.");
                 }
@@ -41,59 +44,67 @@ namespace UWPHelper.Utilities
 
         protected T GetValue<T>(string propertyName)
         {
+            PropertyIdentifier propertyIdentifier = new PropertyIdentifier(this, propertyName);
+
             try
             {
-                return (T)backingStore[propertyName].Value;
+                return (T)backingStore[propertyIdentifier].Value;
             }
             catch (Exception ex)
             {
-                CheckPropertyName(propertyName);
+                CheckPropertyName(propertyIdentifier);
                 throw ex;
             }
         }
 
         protected void SetValue<T>(string propertyName, ref T newValue)
         {
+            PropertyIdentifier propertyIdentifier = new PropertyIdentifier(this, propertyName);
+
             try
             {
-                if (backingStore[propertyName].Type != typeof(T))
+                PropertyData propertyData = backingStore[propertyIdentifier];
+
+                if (propertyData.Type != typeof(T))
                 {
                     throw new ArgumentException($"The type of {nameof(newValue)} is not the same as the type of {propertyName}.");
                 }
 
-                if (!EqualityComparer<T>.Default.Equals((T)backingStore[propertyName].Value, newValue))
+                if (!EqualityComparer<T>.Default.Equals((T)backingStore[propertyIdentifier].Value, newValue))
                 {
-                    backingStore[propertyName].Value = newValue;
-                    backingStore[propertyName].OnValueChangedAction?.Invoke();
+                    propertyData.Value = newValue;
+                    propertyData.OnValueChangedAction?.Invoke();
 
                     OnPropertyChanged(propertyName);
                 }
             }
             catch (Exception ex)
             {
-                CheckPropertyName(propertyName);
+                CheckPropertyName(propertyIdentifier);
                 throw ex;
             }
         }
 
         protected void ChangeOnValueChangedAction(string propertyName, Action onValueChangedAction)
         {
+            PropertyIdentifier propertyIdentifier = new PropertyIdentifier(this, propertyName);
+
             try
             {
-                backingStore[propertyName].OnValueChangedAction = onValueChangedAction;
+                backingStore[propertyIdentifier].OnValueChangedAction = onValueChangedAction;
             }
             catch (Exception ex)
             {
-                CheckPropertyName(propertyName);
+                CheckPropertyName(propertyIdentifier);
                 throw ex;
             }
         }
 
-        private void CheckPropertyName(string propertyName)
+        private void CheckPropertyName(PropertyIdentifier propertyIdentifier)
         {
-            if (backingStore?.ContainsKey(propertyName) != true)
+            if (!backingStore.ContainsKey(propertyIdentifier))
             {
-                throw new ArgumentException($"There is no registered property called {propertyName}.");
+                throw new ArgumentException($"There is no registered property called {propertyIdentifier.PropertyName}.");
             }
         }
 
@@ -102,13 +113,36 @@ namespace UWPHelper.Utilities
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private class PropertyInfo
+        private class PropertyIdentifier
+        {
+            public object Instance { get; }
+            public string PropertyName { get; }
+
+            public PropertyIdentifier(object instance, string propertyName)
+            {
+                Instance = instance;
+                PropertyName = propertyName;
+            }
+
+            public override bool Equals(object obj)
+            {
+                PropertyIdentifier propertyIdentifier = (PropertyIdentifier)obj;
+                return ReferenceEquals(Instance, propertyIdentifier.Instance) && PropertyName == propertyIdentifier.PropertyName;
+            }
+
+            public override int GetHashCode()
+            {
+                return RuntimeHelpers.GetHashCode(Instance);
+            }
+        }
+
+        private class PropertyData
         {
             public object Value { get; set; }
-            public Type Type { get;}
+            public Type Type { get; }
             public Action OnValueChangedAction { get; set; }
 
-            public PropertyInfo(object defaultValue, Type type, Action onValueChangedAction)
+            public PropertyData(object defaultValue, Type type, Action onValueChangedAction)
             {
                 Value = defaultValue;
                 Type  = type;
