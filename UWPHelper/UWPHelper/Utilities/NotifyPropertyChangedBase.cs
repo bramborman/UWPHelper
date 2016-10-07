@@ -8,9 +8,14 @@ namespace UWPHelper.Utilities
     {
         const string PROPERTY_NOT_REGISTERED_EXCEPTION_FORMAT = "There is no registered property called {0}.";
 
-        Dictionary<string, PropertyInfo> backingStore;
+        Dictionary<string, PropertyData> backingStore;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        protected NotifyPropertyChangedBase()
+        {
+            backingStore = new Dictionary<string, PropertyData>();
+        }
 
         protected void RegisterProperty(string name, Type type, object defaultValue)
         {
@@ -21,12 +26,7 @@ namespace UWPHelper.Utilities
         {
             try
             {
-                if (backingStore == null)
-                {
-                    backingStore = new Dictionary<string, PropertyInfo>();
-                }
-
-                backingStore.Add(name, new PropertyInfo(type.Name == "Nullable`1" ? defaultValue : Convert.ChangeType(defaultValue, type), type, onValueChangedAction));
+                backingStore.Add(name, new PropertyData(type.Name == "Nullable`1" ? defaultValue : Convert.ChangeType(defaultValue, type), type, onValueChangedAction));
             }
             catch (Exception ex)
             {
@@ -39,11 +39,11 @@ namespace UWPHelper.Utilities
             }
         }
 
-        protected T GetValue<T>(string propertyName)
+        protected object GetValue(string propertyName)
         {
             try
             {
-                return (T)backingStore[propertyName].Value;
+                return backingStore[propertyName].Value;
             }
             catch (Exception ex)
             {
@@ -52,19 +52,31 @@ namespace UWPHelper.Utilities
             }
         }
 
+        protected void ForceSetValue<T>(string propertyName, ref T newValue)
+        {
+            SetValue(propertyName, ref newValue, true);
+        }
+
         protected void SetValue<T>(string propertyName, ref T newValue)
+        {
+            SetValue(propertyName, ref newValue, false);
+        }
+
+        private void SetValue<T>(string propertyName, ref T newValue, bool forceSetValue)
         {
             try
             {
-                if (backingStore[propertyName].Type != typeof(T))
+                PropertyData propertyData = backingStore[propertyName];
+
+                if (propertyData.Type != typeof(T))
                 {
                     throw new ArgumentException($"The type of {nameof(newValue)} is not the same as the type of {propertyName}.");
                 }
 
-                if (!EqualityComparer<T>.Default.Equals((T)backingStore[propertyName].Value, newValue))
+                if (!EqualityComparer<T>.Default.Equals((T)propertyData.Value, newValue) || forceSetValue)
                 {
-                    backingStore[propertyName].Value = newValue;
-                    backingStore[propertyName].OnValueChangedAction?.Invoke();
+                    propertyData.Value = newValue;
+                    propertyData.OnValueChangedAction?.Invoke();
 
                     OnPropertyChanged(propertyName);
                 }
@@ -102,13 +114,13 @@ namespace UWPHelper.Utilities
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private class PropertyInfo
+        private class PropertyData
         {
             public object Value { get; set; }
             public Type Type { get;}
             public Action OnValueChangedAction { get; set; }
 
-            public PropertyInfo(object defaultValue, Type type, Action onValueChangedAction)
+            public PropertyData(object defaultValue, Type type, Action onValueChangedAction)
             {
                 Value = defaultValue;
                 Type  = type;

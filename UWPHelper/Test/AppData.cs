@@ -16,27 +16,27 @@ namespace Test
 
         public int Foo
         {
-            get { return GetValue<int>(nameof(Foo)); }
+            get { return (int)GetValue(nameof(Foo)); }
             set { SetValue(nameof(Foo), ref value); }
         }
         public bool? WatBoxChecked
         {
-            get { return GetValue<bool?>(nameof(WatBoxChecked)); }
+            get { return (bool?)GetValue(nameof(WatBoxChecked)); }
             set { SetValue(nameof(WatBoxChecked), ref value); }
         }
         public TestEnum TestEnum
         {
-            get { return GetValue<TestEnum>(nameof(TestEnum)); }
+            get { return (TestEnum)GetValue(nameof(TestEnum)); }
             set { SetValue(nameof(TestEnum), ref value); }
         }
         public ElementTheme Theme
         {
-            get { return GetValue<ElementTheme>(nameof(Theme)); }
+            get { return (ElementTheme)GetValue(nameof(Theme)); }
             set { SetValue(nameof(Theme), ref value); }
         }
         public string Uri
         {
-            get { return GetValue<string>(nameof(Uri)); }
+            get { return (string)GetValue(nameof(Uri)); }
             set { SetValue(nameof(Uri), ref value); }
         }
 
