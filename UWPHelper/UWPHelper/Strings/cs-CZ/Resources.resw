@@ -150,7 +150,7 @@
   <data name="SystemTheme.Content" xml:space="preserve">
     <value>Použít nastavení systému</value>
   </data>
-  <data name="JsonNETLinkStart.Text" xml:space="preserve">
+  <data name="JsonNETLinkBeginning.Text" xml:space="preserve">
     <value>Tato aplikace používá</value>
   </data>
   <data name="JsonNETLinkEnd.Text" xml:space="preserve">

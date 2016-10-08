@@ -10,7 +10,9 @@
              >
     <StackPanel>
         <StackPanel.Resources>
-            <Thickness x:Key="AboutAppGapMargin">0,0,0,10</Thickness>
+            <Thickness x:Key="AboutAppGapBottomMargin">0,0,0,10</Thickness>
+            <Thickness x:Key="AboutAppGapLeftMargin">10,0,0,0</Thickness>
+            
             <x:Double x:Key="HyperLinkIconFontSize">12</x:Double>
 
             <Style TargetType="HyperlinkButton" BasedOn="{StaticResource TextBlockButtonStyle}"/>
@@ -34,14 +36,14 @@
                    Margin="{StaticResource TitleGapMargin}"
                    />
 
-        <StackPanel Orientation="Horizontal">
-            <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-                    Margin="{StaticResource AboutAppGapMargin}"
+        <StackPanel Orientation="Horizontal"
+                    Margin="{StaticResource AboutAppGapBottomMargin}"
                     >
+            <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}">
                 <Image Source="{x:Bind AppLogoPath, Mode=OneWay}" Width="71" Height="71"/>
             </Border>
 
-            <StackPanel Padding="15,0,0,0">
+            <StackPanel Padding="{StaticResource AboutAppGapLeftMargin}">
                 <TextBlock Text="{x:Bind AppName}"/>
                 <TextBlock Text="{x:Bind AppVersion}"/>
                 <TextBlock>
@@ -52,9 +54,9 @@
 
         <TextBlock Foreground="{StaticResource LightTextForegroundBrush}"
                    FontSize="12"
-                   Margin="{StaticResource AboutAppGapMargin}"
+                   Margin="{StaticResource AboutAppGapBottomMargin}"
                    >
-            <Run x:Uid="JsonNETLinkStart"/>
+            <Run x:Uid="JsonNETLinkBeginning"/>
             <Hyperlink UnderlineStyle="None" NavigateUri="http://www.newtonsoft.com/json">Json.NET</Hyperlink>
             <Run x:Uid="JsonNETLinkEnd"/>
         </TextBlock>
@@ -84,7 +86,7 @@
                 <Run x:Uid="MoreAppsByPublisher"/>
             </TextBlock>
         </HyperlinkButton>
-        <HyperlinkButton Margin="{StaticResource AboutAppGapMargin}" Click="Hyperlink_Click">
+        <HyperlinkButton Margin="{StaticResource AboutAppGapBottomMargin}" Click="Hyperlink_Click">
             <TextBlock>
                 <Run Text="&#xE715;" FontFamily="Segoe MDL2 Assets" FontSize="{StaticResource HyperLinkIconFontSize}"/>
                 <Run x:Uid="ContactDeveloper"/>
