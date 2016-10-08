@@ -15,23 +15,23 @@
         </Grid.RowDefinitions>
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="Bt_DesktopButt_States">
+            <VisualStateGroup x:Name="DesktopStates">
                 <VisualState>
                     <VisualState.StateTriggers>
                         <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Desktop"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="DesktopButt.Visibility" Value="Visible"/>
+                        <Setter Target="Bt_Desktop.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-            <VisualStateGroup x:Name="Bt_MobileButt_States">
+            <VisualStateGroup x:Name="MobileStates">
                 <VisualState>
                     <VisualState.StateTriggers>
                         <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Mobile"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MobileButt.Visibility" Value="Visible"/>
+                        <Setter Target="Bt_Mobile.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -46,7 +46,6 @@
         <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}"
               Width="{Binding ElementName=CP_PageTitle, Path=ActualHeight}"
               HorizontalAlignment="Right"
-              VerticalAlignment="Stretch"
               Grid.Row="0"
               >
             <Grid.Resources>
@@ -57,7 +56,7 @@
             
             <FontIcon Glyph="&#xE003;"/>
             <FontIcon Glyph="&#xE001;"
-                      Visibility="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Visibility="{x:Bind CX_CheckBox1.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
                       />
         </Grid>
 
@@ -65,29 +64,29 @@
                       Grid.Row="1"
                       >
             <StackPanel Padding="{StaticResource PageContentMargin}">
-                <CheckBox x:Name="WatBox"
-                          IsChecked="{x:Bind AppData.WatBoxChecked, Mode=TwoWay}"
-                          Content="Wat"
+                <StackPanel.Resources>
+                    <Style TargetType="ComboBox">
+                        <Setter Property="Width" Value="120"/>
+                        <Setter Property="Margin" Value="{StaticResource ComboBoxGapMargin}"/>
+                    </Style>
+                </StackPanel.Resources>
+                
+                <CheckBox x:Name="CX_CheckBox1"
+                          Content="CheckBox 1"
+                          IsChecked="{x:Bind AppData.CX_CheckBox1IsChecked, Mode=TwoWay}"
                           />
-                <CheckBox x:Name="WutBox"
-                          Content="Wut"
-                          IsChecked="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToBoolInvertedConverter}}"
+                <CheckBox x:Name="CX_CheckBox2"
+                          Content="CheckBox 2"
+                          IsChecked="{x:Bind CX_CheckBox1.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToBoolInvertedConverter}}"
                           Margin="{StaticResource CheckBoxGapMargin}"
                           />
 
-                <ComboBox Header="Wat"
-                          SelectedIndex="{x:Bind WatBox.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToIntConverter}}"
-                          Margin="{StaticResource ComboBoxGapMargin}"
-                          Width="120"
-                          >
+                <ComboBox SelectedIndex="{x:Bind CX_CheckBox1.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToIntConverter}}">
                     <ComboBoxItem Content="Collapsed"/>
                     <ComboBoxItem Content="Visible"/>
                 </ComboBox>
 
-                <ComboBox SelectedIndex="{x:Bind AppData.TestEnum, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}"
-                          Margin="{StaticResource ComboBoxGapMargin}"
-                          Width="120"
-                          >
+                <ComboBox SelectedIndex="{x:Bind AppData.TestEnum, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                     <ComboBoxItem Content="0"/>
                     <ComboBoxItem Content="1"/>
                     <ComboBoxItem Content="2"/>
@@ -135,23 +134,20 @@
                               IsItemClickEnabled="True"
                               ItemsSource="{x:Bind Suggestions}"
                               Height="200"
+                              ItemContainerTransitions="{x:Null}"
                               Grid.Column="0"
                               Grid.Row="1"
                               ItemClick="ListView_ItemClick"
-                              >
-                        <ListView.ItemContainerTransitions>
-                            <TransitionCollection/>
-                        </ListView.ItemContainerTransitions>
-                    </ListView>
+                              />
                 </Grid>
 
-                <Button x:Name="DesktopButt"
+                <Button x:Name="Bt_Desktop"
                         x:DeferLoadStrategy="Lazy"
                         Visibility="Collapsed"
                         Content="Desktop only button"
                         Margin="{StaticResource ButtonGapMargin}"
                         />
-                <Button x:Name="MobileButt"
+                <Button x:Name="Bt_Mobile"
                         x:DeferLoadStrategy="Lazy"
                         Visibility="Collapsed"
                         Content="Mobile only button"
