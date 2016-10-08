@@ -15,23 +15,7 @@
               Width="{x:Bind ComboBoxWidth, Mode=OneWay}"
               Style="{x:Bind ComboBoxStyle, Mode=OneWay}"
               >
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="CBI_Default_States">
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <StateTrigger IsActive="{x:Bind _IsDefaultThemeAvailable}"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="CBI_Default.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-        <ComboBoxItem x:Name="CBI_Default"
-                      x:Uid="SystemTheme"
-                      Visibility="Collapsed"
-                      />
+        <ComboBoxItem x:Uid="SystemTheme" Visibility="{x:Bind _IsDefaultThemeAvailable, Converter={StaticResource BoolToVisibilityConverter}}"/>
         <ComboBoxItem x:Uid="LightTheme"/>
         <ComboBoxItem x:Uid="DarkTheme"/>
     </ComboBox>
