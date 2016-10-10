@@ -45,7 +45,7 @@ namespace Test
             RegisterProperty(nameof(Foo), typeof(int), 0);
             RegisterProperty(nameof(CX_CheckBox1IsChecked), typeof(bool?), true);
             RegisterProperty(nameof(TestEnum), typeof(TestEnum), TestEnum._0);
-            RegisterProperty(nameof(Theme), typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark, () => Current?.SetTheme());
+            RegisterProperty(nameof(Theme), typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark, (oldValue, newValue) => Current?.SetTheme());
             RegisterProperty(nameof(Uri), typeof(string), "");
         }
 
