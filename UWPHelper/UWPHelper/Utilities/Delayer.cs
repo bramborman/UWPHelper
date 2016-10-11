@@ -4,9 +4,14 @@ using Windows.UI.Xaml;
 namespace UWPHelper.Utilities
 {
     // Inspired by Rudy Huyn - http://www.rudyhuyn.com/blog/2016/03/01/delay-an-action-debounce-and-throttle/
-    public class Delayer
+    public sealed class Delayer
     {
         DispatcherTimer timer;
+
+        public bool IsRunning
+        {
+            get { return timer.IsEnabled; }
+        }
 
         public event EventHandler Tick;
 

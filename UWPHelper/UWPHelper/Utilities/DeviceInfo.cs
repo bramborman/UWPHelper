@@ -17,11 +17,13 @@ namespace UWPHelper.Utilities
         {
             SystemFamily = AnalyticsInfo.VersionInfo.DeviceFamily;
             
-            ulong v = ulong.Parse(AnalyticsInfo.VersionInfo.DeviceFamilyVersion);
-            ulong major     = (v & 0xFFFF000000000000L) >> 48;
-            ulong minor     = (v & 0x0000FFFF00000000L) >> 32;
-            ulong build     = (v & 0x00000000FFFF0000L) >> 16;
-            ulong revision  = (v & 0x000000000000FFFFL);
+            ulong version = ulong.Parse(AnalyticsInfo.VersionInfo.DeviceFamilyVersion);
+
+            ulong major     = (version & 0xFFFF000000000000L) >> 48;
+            ulong minor     = (version & 0x0000FFFF00000000L) >> 32;
+            ulong build     = (version & 0x00000000FFFF0000L) >> 16;
+            ulong revision  = (version & 0x000000000000FFFFL);
+
             SystemVersion = $"{major}.{minor}.{build}.{revision}";
             
             PackageArchitecture = Package.Current.Id.Architecture.ToString();

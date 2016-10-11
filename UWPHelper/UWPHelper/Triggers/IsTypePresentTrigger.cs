@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 
 namespace UWPHelper.Triggers
 {
-    public class IsTypePresentTrigger : StateTriggerBase
+    public sealed class IsTypePresentTrigger : StateTriggerBase
     {
         public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(nameof(Type), typeof(string), typeof(IsTypePresentTrigger), new PropertyMetadata(null, OnTypePropertyChanged));
 

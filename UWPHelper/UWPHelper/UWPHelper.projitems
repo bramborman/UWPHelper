@@ -26,7 +26,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UI\ColoredPivot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\LoadingErrorDialog.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\RadioButtonBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\ThemeSelector.xaml.cs">
       <DependentUpon>ThemeSelector.xaml</DependentUpon>
     </Compile>

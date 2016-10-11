@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace UWPHelper.UI
 {
-    public class LoadingErrorDialog
+    public sealed class LoadingErrorDialog
     {
         public static IAsyncOperation<ContentDialogResult> ShowAsync(string title)
         {

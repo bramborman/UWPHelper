@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 
 namespace UWPHelper.Triggers
 {
-    public class IsApiContractPresentTrigger : StateTriggerBase
+    public sealed class IsApiContractPresentTrigger : StateTriggerBase
     {
         public static readonly DependencyProperty ContractNameProperty = DependencyProperty.Register(nameof(ContractName), typeof(string), typeof(IsApiContractPresentTrigger), new PropertyMetadata(null, OnPropertyChanged));
         public static readonly DependencyProperty MajorVersionProperty = DependencyProperty.Register(nameof(MajorVersion), typeof(int), typeof(IsApiContractPresentTrigger), new PropertyMetadata(null, OnPropertyChanged));
@@ -14,13 +14,11 @@ namespace UWPHelper.Triggers
             get { return (string)GetValue(ContractNameProperty); }
             set { SetValue(ContractNameProperty, value); }
         }
-
         public int MajorVersion
         {
             get { return (int)GetValue(MajorVersionProperty); }
             set { SetValue(MajorVersionProperty, value); }
         }
-
         public int MinorVersion
         {
             get { return (int)GetValue(MinorVersionProperty); }

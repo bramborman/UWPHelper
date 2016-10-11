@@ -10,7 +10,7 @@ namespace UWPHelper.Triggers
         Landscape
     }
 
-    public class OrientationTrigger : StateTriggerBase
+    public sealed class OrientationTrigger : StateTriggerBase
     {
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(OrientationTrigger), new PropertyMetadata(null, OnOrientationPropertyChanged));
 

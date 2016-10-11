@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 
 namespace UWPHelper.Triggers
 {
-    public class DeviceFamilyTrigger : StateTriggerBase
+    public sealed class DeviceFamilyTrigger : StateTriggerBase
     {
         public static readonly DependencyProperty DeviceFamilyProperty = DependencyProperty.Register(nameof(DeviceFamily), typeof(string), typeof(DeviceFamilyTrigger), new PropertyMetadata(null, OnDeviceFamilyPropertyChanged));
 

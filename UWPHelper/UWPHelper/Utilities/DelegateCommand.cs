@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace UWPHelper.Utilities
 {
-    public class DelegateCommand : ICommand
+    public sealed class DelegateCommand : ICommand
     {
         private readonly Predicate<object> canExecute;
 

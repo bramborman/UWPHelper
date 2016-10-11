@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Test
 {
-    public class AppData : NotifyPropertyChangedBase
+    public sealed class AppData : NotifyPropertyChangedBase
     {
         const string FILE = "AppData.json";
 

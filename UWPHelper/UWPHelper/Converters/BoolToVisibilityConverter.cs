@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 
 namespace UWPHelper.Converters
 {
-    public class BoolToVisibilityConverter : IValueConverter
+    public sealed class BoolToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
