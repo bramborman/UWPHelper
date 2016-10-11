@@ -56,7 +56,7 @@
             
             <FontIcon Glyph="&#xE003;"/>
             <FontIcon Glyph="&#xE001;"
-                      Visibility="{x:Bind CX_CheckBox1.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                      Visibility="{x:Bind CX_CheckBox1.IsChecked, Converter={StaticResource BoolToVisibilityConverter}, Mode=TwoWay}"
                       />
         </Grid>
 
@@ -77,16 +77,16 @@
                           />
                 <CheckBox x:Name="CX_CheckBox2"
                           Content="CheckBox 2"
-                          IsChecked="{x:Bind CX_CheckBox1.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToBoolInvertedConverter}}"
+                          IsChecked="{x:Bind CX_CheckBox1.IsChecked, Converter={StaticResource BoolToBoolInvertedConverter}, Mode=TwoWay}"
                           Margin="{StaticResource CheckBoxGapMargin}"
                           />
 
-                <ComboBox SelectedIndex="{x:Bind CX_CheckBox1.IsChecked, Mode=TwoWay, Converter={StaticResource BoolToIntConverter}}">
+                <ComboBox SelectedIndex="{x:Bind CX_CheckBox1.IsChecked, Converter={StaticResource BoolToIntConverter}, Mode=TwoWay}">
                     <ComboBoxItem Content="Collapsed"/>
                     <ComboBoxItem Content="Visible"/>
                 </ComboBox>
 
-                <ComboBox SelectedIndex="{x:Bind AppData.TestEnum, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                <ComboBox SelectedIndex="{x:Bind AppData.TestEnum, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
                     <ComboBoxItem Content="0"/>
                     <ComboBoxItem Content="1"/>
                     <ComboBoxItem Content="2"/>

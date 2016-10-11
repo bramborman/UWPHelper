@@ -39,6 +39,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DebugMessages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\Delayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DisplayRequestHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ThreadPoolTimer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Resources.xaml">

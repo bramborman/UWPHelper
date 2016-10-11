@@ -15,15 +15,15 @@ namespace UWPHelper.Utilities
 
         public event EventHandler Tick;
 
-        public Delayer(double seconds) : this(TimeSpan.FromSeconds(seconds))
+        public Delayer(double secondsInterval) : this(TimeSpan.FromSeconds(secondsInterval))
         {
 
         }
 
-        public Delayer(TimeSpan timeSpan)
+        public Delayer(TimeSpan interval)
         {
             timer = new DispatcherTimer();
-            timer.Interval = timeSpan;
+            timer.Interval = interval;
             timer.Tick += Timer_Tick;
         }
 
