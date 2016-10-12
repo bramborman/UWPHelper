@@ -52,7 +52,7 @@ namespace Test
 
                     if (await LoadingErrorDialog.ShowAsync("settings", " with default settings") == ContentDialogResult.Primary)
                     {
-                        Application.Current.Exit();
+                        App.Current.Exit();
                     }
                     else
                     {

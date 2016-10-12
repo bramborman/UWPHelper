@@ -5,7 +5,6 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
-using Windows.System.Profile;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -57,7 +56,7 @@ namespace Test
                 await loadAppDataTask;
                 AppData.Current.SetTheme();
 
-                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
                 {
                     Window.Current.VisibilityChanged += (sender, e) =>
                     {
