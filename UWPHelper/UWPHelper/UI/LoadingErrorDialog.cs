@@ -1,6 +1,5 @@
 ﻿using UWPHelper.Utilities;
 using Windows.Foundation;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace UWPHelper.UI
@@ -14,19 +13,14 @@ namespace UWPHelper.UI
 
         public static IAsyncOperation<ContentDialogResult> ShowAsync(string title, string continueWith)
         {
-            ContentDialog CD_Dialog = new ContentDialog();
-            CD_Dialog.Title = string.Format(ResourceLoaderHelper.GetString("LoadingErrorDialog/Title"), title);
-            CD_Dialog.Content = string.Format(ResourceLoaderHelper.GetString("LoadingErrorDialog/Content"), continueWith);
-
-            CD_Dialog.PrimaryButtonText = ResourceLoaderHelper.GetString("LoadingErrorDialog/PrimaryButtonText");
-            CD_Dialog.PrimaryButtonClick += (sender, args) =>
+            return new ContentDialog()
             {
-                Application.Current.Exit();
-            };
+                Title   = string.Format(ResourceLoaderHelper.GetString("LoadingErrorDialog/Title"), title),
+                Content = string.Format(ResourceLoaderHelper.GetString("LoadingErrorDialog/Content"), continueWith),
 
-            CD_Dialog.SecondaryButtonText = ResourceLoaderHelper.GetString("LoadingErrorDialog/SecondaryButtonText");
-
-            return CD_Dialog.ShowAsync();
+                PrimaryButtonText   = ResourceLoaderHelper.GetString("LoadingErrorDialog/PrimaryButtonText"),
+                SecondaryButtonText = ResourceLoaderHelper.GetString("LoadingErrorDialog/SecondaryButtonText")
+            }.ShowAsync();
         }
     }
 }

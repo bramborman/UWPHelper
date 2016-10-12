@@ -49,14 +49,15 @@ namespace Test
                 if (AppData.ShowLoadingError)
                 {
                     AppData.ShowLoadingError = false;
-                    ContentDialogResult contentDialogResult = await LoadingErrorDialog.ShowAsync("settings", " with default settings");
 
-                    if (contentDialogResult == ContentDialogResult.Primary)
+                    if (await LoadingErrorDialog.ShowAsync("settings", " with default settings") == ContentDialogResult.Primary)
                     {
-                        return;
+                        Application.Current.Exit();
                     }
-
-                    await AppData.Current.SaveAsync();
+                    else
+                    {
+                        await AppData.Current.SaveAsync();
+                    }
                 }
             };
         }
