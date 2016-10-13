@@ -13,6 +13,7 @@
     <converters:StringIsNullOrWhiteSpaceInvertedConverter x:Key="StringIsNullOrWhiteSpaceInvertedConverter"/>
     <converters:StringToUpperCaseConverter x:Key="StringToUpperCaseConverter"/>
 
+    <Thickness x:Key="ContentDialogContentMargin">0,7,0,0</Thickness>
     <Thickness x:Key="PageContentMargin">20</Thickness>
     <Thickness x:Key="RadioButtonHeaderMargin">0,0,0,4</Thickness>
     <Thickness x:Key="TitleGapMargin">0,11,0,14</Thickness>
