@@ -154,7 +154,9 @@
                         Margin="{StaticResource ButtonGapMargin}"
                         />
 
-                <ui:AboutApp AppUri="md-test:" AppDeveloperMail="example@example.com"/>
+                <ui:AboutApp AppUri="md-test:"
+                             AppDeveloperMail="example@example.com"
+                             />
             </StackPanel>
         </ScrollViewer>
     </Grid>
