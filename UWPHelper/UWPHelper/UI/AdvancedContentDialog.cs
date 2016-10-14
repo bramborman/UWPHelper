@@ -32,10 +32,12 @@ namespace UWPHelper.UI
             switch (args.VirtualKey)
             {
                 case VirtualKey.Enter:
+                    args.Handled = true;
                     OnPrimaryButtonClick(this, null);
                     break;
 
                 case VirtualKey.Escape:
+                    args.Handled = true;
                     OnSecondaryButtonClick(this, null);
                     break;
             }

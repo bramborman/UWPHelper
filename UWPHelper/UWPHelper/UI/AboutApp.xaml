@@ -53,12 +53,12 @@
         </StackPanel>
 
         <TextBlock Foreground="{StaticResource LightTextForegroundBrush}"
-                   FontSize="12"
+                   FontSize="{StaticResource DescriptionFontSize}"
                    Margin="{StaticResource AboutAppGapBottomMargin}"
                    >
             <Run x:Uid="JsonNETLinkBeginning"/>
             <Hyperlink UnderlineStyle="None" NavigateUri="http://www.newtonsoft.com/json">Json.NET</Hyperlink>
-            <Run x:Uid="JsonNETLinkEnd"/>
+            <Run x:Uid="JsonNETLinkEnding"/>
         </TextBlock>
 
         <!-- Inspired by an app called Bakaláři -->
@@ -97,7 +97,9 @@
                     x:DeferLoadStrategy="Lazy"
                     Visibility="Collapsed"
                     >
-            <Button Margin="0,0,0,8" Click="OpenFeedbackHub">
+            <Button Margin="{StaticResource DescriptionGapBottomMargin}"
+                    Click="OpenFeedbackHub"
+                    >
                 <TextBlock>
                     <Run Text="&#xE939;" FontFamily="Segoe MDL2 Assets"/>
                     <Run x:Uid="Feedback"/>
@@ -106,7 +108,7 @@
 
             <TextBlock x:Uid="FeedbackText"
                        Foreground="{StaticResource LightTextForegroundBrush}"
-                       FontSize="12"
+                       FontSize="{StaticResource DescriptionFontSize}"
                        TextWrapping="WrapWholeWords"
                        Margin="{StaticResource PanelGapMargin}"
                        />

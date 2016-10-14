@@ -28,6 +28,9 @@
     <Thickness x:Key="TextBoxGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="ToggleSwitchGapMargin">0,0,0,10</Thickness>
 
+    <Thickness x:Key="DescriptionGapBottomMargin">0,0,0,8</Thickness>
+    <x:Double x:Key="DescriptionFontSize">12</x:Double>
+
     <x:Double x:Key="PageTitleFontSize">15</x:Double>
     <x:Double x:Key="PageTitleHeight">48</x:Double>
     <text:FontWeight x:Key="PageTitleFontWeight">Bold</text:FontWeight>

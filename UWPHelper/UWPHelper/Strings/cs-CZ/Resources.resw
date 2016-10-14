@@ -153,7 +153,7 @@
   <data name="JsonNETLinkBeginning.Text" xml:space="preserve">
     <value>Tato aplikace používá</value>
   </data>
-  <data name="JsonNETLinkEnd.Text" xml:space="preserve">
+  <data name="JsonNETLinkEnding.Text" xml:space="preserve">
     <value>k uložení Vašich dat.</value>
   </data>
   <data name="FeedbackText.Text" xml:space="preserve">
@@ -170,7 +170,7 @@ Zašlete mi zpětnou vazbu a já ji použiji při budoucím vývoji aplikace ;-)
     <value>Ne</value>
   </data>
   <data name="LoadingErrorDialog.Content" xml:space="preserve">
-    <value>Můžeme se o to pokusit znovu při příštím spuštění aplikace, nebo můžete pokračovat{0}.
+    <value>Můžeme se o to pokusit znovu při příštím spuštění aplikace, nebo můžete pokračovat v jejím používání{0}.
 Přejete si aplikaci nyní zavřít?</value>
   </data>
   <data name="ContactDeveloper.Text" xml:space="preserve">

@@ -50,7 +50,7 @@ namespace Test
                 {
                     AppData.ShowLoadingError = false;
 
-                    if (await LoadingErrorDialog.ShowAsync("settings", " with default settings") == ContentDialogResult.Primary)
+                    if (await new LoadingErrorDialog("settings", "with default settings").ShowAsync() == ContentDialogResult.Primary)
                     {
                         App.Current.Exit();
                     }
