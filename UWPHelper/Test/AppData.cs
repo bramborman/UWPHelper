@@ -19,10 +19,10 @@ namespace Test
             get { return (int)GetValue(nameof(Foo)); }
             set { SetValue(nameof(Foo), ref value); }
         }
-        public bool? CX_CheckBox1IsChecked
+        public bool? CheckBoxChecked
         {
-            get { return (bool?)GetValue(nameof(CX_CheckBox1IsChecked)); }
-            set { SetValue(nameof(CX_CheckBox1IsChecked), ref value); }
+            get { return (bool?)GetValue(nameof(CheckBoxChecked)); }
+            set { SetValue(nameof(CheckBoxChecked), ref value); }
         }
         public TestEnum TestEnum
         {
@@ -43,7 +43,7 @@ namespace Test
         public AppData()
         {
             RegisterProperty(nameof(Foo), typeof(int), 0);
-            RegisterProperty(nameof(CX_CheckBox1IsChecked), typeof(bool?), true);
+            RegisterProperty(nameof(CheckBoxChecked), typeof(bool?), true);
             RegisterProperty(nameof(TestEnum), typeof(TestEnum), TestEnum._0);
             RegisterProperty(nameof(Theme), typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark, (oldValue, newValue) => Current?.SetTheme());
             RegisterProperty(nameof(Uri), typeof(string), "");

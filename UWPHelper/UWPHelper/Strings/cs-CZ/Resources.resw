@@ -126,13 +126,13 @@
   <data name="InWindowsStore" xml:space="preserve">
     <value>ve Windows Store</value>
   </data>
-  <data name="MoreAppsByPublisher.Text" xml:space="preserve">
+  <data name="MoreAppsByThisPublisher.Content" xml:space="preserve">
     <value>Více aplikací autora</value>
   </data>
-  <data name="RateApp.Text" xml:space="preserve">
+  <data name="RateApp.Content" xml:space="preserve">
     <value>Ohodnotit aplikaci</value>
   </data>
-  <data name="ShareApp.Text" xml:space="preserve">
+  <data name="ShareApp.Content" xml:space="preserve">
     <value>Sdílet aplikaci</value>
   </data>
   <data name="Version" xml:space="preserve">
@@ -173,7 +173,10 @@ Zašlete mi zpětnou vazbu a já ji použiji při budoucím vývoji aplikace ;-)
     <value>Můžeme se o to pokusit znovu při příštím spuštění aplikace, nebo můžete pokračovat v jejím používání{0}.
 Přejete si aplikaci nyní zavřít?</value>
   </data>
-  <data name="ContactDeveloper.Text" xml:space="preserve">
+  <data name="ContactDeveloper.Content" xml:space="preserve">
     <value>Kontaktovat vývojáře aplikace</value>
+  </data>
+  <data name="Translating.Text" xml:space="preserve">
+    <value>Chcete-li mi pomoci s překladem aplikace do dalších jazyků, kontaktujte mě prosím použití odkazu výše.</value>
   </data>
 </root>

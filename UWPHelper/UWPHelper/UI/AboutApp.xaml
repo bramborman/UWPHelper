@@ -12,10 +12,8 @@
         <StackPanel.Resources>
             <Thickness x:Key="AboutAppGapBottomMargin">0,0,0,10</Thickness>
             <Thickness x:Key="AboutAppGapLeftMargin">10,0,0,0</Thickness>
-            
-            <x:Double x:Key="HyperLinkIconFontSize">12</x:Double>
 
-            <Style TargetType="HyperlinkButton" BasedOn="{StaticResource TextBlockButtonStyle}"/>
+            <Style TargetType="HyperlinkButton" BasedOn="{StaticResource HyperLinkWithIcon}"/>
         </StackPanel.Resources>
 
         <VisualStateManager.VisualStateGroups>
@@ -52,8 +50,7 @@
             </StackPanel>
         </StackPanel>
 
-        <TextBlock Foreground="{StaticResource LightTextForegroundBrush}"
-                   FontSize="{StaticResource DescriptionFontSize}"
+        <TextBlock Style="{StaticResource Description}"
                    Margin="{StaticResource AboutAppGapBottomMargin}"
                    >
             <Run x:Uid="JsonNETLinkBeginning"/>
@@ -62,36 +59,20 @@
         </TextBlock>
 
         <!-- Inspired by an app called Bakaláři -->
-        <HyperlinkButton Click="Hyperlink_Click">
-            <TextBlock>
-                <Run Text="&#xE14D;" FontFamily="Segoe MDL2 Assets" FontSize="{StaticResource HyperLinkIconFontSize}"/>
-                <Run Text="{x:Bind AppStoreLink}"/>
-            </TextBlock>
-        </HyperlinkButton>
-        <HyperlinkButton Click="Hyperlink_Click">
-            <TextBlock>
-                <Run Text="&#xE24A;" FontFamily="Segoe MDL2 Assets" FontSize="{StaticResource HyperLinkIconFontSize}"/>
-                <Run x:Uid="RateApp"/>
-            </TextBlock>
-        </HyperlinkButton>
-        <HyperlinkButton Click="Hyperlink_Click">
-            <TextBlock>
-                <Run Text="&#xE72D;" FontFamily="Segoe MDL2 Assets" FontSize="{StaticResource HyperLinkIconFontSize}"/>
-                <Run x:Uid="ShareApp"/>
-            </TextBlock>
-        </HyperlinkButton>
-        <HyperlinkButton Click="Hyperlink_Click">
-            <TextBlock>
-                <Run Text="&#xE1A6;" FontFamily="Segoe MDL2 Assets" FontSize="{StaticResource HyperLinkIconFontSize}"/>
-                <Run x:Uid="MoreAppsByPublisher"/>
-            </TextBlock>
-        </HyperlinkButton>
-        <HyperlinkButton Margin="{StaticResource AboutAppGapBottomMargin}" Click="Hyperlink_Click">
-            <TextBlock>
-                <Run Text="&#xE715;" FontFamily="Segoe MDL2 Assets" FontSize="{StaticResource HyperLinkIconFontSize}"/>
-                <Run x:Uid="ContactDeveloper"/>
-            </TextBlock>
-        </HyperlinkButton>
+        <HyperlinkButton Content="{x:Bind AppStoreLink}" Tag="&#xE14D;" Click="Hyperlink_Click"/>
+        <HyperlinkButton x:Uid="RateApp" Tag="&#xE24A;" Click="Hyperlink_Click"/>
+        <HyperlinkButton x:Uid="ShareApp" Tag="&#xE72D;" Click="Hyperlink_Click"/>
+        <HyperlinkButton x:Uid="MoreAppsByThisPublisher" Tag="&#xE1A6;" Click="Hyperlink_Click"/>
+        <HyperlinkButton x:Uid="ContactDeveloper"
+                         Tag="&#xE715;"
+                         Margin="{StaticResource DescriptionGapBottomMargin}"
+                         Click="Hyperlink_Click"
+                         />
+
+        <TextBlock x:Uid="Translating"
+                   Style="{StaticResource Description}"
+                   Margin="{StaticResource AboutAppGapBottomMargin}"
+                   />
 
         <StackPanel x:Name="SP_Feedback"
                     x:DeferLoadStrategy="Lazy"
@@ -107,9 +88,7 @@
             </Button>
 
             <TextBlock x:Uid="FeedbackText"
-                       Foreground="{StaticResource LightTextForegroundBrush}"
-                       FontSize="{StaticResource DescriptionFontSize}"
-                       TextWrapping="WrapWholeWords"
+                       Style="{StaticResource Description}"
                        Margin="{StaticResource PanelGapMargin}"
                        />
         </StackPanel>

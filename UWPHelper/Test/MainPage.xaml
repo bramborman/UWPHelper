@@ -21,7 +21,7 @@
                         <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Desktop"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="Bt_Desktop.Visibility" Value="Visible"/>
+                        <Setter Target="TB_Desktop.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -31,14 +31,14 @@
                         <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Mobile"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="Bt_Mobile.Visibility" Value="Visible"/>
+                        <Setter Target="TB_Mobile.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <ContentPresenter x:Name="CP_PageTitle"
-                          Content="TEST"
+                          x:Uid="Test"
                           Style="{StaticResource PageTitle}"
                           Grid.Row="0"
                           />
@@ -53,10 +53,10 @@
                     <Setter Property="Foreground" Value="White"/>
                 </Style>
             </Grid.Resources>
-            
+
             <FontIcon Glyph="&#xE003;"/>
             <FontIcon Glyph="&#xE001;"
-                      Visibility="{x:Bind CX_CheckBox1.IsChecked, Converter={StaticResource BoolToVisibilityConverter}, Mode=TwoWay}"
+                      Visibility="{x:Bind CX_Visible.IsChecked, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                       />
         </Grid>
 
@@ -70,20 +70,20 @@
                         <Setter Property="Margin" Value="{StaticResource ComboBoxGapMargin}"/>
                     </Style>
                 </StackPanel.Resources>
-                
-                <CheckBox x:Name="CX_CheckBox1"
-                          Content="CheckBox 1"
-                          IsChecked="{x:Bind AppData.CX_CheckBox1IsChecked, Mode=TwoWay}"
+
+                <CheckBox x:Name="CX_Visible"
+                          x:Uid="Visible"
+                          IsChecked="{x:Bind AppData.CheckBoxChecked, Mode=TwoWay}"
                           />
-                <CheckBox x:Name="CX_CheckBox2"
-                          Content="CheckBox 2"
-                          IsChecked="{x:Bind CX_CheckBox1.IsChecked, Converter={StaticResource BoolToBoolInvertedConverter}, Mode=TwoWay}"
+                <CheckBox x:Name="CX_Collapsed"
+                          x:Uid="Collapsed"
+                          IsChecked="{x:Bind CX_Visible.IsChecked, Converter={StaticResource BoolToBoolInvertedConverter}, Mode=TwoWay}"
                           Margin="{StaticResource CheckBoxGapMargin}"
                           />
 
-                <ComboBox SelectedIndex="{x:Bind CX_CheckBox1.IsChecked, Converter={StaticResource BoolToIntConverter}, Mode=TwoWay}">
-                    <ComboBoxItem Content="Collapsed"/>
-                    <ComboBoxItem Content="Visible"/>
+                <ComboBox SelectedIndex="{x:Bind CX_Visible.IsChecked, Converter={StaticResource BoolToIntConverter}, Mode=TwoWay}">
+                    <ComboBoxItem x:Uid="Collapsed"/>
+                    <ComboBoxItem x:Uid="Visible"/>
                 </ComboBox>
 
                 <ComboBox SelectedIndex="{x:Bind AppData.TestEnum, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
@@ -92,12 +92,6 @@
                     <ComboBoxItem Content="2"/>
                     <ComboBoxItem Content="3"/>
                 </ComboBox>
-
-                <TextBlock Margin="{StaticResource PanelGapMargin}">
-                    Foo: <Run Text="{x:Bind AppData.Foo}"/>
-                </TextBlock>
-
-                <ui:ThemeSelector Theme="{x:Bind AppData.Theme, Mode=TwoWay}"/>
 
                 <Grid Margin="{StaticResource PanelGapMargin}">
                     <Grid.ColumnDefinitions>
@@ -110,16 +104,15 @@
                     </Grid.RowDefinitions>
 
                     <TextBox x:Name="TX_Uri"
+                             x:Uid="Launcher"
                              Text="{x:Bind AppData.Uri, Mode=TwoWay}"
-                             PlaceholderText="Uri"
-                             Header="Launcher"
                              Grid.Column="0"
                              Grid.Row="0"
                              KeyDown="TX_Uri_KeyDown"
                              />
 
                     <Button x:Name="Bt_Launch"
-                            Content="Launch"
+                            x:Uid="LaunchButton"
                             Margin="5,0,0,0"
                             VerticalAlignment="Bottom"
                             Grid.Column="1"
@@ -141,18 +134,30 @@
                               />
                 </Grid>
 
-                <Button x:Name="Bt_Desktop"
-                        x:DeferLoadStrategy="Lazy"
-                        Visibility="Collapsed"
-                        Content="Desktop only button"
-                        Margin="{StaticResource ButtonGapMargin}"
-                        />
-                <Button x:Name="Bt_Mobile"
-                        x:DeferLoadStrategy="Lazy"
-                        Visibility="Collapsed"
-                        Content="Mobile only button"
-                        Margin="{StaticResource ButtonGapMargin}"
-                        />
+                <TextBlock>
+                    AppData.Foo: <Run Text="{x:Bind AppData.Foo}"/>
+                </TextBlock>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="{StaticResource PanelGapMargin}"
+                            >
+                    <TextBlock x:Uid="DeviceUsingText"
+                               Margin="{StaticResource WordSpaceRightMargin}"
+                               />
+
+                    <TextBlock x:Name="TB_Desktop"
+                               x:Uid="Desktop"
+                               x:DeferLoadStrategy="Lazy"
+                               Visibility="Collapsed"
+                               />
+                    <TextBlock x:Name="TB_Mobile"
+                               x:Uid="Mobile"
+                               x:DeferLoadStrategy="Lazy"
+                               Visibility="Collapsed"
+                               />
+                </StackPanel>
+
+                <ui:ThemeSelector Theme="{x:Bind AppData.Theme, Mode=TwoWay}"/>
 
                 <ui:AboutApp AppUri="md-test:"
                              AppDeveloperMail="example@example.com"
