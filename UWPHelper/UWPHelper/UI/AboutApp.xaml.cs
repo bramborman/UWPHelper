@@ -68,7 +68,7 @@ namespace UWPHelper.UI
 
         private async void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            string content = ((TextBlock)((HyperlinkButton)sender).Content).Text;
+            string content = (string)(((HyperlinkButton)sender).Content);
 
             if (content.Contains(AppStoreLink))
             {
