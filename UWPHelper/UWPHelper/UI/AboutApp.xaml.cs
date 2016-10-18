@@ -74,16 +74,16 @@ namespace UWPHelper.UI
             {
                 await $@"ms-windows-store://pdp/?ProductId={AppStoreId}".LaunchAsUriAsync();
             }
-            else if (content.Contains(ResourceLoaderHelper.GetString("RateApp/Text")))
+            else if (content.Contains(ResourceLoaderHelper.GetString("RateApp/Content")))
             {
                 await $@"ms-windows-store://review/?ProductId={AppStoreId}".LaunchAsUriAsync();
             }
-            else if (content.Contains(ResourceLoaderHelper.GetString("ShareApp/Text")))
+            else if (content.Contains(ResourceLoaderHelper.GetString("ShareApp/Content")))
             {
                 DataTransferManager.GetForCurrentView().DataRequested += SharingDataRequested;
                 DataTransferManager.ShowShareUI();
             }
-            else if (content.Contains(ResourceLoaderHelper.GetString("MoreAppsByPublisher/Text")))
+            else if (content.Contains(ResourceLoaderHelper.GetString("MoreAppsByThisPublisher/Content")))
             {
                 await $@"ms-windows-store://publisher/?name={AppPublisher}".LaunchAsUriAsync();
             }
