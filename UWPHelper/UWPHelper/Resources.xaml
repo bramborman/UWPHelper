@@ -13,8 +13,10 @@
     <converters:StringIsNullOrWhiteSpaceInvertedConverter x:Key="StringIsNullOrWhiteSpaceInvertedConverter"/>
     <converters:StringToUpperCaseConverter x:Key="StringToUpperCaseConverter"/>
 
+    <Thickness x:Key="ContentMargin">20</Thickness>
+    <x:Double x:Key="ContentMaxWidth">400</x:Double>
+
     <Thickness x:Key="ContentDialogContentMargin">0,7,0,0</Thickness>
-    <Thickness x:Key="PageContentMargin">20</Thickness>
     <Thickness x:Key="RadioButtonHeaderMargin">0,0,0,4</Thickness>
     <Thickness x:Key="TitleGapMargin">0,11,0,14</Thickness>
     <Thickness x:Key="TitleGapBottomMargin">0,0,0,14</Thickness>
@@ -26,6 +28,7 @@
     <Thickness x:Key="PanelGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="RadioButtonGapMargin">0,0,0,14</Thickness>
     <Thickness x:Key="TextBoxGapMargin">0,0,0,20</Thickness>
+    <Thickness x:Key="TimePickerGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="ToggleSwitchGapMargin">0,0,0,10</Thickness>
 
     <SolidColorBrush x:Key="LightTextForegroundBrush" Color="{ThemeResource SystemBaseMediumColor}"/>

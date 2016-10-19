@@ -63,13 +63,40 @@
         <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto"
                       Grid.Row="1"
                       >
-            <StackPanel Padding="{StaticResource PageContentMargin}">
+            <StackPanel Padding="{StaticResource ContentMargin}"
+                        MaxWidth="{StaticResource ContentMaxWidth}"
+                        HorizontalAlignment="Left"
+                        >
                 <StackPanel.Resources>
                     <Style TargetType="ComboBox">
                         <Setter Property="Width" Value="120"/>
                         <Setter Property="Margin" Value="{StaticResource ComboBoxGapMargin}"/>
                     </Style>
                 </StackPanel.Resources>
+
+                <Grid Margin="{StaticResource PanelGapMargin}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="TX_Uri"
+                             x:Uid="Launcher"
+                             Text="{x:Bind AppData.Uri, Mode=TwoWay}"
+                             Grid.Column="0"
+                             Grid.Row="0"
+                             KeyDown="TX_Uri_KeyDown"
+                             />
+
+                    <Button x:Name="Bt_Launch"
+                            x:Uid="LaunchButton"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Bottom"
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Click="LaunchUri"
+                            />
+                </Grid>
 
                 <CheckBox x:Name="CX_Visible"
                           x:Uid="Visible"
@@ -92,47 +119,6 @@
                     <ComboBoxItem Content="2"/>
                     <ComboBoxItem Content="3"/>
                 </ComboBox>
-
-                <Grid Margin="{StaticResource PanelGapMargin}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <TextBox x:Name="TX_Uri"
-                             x:Uid="Launcher"
-                             Text="{x:Bind AppData.Uri, Mode=TwoWay}"
-                             Grid.Column="0"
-                             Grid.Row="0"
-                             KeyDown="TX_Uri_KeyDown"
-                             />
-
-                    <Button x:Name="Bt_Launch"
-                            x:Uid="LaunchButton"
-                            Margin="5,0,0,0"
-                            VerticalAlignment="Bottom"
-                            Grid.Column="1"
-                            Grid.Row="0"
-                            Click="LaunchUri"
-                            />
-
-                    <ListView Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
-                              BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
-                              BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}"
-                              SelectionMode="None"
-                              IsItemClickEnabled="True"
-                              ItemsSource="{x:Bind Suggestions}"
-                              Height="200"
-                              ItemContainerTransitions="{x:Null}"
-                              Grid.Column="0"
-                              Grid.Row="1"
-                              ItemClick="ListView_ItemClick"
-                              />
-                </Grid>
 
                 <TextBlock>
                     AppData.Foo: <Run Text="{x:Bind AppData.Foo}"/>

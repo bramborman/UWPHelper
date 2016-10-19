@@ -72,4 +72,7 @@
   <data name="Mobile.Text" xml:space="preserve">
     <value>mobile</value>
   </data>
+  <data name="LaunchUriExceptionDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
 </root>
