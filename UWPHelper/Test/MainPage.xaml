@@ -63,17 +63,7 @@
         <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto"
                       Grid.Row="1"
                       >
-            <StackPanel Padding="{StaticResource ContentMargin}"
-                        MaxWidth="{StaticResource ContentMaxWidth}"
-                        HorizontalAlignment="Left"
-                        >
-                <StackPanel.Resources>
-                    <Style TargetType="ComboBox">
-                        <Setter Property="Width" Value="120"/>
-                        <Setter Property="Margin" Value="{StaticResource ComboBoxGapMargin}"/>
-                    </Style>
-                </StackPanel.Resources>
-
+            <StackPanel Style="{StaticResource Content}">
                 <Grid Margin="{StaticResource PanelGapMargin}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -108,12 +98,16 @@
                           Margin="{StaticResource CheckBoxGapMargin}"
                           />
 
-                <ComboBox SelectedIndex="{x:Bind CX_Visible.IsChecked, Converter={StaticResource BoolToIntConverter}, Mode=TwoWay}">
+                <ComboBox SelectedIndex="{x:Bind CX_Visible.IsChecked, Converter={StaticResource BoolToIntConverter}, Mode=TwoWay}"
+                          Margin="{StaticResource CheckBoxGapMargin}"
+                          >
                     <ComboBoxItem x:Uid="Collapsed"/>
                     <ComboBoxItem x:Uid="Visible"/>
                 </ComboBox>
 
-                <ComboBox SelectedIndex="{x:Bind AppData.TestEnum, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
+                <ComboBox SelectedIndex="{x:Bind AppData.TestEnum, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
+                          Margin="{StaticResource ComboBoxGapMargin}"
+                          >
                     <ComboBoxItem Content="0"/>
                     <ComboBoxItem Content="1"/>
                     <ComboBoxItem Content="2"/>

@@ -158,7 +158,7 @@
   </data>
   <data name="FeedbackText.Text" xml:space="preserve">
     <value>Máte nějaké nápady, doporučení, nebo aplikace nefunguje tak, jak by měla?
-Zašlete mi zpětnou vazbu a já ji použiji při budoucím vývoji aplikace ;-)</value>
+Zašlete mi zpětnou vazbu a já ji použiji při budoucím vývoji této aplikace ;-)</value>
   </data>
   <data name="LoadingErrorDialog.Title" xml:space="preserve">
     <value>Vaše {0} nelze načíst</value>
@@ -177,6 +177,6 @@ Přejete si aplikaci nyní zavřít?</value>
     <value>Kontaktovat vývojáře aplikace</value>
   </data>
   <data name="Translating.Text" xml:space="preserve">
-    <value>Chcete-li mi pomoci s překladem aplikace do dalších jazyků, kontaktujte mě prosím použití odkazu výše.</value>
+    <value>Chcete-li pomoci s překladem aplikace do dalších jazyků, kontaktujte mě prosím použitím odkazu výše.</value>
   </data>
 </root>

@@ -13,9 +13,6 @@
     <converters:StringIsNullOrWhiteSpaceInvertedConverter x:Key="StringIsNullOrWhiteSpaceInvertedConverter"/>
     <converters:StringToUpperCaseConverter x:Key="StringToUpperCaseConverter"/>
 
-    <Thickness x:Key="ContentMargin">20</Thickness>
-    <x:Double x:Key="ContentMaxWidth">400</x:Double>
-
     <Thickness x:Key="ContentDialogContentMargin">0,7,0,0</Thickness>
     <Thickness x:Key="RadioButtonHeaderMargin">0,0,0,4</Thickness>
     <Thickness x:Key="TitleGapMargin">0,11,0,14</Thickness>
@@ -34,6 +31,9 @@
     <SolidColorBrush x:Key="LightTextForegroundBrush" Color="{ThemeResource SystemBaseMediumColor}"/>
     <SolidColorBrush x:Key="PageTitleBackgroundBrush" Color="{ThemeResource SystemChromeMediumColor}"/>
 
+    <Thickness x:Key="ContentMargin">20</Thickness>
+    <x:Double x:Key="ContentMaxWidth">400</x:Double>
+
     <Thickness x:Key="DescriptionGapBottomMargin">0,0,0,8</Thickness>
     <x:Double x:Key="DescriptionFontSize">12</x:Double>
 
@@ -43,6 +43,12 @@
     <Thickness x:Key="PageTitlePadding">12,0,0,0</Thickness>
 
     <x:Double x:Key="HyperLinkIconFontSize">12</x:Double>
+
+    <Style x:Key="Content" TargetType="StackPanel">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="MaxWidth" Value="{StaticResource ContentMaxWidth}"/>
+        <Setter Property="Margin" Value="{StaticResource ContentMargin}"/>
+    </Style>
 
     <Style x:Key="Description" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource LightTextForegroundBrush}"/>
