@@ -34,6 +34,8 @@ namespace Test
                         await AppData.Current.SaveAsync();
                     }
                 }
+
+                TX_Uri.SelectionStart = TX_Uri.Text.Length;
             };
         }
 

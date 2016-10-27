@@ -24,7 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\AboutApp.xaml.cs">
       <DependentUpon>AboutApp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\AdvancedContentDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\AboutAppLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\ColoredPivot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\LoadingErrorDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\ThemeSelector.xaml.cs">

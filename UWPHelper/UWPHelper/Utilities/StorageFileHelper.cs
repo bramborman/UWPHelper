@@ -65,7 +65,7 @@ namespace UWPHelper.Utilities
             return output;
         }
 
-        public class LoadObjectAsyncResult<T> where T : class, new()
+        public sealed class LoadObjectAsyncResult<T> where T : class, new()
         {
             public T Object { get; set; }
             public bool Success { get; set; }

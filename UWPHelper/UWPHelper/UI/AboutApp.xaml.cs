@@ -1,5 +1,6 @@
 ﻿using Microsoft.Services.Store.Engagement;
 using System;
+using System.Collections.ObjectModel;
 using UWPHelper.Utilities;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
@@ -14,6 +15,7 @@ namespace UWPHelper.UI
         public static readonly DependencyProperty AppUriProperty            = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty AppLogoPathProperty       = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
         public static readonly DependencyProperty AppDeveloperMailProperty  = DependencyProperty.Register(nameof(AppDeveloperMail), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AboutAppLinksProperty     = DependencyProperty.Register(nameof(AboutAppLinks), typeof(ObservableCollection<AboutAppLink>), typeof(AboutApp),  new PropertyMetadata(new ObservableCollection<AboutAppLink>()));
         
         private PackageVersion Version
         {
@@ -59,6 +61,11 @@ namespace UWPHelper.UI
         {
             get { return (string)GetValue(AppDeveloperMailProperty); }
             set { SetValue(AppDeveloperMailProperty, value); }
+        }
+        public ObservableCollection<AboutAppLink> AboutAppLinks
+        {
+            get { return (ObservableCollection<AboutAppLink>)GetValue(AboutAppLinksProperty); }
+            set { SetValue(AboutAppLinksProperty, value); }
         }
 
         public AboutApp()

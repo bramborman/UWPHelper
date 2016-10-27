@@ -63,11 +63,22 @@
         <HyperlinkButton x:Uid="RateApp" Tag="&#xE24A;" Click="Hyperlink_Click"/>
         <HyperlinkButton x:Uid="ShareApp" Tag="&#xE72D;" Click="Hyperlink_Click"/>
         <HyperlinkButton x:Uid="MoreAppsByThisPublisher" Tag="&#xE1A6;" Click="Hyperlink_Click"/>
-        <HyperlinkButton x:Uid="ContactDeveloper"
-                         Tag="&#xE715;"
-                         Margin="{StaticResource DescriptionGapBottomMargin}"
-                         Click="Hyperlink_Click"
-                         />
+        <HyperlinkButton x:Uid="ContactDeveloper" Tag="&#xE715;" Click="Hyperlink_Click"/>
+        
+        <ItemsControl ItemsSource="{x:Bind AboutAppLinks}"
+                      Margin="{StaticResource DescriptionGapBottomMargin}"
+                      >
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:AboutAppLink">
+                    <HyperlinkButton Content="{x:Bind Text, Mode=OneWay}"
+                                     Tag="{x:Bind Icon, Mode=OneWay}"
+                                     Command="{x:Bind Command, Mode=OneWay}"
+                                     CommandParameter="{Binding}"
+                                     Style="{StaticResource HyperLinkWithIcon}"
+                                     />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <TextBlock x:Uid="Translating"
                    Style="{StaticResource Description}"
