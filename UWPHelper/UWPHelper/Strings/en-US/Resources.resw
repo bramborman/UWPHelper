@@ -161,7 +161,7 @@
 Please submit a feedback and I'll use it for further development ;-)</value>
   </data>
   <data name="LoadingErrorDialog.Title" xml:space="preserve">
-    <value>Unable to load your {0}</value>
+    <value>Unable to load Your {0}</value>
   </data>
   <data name="LoadingErrorDialog.PrimaryButtonText" xml:space="preserve">
     <value>Yes</value>
