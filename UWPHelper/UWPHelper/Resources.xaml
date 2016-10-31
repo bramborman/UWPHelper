@@ -9,7 +9,7 @@
     <converters:BoolToIntConverter x:Key="BoolToIntConverter"/>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
-    <converters:ResourceLoader x:Key="ResourceLoader"/>
+    <converters:ResourceLoaderConverter x:Key="ResourceLoaderConverter"/>
     <converters:StringIsNullOrWhiteSpaceInvertedConverter x:Key="StringIsNullOrWhiteSpaceInvertedConverter"/>
     <converters:StringToUpperCaseConverter x:Key="StringToUpperCaseConverter"/>
 

@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Data;
 
 namespace UWPHelper.Converters
 {
-    public sealed class ResourceLoader : IValueConverter
+    public sealed class ResourceLoaderConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
