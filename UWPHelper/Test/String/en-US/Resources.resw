@@ -75,4 +75,10 @@
   <data name="LaunchUriExceptionDialog.SecondaryButtonText" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="LoadingErrorDialog.Settings" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="LoadingErrorDialog.ContinueWith" xml:space="preserve">
+    <value>with default settings</value>
+  </data>
 </root>

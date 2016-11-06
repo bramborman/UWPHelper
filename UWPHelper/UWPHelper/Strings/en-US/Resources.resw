@@ -154,14 +154,14 @@
     <value>This app uses</value>
   </data>
   <data name="JsonNETLinkEnding.Text" xml:space="preserve">
-    <value>to store Your app data.</value>
+    <value>to store your data.</value>
   </data>
   <data name="FeedbackText.Text" xml:space="preserve">
     <value>Got any ideas, suggestions or the app's not working like it should?
 Please submit a feedback and I'll use it for further development ;-)</value>
   </data>
   <data name="LoadingErrorDialog.Title" xml:space="preserve">
-    <value>Unable to load Your {0}</value>
+    <value>Unable to load your {0}</value>
   </data>
   <data name="LoadingErrorDialog.PrimaryButtonText" xml:space="preserve">
     <value>Yes</value>
@@ -171,12 +171,12 @@ Please submit a feedback and I'll use it for further development ;-)</value>
   </data>
   <data name="LoadingErrorDialog.Content" xml:space="preserve">
     <value>You can restart the app to try again or continue using it{0}.
-Would You like to close the app now?</value>
+Would you like to close the app now?</value>
   </data>
   <data name="ContactDeveloper.Content" xml:space="preserve">
     <value>Contact app developer</value>
   </data>
   <data name="Translating.Text" xml:space="preserve">
-    <value>If You want to help with translating this app to another languages, please contact me using the link above.</value>
+    <value>If you want to help with translating this app to another languages, please contact me using the link above.</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Data;
 
 namespace UWPHelper.Converters
@@ -7,7 +8,7 @@ namespace UWPHelper.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString((string)parameter);
+            return ResourceLoader.GetForCurrentView().GetString((string)parameter);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

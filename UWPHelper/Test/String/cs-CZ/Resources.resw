@@ -75,4 +75,10 @@
   <data name="LaunchUriExceptionDialog.SecondaryButtonText" xml:space="preserve">
     <value>Zavřít</value>
   </data>
+  <data name="LoadingErrorDialog.Settings" xml:space="preserve">
+    <value>nastavení</value>
+  </data>
+  <data name="LoadingErrorDialog.ContinueWith" xml:space="preserve">
+    <value>s výchozím nastavením</value>
+  </data>
 </root>

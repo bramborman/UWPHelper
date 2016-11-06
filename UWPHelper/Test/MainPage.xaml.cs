@@ -25,7 +25,7 @@ namespace Test
                 {
                     AppData.ShowLoadingError = false;
 
-                    if (await new LoadingErrorDialog("settings", "with default settings").ShowAsync() == ContentDialogResult.Primary)
+                    if (await new LoadingErrorDialog(ResourceLoaderHelper.GetString("LoadingErrorDialog/Settings"), ResourceLoaderHelper.GetString("LoadingErrorDialog/ContinueWith")).ShowAsync() == ContentDialogResult.Primary)
                     {
                         App.Current.Exit();
                     }

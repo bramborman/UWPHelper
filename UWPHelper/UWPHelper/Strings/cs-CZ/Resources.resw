@@ -154,7 +154,7 @@
     <value>Tato aplikace používá</value>
   </data>
   <data name="JsonNETLinkEnding.Text" xml:space="preserve">
-    <value>k uložení Vašich dat.</value>
+    <value>k uložení vašich dat.</value>
   </data>
   <data name="FeedbackText.Text" xml:space="preserve">
     <value>Máte nějaké nápady, doporučení, nebo aplikace nefunguje tak, jak by měla?
@@ -170,7 +170,7 @@ Zašlete mi zpětnou vazbu a já ji použiji při budoucím vývoji této aplika
     <value>Ne</value>
   </data>
   <data name="LoadingErrorDialog.Content" xml:space="preserve">
-    <value>Můžeme se o to pokusit znovu při příštím spuštění aplikace, nebo můžete pokračovat v jejím používání{0}.
+    <value>Můžete aplikaci restartovat a zkusit to znovu, nebo můžete pokračovat v jejím používání{0}.
 Přejete si aplikaci nyní zavřít?</value>
   </data>
   <data name="ContactDeveloper.Content" xml:space="preserve">
