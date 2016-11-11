@@ -9,7 +9,7 @@ namespace Test
 {
     public sealed class AppData : NotifyPropertyChangedBase
     {
-        const string FILE = "AppData.json";
+        const string FILE_NAME = "AppData.json";
 
         public static AppData Current { get; private set; }
         public static bool ShowLoadingError { get; set; }
@@ -58,12 +58,12 @@ namespace Test
 
         public Task SaveAsync()
         {
-            return StorageFileHelper.SaveObjectAsync(this, FILE, ApplicationData.Current.LocalFolder);
+            return StorageFileHelper.SaveObjectAsync(this, FILE_NAME, ApplicationData.Current.LocalFolder);
         }
 
         public static async Task LoadAsync()
         {
-            var loadObjectAsyncResult = await StorageFileHelper.LoadObjectAsync<AppData>(FILE, ApplicationData.Current.LocalFolder);
+            var loadObjectAsyncResult = await StorageFileHelper.LoadObjectAsync<AppData>(FILE_NAME, ApplicationData.Current.LocalFolder);
             Current             = loadObjectAsyncResult.Object;
             ShowLoadingError    = !loadObjectAsyncResult.Success;
 

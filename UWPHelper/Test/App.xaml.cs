@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Test
 {
-    sealed partial class App : Application
+    public sealed partial class App : Application
     {
         public static new App Current { get; private set; }
 
@@ -96,9 +96,9 @@ namespace Test
 
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            var deferral = e.SuspendingOperation.GetDeferral();
+            SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
 
-            await AppData.Current?.SaveAsync();
+            await AppData.Current.SaveAsync();
             deferral.Complete();
         }
     }
