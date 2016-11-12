@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{EC59601C-7EB3-4A00-B00D-FA3B85F96183}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "UWPHelper", "UWPHelper\UWPHelper.shproj", "{C6E52F0F-39A1-4417-907E-20B85040D1DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPHelper Sample App", "UWPHelper Sample App\UWPHelper Sample App.csproj", "{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		UWPHelper\UWPHelper.projitems*{c6e52f0f-39a1-4417-907e-20b85040d1dd}*SharedItemsImports = 13
-		UWPHelper\UWPHelper.projitems*{ec59601c-7eb3-4a00-b00d-fa3b85f96183}*SharedItemsImports = 4
+		UWPHelper\UWPHelper.projitems*{fd70e801-3d10-4955-a35b-dbf3ae4d3a63}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -21,24 +21,24 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Debug|ARM.ActiveCfg = Debug|ARM
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Debug|ARM.Build.0 = Debug|ARM
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Debug|ARM.Deploy.0 = Debug|ARM
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Debug|x64.ActiveCfg = Debug|x64
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Debug|x64.Build.0 = Debug|x64
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Debug|x64.Deploy.0 = Debug|x64
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Debug|x86.ActiveCfg = Debug|x86
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Debug|x86.Build.0 = Debug|x86
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Debug|x86.Deploy.0 = Debug|x86
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Release|ARM.ActiveCfg = Release|ARM
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Release|ARM.Build.0 = Release|ARM
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Release|ARM.Deploy.0 = Release|ARM
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Release|x64.ActiveCfg = Release|x64
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Release|x64.Build.0 = Release|x64
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Release|x64.Deploy.0 = Release|x64
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Release|x86.ActiveCfg = Release|x86
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Release|x86.Build.0 = Release|x86
-		{EC59601C-7EB3-4A00-B00D-FA3B85F96183}.Release|x86.Deploy.0 = Release|x86
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Debug|ARM.Build.0 = Debug|ARM
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Debug|ARM.Deploy.0 = Debug|ARM
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Debug|x64.ActiveCfg = Debug|x64
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Debug|x64.Build.0 = Debug|x64
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Debug|x64.Deploy.0 = Debug|x64
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Debug|x86.ActiveCfg = Debug|x86
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Debug|x86.Build.0 = Debug|x86
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Debug|x86.Deploy.0 = Debug|x86
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Release|ARM.ActiveCfg = Release|ARM
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Release|ARM.Build.0 = Release|ARM
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Release|ARM.Deploy.0 = Release|ARM
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Release|x64.ActiveCfg = Release|x64
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Release|x64.Build.0 = Release|x64
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Release|x64.Deploy.0 = Release|x64
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Release|x86.ActiveCfg = Release|x86
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Release|x86.Build.0 = Release|x86
+		{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

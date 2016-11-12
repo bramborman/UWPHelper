@@ -1,7 +1,7 @@
-﻿<Page x:Class="Test.MainPage"
+﻿<Page x:Class="UWPHelper.SampleApp.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:Test"
+      xmlns:local="using:UWPHelper.SampleApp"
       xmlns:triggers="using:UWPHelper.Triggers"
       xmlns:ui="using:UWPHelper.UI"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -38,7 +38,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <ContentPresenter x:Name="CP_PageTitle"
-                          x:Uid="Test"
+                          x:Uid="PageTitle"
                           Style="{StaticResource PageTitle}"
                           Grid.Row="0"
                           />
@@ -105,13 +105,13 @@
                     <ComboBoxItem x:Uid="Visible"/>
                 </ComboBox>
 
-                <ComboBox SelectedIndex="{x:Bind AppData.TestEnum, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
+                <ComboBox SelectedIndex="{x:Bind AppData.SampleEnum, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
                           Margin="{StaticResource ComboBoxGapMargin}"
                           >
-                    <ComboBoxItem Content="0"/>
-                    <ComboBoxItem Content="1"/>
-                    <ComboBoxItem Content="2"/>
-                    <ComboBoxItem Content="3"/>
+                    <ComboBoxItem x:Uid="SampleEnum/Zero"/>
+                    <ComboBoxItem x:Uid="SampleEnum/One"/>
+                    <ComboBoxItem x:Uid="SampleEnum/Two"/>
+                    <ComboBoxItem x:Uid="SampleEnum/Three"/>
                 </ComboBox>
 
                 <TextBlock>
@@ -139,8 +139,9 @@
 
                 <ui:ThemeSelector Theme="{x:Bind AppData.Theme, Mode=TwoWay}"/>
 
-                <ui:AboutApp AppUri="md-test:"
-                             AppDeveloperMail="example@example.com"
+                <ui:AboutApp AppStoreId="9nblggh3zqdb"
+                             AppUri="md-uwphelper:"
+                             AppDeveloperMail="mariandolinsky@outlook.com"
                              />
             </StackPanel>
         </ScrollViewer>

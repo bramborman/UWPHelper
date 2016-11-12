@@ -10,7 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Test
+namespace UWPHelper.SampleApp
 {
     public sealed partial class App : Application
     {

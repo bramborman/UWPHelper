@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-namespace Test
+namespace UWPHelper.SampleApp
 {
     public sealed partial class MainPage : Page
     {

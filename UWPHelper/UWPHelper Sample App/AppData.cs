@@ -5,7 +5,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Test
+namespace UWPHelper.SampleApp
 {
     public sealed class AppData : NotifyPropertyChangedBase
     {
@@ -24,10 +24,10 @@ namespace Test
             get { return (bool?)GetValue(nameof(CheckBoxChecked)); }
             set { SetValue(nameof(CheckBoxChecked), ref value); }
         }
-        public TestEnum TestEnum
+        public SampleEnum SampleEnum
         {
-            get { return (TestEnum)GetValue(nameof(TestEnum)); }
-            set { SetValue(nameof(TestEnum), ref value); }
+            get { return (SampleEnum)GetValue(nameof(SampleEnum)); }
+            set { SetValue(nameof(SampleEnum), ref value); }
         }
         public ElementTheme Theme
         {
@@ -44,7 +44,7 @@ namespace Test
         {
             RegisterProperty(nameof(Foo), typeof(int), 0);
             RegisterProperty(nameof(CheckBoxChecked), typeof(bool?), true);
-            RegisterProperty(nameof(TestEnum), typeof(TestEnum), TestEnum._0);
+            RegisterProperty(nameof(SampleEnum), typeof(SampleEnum), SampleEnum.Zero);
             RegisterProperty(nameof(Theme), typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark, (oldValue, newValue) => Current?.SetTheme());
             RegisterProperty(nameof(Uri), typeof(string), "");
         }
