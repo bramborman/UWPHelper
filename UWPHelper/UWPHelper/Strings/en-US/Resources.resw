@@ -179,4 +179,7 @@ Would you like to close the app now?</value>
   <data name="Translating.Text" xml:space="preserve">
     <value>If you want to help with translating this app to another languages, please contact me using the link above.</value>
   </data>
+  <data name="OnGitHub.Text" xml:space="preserve">
+    <value>on GitHub</value>
+  </data>
 </root>

@@ -179,4 +179,7 @@ Přejete si aplikaci nyní zavřít?</value>
   <data name="Translating.Text" xml:space="preserve">
     <value>Chcete-li pomoci s překladem aplikace do dalších jazyků, kontaktujte mě prosím použitím odkazu výše.</value>
   </data>
+  <data name="OnGitHub.Text" xml:space="preserve">
+    <value>na GitHubu</value>
+  </data>
 </root>

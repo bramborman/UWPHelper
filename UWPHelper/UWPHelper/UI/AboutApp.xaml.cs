@@ -11,11 +11,14 @@ namespace UWPHelper.UI
 {
     public sealed partial class AboutApp : UserControl
     {
-        public static readonly DependencyProperty AppStoreIdProperty        = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppUriProperty            = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppLogoPathProperty       = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
-        public static readonly DependencyProperty AppDeveloperMailProperty  = DependencyProperty.Register(nameof(AppDeveloperMail), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AboutAppLinksProperty     = DependencyProperty.Register(nameof(AboutAppLinks), typeof(ObservableCollection<AboutAppLink>), typeof(AboutApp),  new PropertyMetadata(new ObservableCollection<AboutAppLink>()));
+        public static readonly DependencyProperty AppStoreIdProperty            = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppUriProperty                = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppLogoPathProperty           = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
+        public static readonly DependencyProperty AppDeveloperMailProperty      = DependencyProperty.Register(nameof(AppDeveloperMail), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty LinksProperty                 = DependencyProperty.Register(nameof(Links), typeof(ObservableCollection<HyperlinkButton>), typeof(AboutApp), new PropertyMetadata(new ObservableCollection<HyperlinkButton>()));
+        public static readonly DependencyProperty GitHubProjectNameProperty     = DependencyProperty.Register(nameof(GitHubProjectName), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty GitHubLinkUrlProperty         = DependencyProperty.Register(nameof(GitHubLinkUrl), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty GitHubLinkVisibilityProperty  = DependencyProperty.Register(nameof(GitHubLinkVisibility), typeof(Visibility), typeof(AboutApp), new PropertyMetadata(Visibility.Collapsed));
         
         private PackageVersion Version
         {
@@ -41,6 +44,10 @@ namespace UWPHelper.UI
         {
             get { return $"{AppName} {ResourceLoaderHelper.GetString("InWindowsStore")}"; }
         }
+        private string GitHubLink
+        {
+            get { return $"{AppName} {ResourceLoaderHelper.GetString("OnGitHub")}"; }
+        }
 
         public string AppStoreId
         {
@@ -62,10 +69,24 @@ namespace UWPHelper.UI
             get { return (string)GetValue(AppDeveloperMailProperty); }
             set { SetValue(AppDeveloperMailProperty, value); }
         }
-        public ObservableCollection<AboutAppLink> AboutAppLinks
+        public ObservableCollection<HyperlinkButton> Links
         {
-            get { return (ObservableCollection<AboutAppLink>)GetValue(AboutAppLinksProperty); }
-            set { SetValue(AboutAppLinksProperty, value); }
+            get { return (ObservableCollection<HyperlinkButton>)GetValue(LinksProperty); }
+        }
+        public string GitHubProjectName
+        {
+            get { return (string)GetValue(GitHubProjectNameProperty); }
+            set { SetValue(GitHubProjectNameProperty, value); }
+        }
+        public string GitHubLinkUrl
+        {
+            get { return (string)GetValue(GitHubLinkUrlProperty); }
+            set { SetValue(GitHubLinkUrlProperty, value); }
+        }
+        public Visibility GitHubLinkVisibility
+        {
+            get { return (Visibility)GetValue(GitHubLinkVisibilityProperty); }
+            set { SetValue(GitHubLinkVisibilityProperty, value); }
         }
 
         public AboutApp()
@@ -77,20 +98,20 @@ namespace UWPHelper.UI
         {
             string content = (string)(((HyperlinkButton)sender).Content);
 
-            if (content.Contains(AppStoreLink))
+            if (content == AppStoreLink)
             {
                 await $@"ms-windows-store://pdp/?ProductId={AppStoreId}".LaunchAsUriAsync();
             }
-            else if (content.Contains(ResourceLoaderHelper.GetString("RateApp/Content")))
+            else if (content == ResourceLoaderHelper.GetString("RateApp/Content"))
             {
                 await $@"ms-windows-store://review/?ProductId={AppStoreId}".LaunchAsUriAsync();
             }
-            else if (content.Contains(ResourceLoaderHelper.GetString("ShareApp/Content")))
+            else if (content == ResourceLoaderHelper.GetString("ShareApp/Content"))
             {
                 DataTransferManager.GetForCurrentView().DataRequested += SharingDataRequested;
                 DataTransferManager.ShowShareUI();
             }
-            else if (content.Contains(ResourceLoaderHelper.GetString("MoreAppsByThisPublisher/Content")))
+            else if (content == ResourceLoaderHelper.GetString("MoreAppsByThisPublisher/Content"))
             {
                 await $@"ms-windows-store://publisher/?name={AppPublisher}".LaunchAsUriAsync();
             }
@@ -103,6 +124,7 @@ Windows version: {DeviceInfo.SystemVersion}
 Device info: {DeviceInfo.DeviceManufacturer} {DeviceInfo.DeviceModel}
 App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision} ({DeviceInfo.PackageArchitecture})
 ".Replace(" ", "%20").Replace("\r\n", "%0A");
+
                 await mailContent.LaunchAsUriAsync();
             }
         }

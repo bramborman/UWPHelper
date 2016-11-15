@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "UWPHelper", "UWPHelper\UWPHelper.shproj", "{C6E52F0F-39A1-4417-907E-20B85040D1DD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPHelper Sample App", "UWPHelper Sample App\UWPHelper Sample App.csproj", "{FD70E801-3D10-4955-A35B-DBF3AE4D3A63}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "UWPHelper", "UWPHelper\UWPHelper.shproj", "{7F198FCD-241B-4AAB-9F63-F944CB179D7F}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		UWPHelper\UWPHelper.projitems*{c6e52f0f-39a1-4417-907e-20b85040d1dd}*SharedItemsImports = 13
+		UWPHelper\UWPHelper.projitems*{7f198fcd-241b-4aab-9f63-f944cb179d7f}*SharedItemsImports = 13
 		UWPHelper\UWPHelper.projitems*{fd70e801-3d10-4955-a35b-dbf3ae4d3a63}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
