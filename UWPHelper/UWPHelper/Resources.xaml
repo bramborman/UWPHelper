@@ -17,6 +17,7 @@
     <Thickness x:Key="RadioButtonHeaderMargin">0,0,0,4</Thickness>
     <Thickness x:Key="TitleGapMargin">0,11,0,14</Thickness>
     <Thickness x:Key="TitleGapBottomMargin">0,0,0,14</Thickness>
+    <Thickness x:Key="WordSpaceLeftMargin">4,0,0,0</Thickness>
     <Thickness x:Key="WordSpaceRightMargin">0,0,4,0</Thickness>
 
     <Thickness x:Key="ButtonGapMargin">0,0,0,20</Thickness>

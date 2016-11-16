@@ -60,14 +60,14 @@
   <data name="LaunchButton.Content" xml:space="preserve">
     <value>Spustit</value>
   </data>
-  <data name="DeviceUsingText.Text" xml:space="preserve">
+  <data name="DeviceUsing.Text" xml:space="preserve">
     <value>Právě používáte</value>
   </data>
   <data name="Desktop.Text" xml:space="preserve">
-    <value>desktop</value>
+    <value>stolní</value>
   </data>
   <data name="Mobile.Text" xml:space="preserve">
-    <value>mobil</value>
+    <value>mobilní</value>
   </data>
   <data name="LaunchUriExceptionDialog.SecondaryButtonText" xml:space="preserve">
     <value>Zavřít</value>
@@ -98,5 +98,11 @@
   </data>
   <data name="SampleEnum.Three.Content" xml:space="preserve">
     <value>Tři</value>
+  </data>
+  <data name="Holographic.Text" xml:space="preserve">
+    <value>holografické</value>
+  </data>
+  <data name="Device.Text" xml:space="preserve">
+    <value>zařízení</value>
   </data>
 </root>

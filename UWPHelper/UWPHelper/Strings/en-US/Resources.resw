@@ -158,7 +158,7 @@
   </data>
   <data name="FeedbackText.Text" xml:space="preserve">
     <value>Got any ideas, suggestions or the app's not working like it should?
-Please submit a feedback and I'll use it for further development ;-)</value>
+Please submit a feedback and we'll use it for further development ;-)</value>
   </data>
   <data name="LoadingErrorDialog.Title" xml:space="preserve">
     <value>Unable to load your {0}</value>
@@ -177,7 +177,7 @@ Would you like to close the app now?</value>
     <value>Contact app developer</value>
   </data>
   <data name="Translating.Text" xml:space="preserve">
-    <value>If you want to help with translating this app to another languages, please contact me using the link above.</value>
+    <value>If you want to help with translating this app to another languages, please contact us using the link above.</value>
   </data>
   <data name="OnGitHub.Text" xml:space="preserve">
     <value>on GitHub</value>

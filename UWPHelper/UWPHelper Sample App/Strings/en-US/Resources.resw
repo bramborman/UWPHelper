@@ -60,8 +60,8 @@
   <data name="LaunchButton.Content" xml:space="preserve">
     <value>Launch</value>
   </data>
-  <data name="DeviceUsingText.Text" xml:space="preserve">
-    <value>You are now using</value>
+  <data name="DeviceUsing.Text" xml:space="preserve">
+    <value>You are now using a</value>
   </data>
   <data name="Desktop.Text" xml:space="preserve">
     <value>desktop</value>
@@ -98,5 +98,11 @@
   </data>
   <data name="SampleEnum.Three.Content" xml:space="preserve">
     <value>Three</value>
+  </data>
+  <data name="Holographic.Text" xml:space="preserve">
+    <value>holographic</value>
+  </data>
+  <data name="Device.Text" xml:space="preserve">
+    <value>device</value>
   </data>
 </root>

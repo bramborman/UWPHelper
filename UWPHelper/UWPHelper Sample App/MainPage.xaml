@@ -35,6 +35,16 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="HolographicStates">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Holographic"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TB_Holographic.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <ContentPresenter x:Name="CP_PageTitle"
@@ -121,7 +131,7 @@
                 <StackPanel Orientation="Horizontal"
                             Margin="{StaticResource PanelGapMargin}"
                             >
-                    <TextBlock x:Uid="DeviceUsingText"
+                    <TextBlock x:Uid="DeviceUsing"
                                Margin="{StaticResource WordSpaceRightMargin}"
                                />
 
@@ -134,6 +144,15 @@
                                x:Uid="Mobile"
                                x:DeferLoadStrategy="Lazy"
                                Visibility="Collapsed"
+                               />
+                    <TextBlock x:Name="TB_Holographic"
+                               x:Uid="Holographic"
+                               x:DeferLoadStrategy="Lazy"
+                               Visibility="Collapsed"
+                               />
+                    
+                    <TextBlock x:Uid="Device"
+                               Margin="{StaticResource WordSpaceLeftMargin}"
                                />
                 </StackPanel>
 
