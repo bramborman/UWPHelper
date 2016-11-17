@@ -24,7 +24,7 @@ namespace UWPHelper.SampleApp
             Suspending += OnSuspending;
         }
 
-        private async void Initialize(IActivatedEventArgs args)
+        protected override async void OnActivated(IActivatedEventArgs args)
         {
             bool loadAppData = AppData.Current == null;
             Task loadAppDataTask = null;
@@ -79,14 +79,9 @@ namespace UWPHelper.SampleApp
             }
         }
 
-        protected override void OnActivated(IActivatedEventArgs args)
-        {
-            Initialize(args);
-        }
-
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Initialize(e);
+            OnActivated(e);
         }
 
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
