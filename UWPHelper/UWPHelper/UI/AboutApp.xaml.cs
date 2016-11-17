@@ -44,10 +44,6 @@ namespace UWPHelper.UI
         {
             get { return $"{AppName} {ResourceLoaderHelper.GetString("InWindowsStore")}"; }
         }
-        private string GitHubLink
-        {
-            get { return $"{AppName} {ResourceLoaderHelper.GetString("OnGitHub")}"; }
-        }
 
         public string AppStoreId
         {
@@ -127,6 +123,11 @@ App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Rev
 
                 await mailContent.LaunchAsUriAsync();
             }
+        }
+
+        private async void OpenGitHubLink(object sender, RoutedEventArgs e)
+        {
+            await GitHubLinkUrl.LaunchAsUriAsync();
         }
 
         private void SharingDataRequested(DataTransferManager sender, DataRequestedEventArgs args)
