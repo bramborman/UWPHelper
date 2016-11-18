@@ -32,14 +32,14 @@ namespace UWPHelper.Utilities
             {
                 backingStore.Add(name, new PropertyData(type.Name == NULLABLE ? defaultValue : Convert.ChangeType(defaultValue, type), type, propertyChangedAction));
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
                 if (backingStore.ContainsKey(name))
                 {
                     throw new ArgumentException($"This class already contains property named {name}.");
                 }
 
-                throw ex;
+                throw exception;
             }
         }
 
@@ -49,10 +49,10 @@ namespace UWPHelper.Utilities
             {
                 return backingStore[propertyName].Value;
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
                 CheckPropertyName(propertyName);
-                throw ex;
+                throw exception;
             }
         }
 
@@ -86,10 +86,10 @@ namespace UWPHelper.Utilities
                     OnPropertyChanged(propertyName);
                 }
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
                 CheckPropertyName(propertyName);
-                throw ex;
+                throw exception;
             }
         }
         

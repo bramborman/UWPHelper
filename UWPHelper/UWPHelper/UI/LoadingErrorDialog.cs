@@ -1,9 +1,8 @@
 ﻿using UWPHelper.Utilities;
-using Windows.UI.Xaml.Controls;
 
 namespace UWPHelper.UI
 {
-    public sealed class LoadingErrorDialog : ContentDialog
+    public sealed class LoadingErrorDialog : AdvancedContentDialog
     {
         public LoadingErrorDialog(string title) : this(title, "")
         {

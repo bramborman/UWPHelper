@@ -54,11 +54,11 @@ namespace UWPHelper.SampleApp
             {
                 await TX_Uri.Text.LaunchAsUriAsync();
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
                 await new ContentDialog()
                 {
-                    Content = ex,
+                    Content = exception,
                     SecondaryButtonText = ResourceLoaderHelper.GetString("LaunchUriExceptionDialog/SecondaryButtonText")
                 }.ShowAsync();
             }
