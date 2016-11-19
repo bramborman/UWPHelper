@@ -161,9 +161,9 @@
                 <ui:AboutApp AppStoreId="9nblggh3zqdb"
                              AppUri="md-uwphelper:"
                              AppDeveloperMail="mariandolinsky@outlook.com"
+                             IsGitHubLinkEnabled="True"
                              GitHubProjectName="UWPHelper"
                              GitHubLinkUrl="https://github.com/bramborman/UWPHelper"
-                             GitHubLinkVisibility="Visible"
                              />
             </StackPanel>
         </ScrollViewer>

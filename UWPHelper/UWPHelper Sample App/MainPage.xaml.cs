@@ -44,23 +44,26 @@ namespace UWPHelper.SampleApp
             if (e.Key == VirtualKey.Enter)
             {
                 e.Handled = true;
-                LaunchUri(this, new RoutedEventArgs());
+                LaunchUri(this, null);
             }
         }
 
         private async void LaunchUri(object sender, RoutedEventArgs e)
         {
-            try
+            if (!string.IsNullOrWhiteSpace(TX_Uri.Text))
             {
-                await TX_Uri.Text.LaunchAsUriAsync();
-            }
-            catch (Exception exception)
-            {
-                await new ContentDialog()
+                try
                 {
-                    Content = exception,
-                    SecondaryButtonText = ResourceLoaderHelper.GetString("LaunchUriExceptionDialog/SecondaryButtonText")
-                }.ShowAsync();
+                    await TX_Uri.Text.LaunchAsUriAsync();
+                }
+                catch (Exception exception)
+                {
+                    await new ContentDialog()
+                    {
+                        Content = exception,
+                        SecondaryButtonText = ResourceLoaderHelper.GetString("LaunchUriExceptionDialog/SecondaryButtonText")
+                    }.ShowAsync();
+                }
             }
         }
     }

@@ -13,15 +13,7 @@ namespace UWPHelper.Utilities
 
             try
             {
-                StorageFile file = await folder.TryGetItemAsync(fileName) as StorageFile;
-
-                if (file == null)
-                {
-                    file = await folder.CreateFileAsync(fileName);
-                }
-
-                string json = await Task.Factory.StartNew(() => JsonConvert.SerializeObject(obj));
-                await FileIO.WriteTextAsync(file, json);
+                await FileIO.WriteTextAsync(await folder.TryGetItemAsync(fileName) as StorageFile ?? await folder.CreateFileAsync(fileName), await Task.Factory.StartNew(() => JsonConvert.SerializeObject(obj)));
             }
             catch
             {
@@ -45,19 +37,11 @@ namespace UWPHelper.Utilities
             try
             {
                 string json = await FileIO.ReadTextAsync(file);
-
-                if (string.IsNullOrWhiteSpace(json))
-                {
-                    output.Object = new T();
-                }
-                else
-                {
-                    output.Object = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(json));
-                }
+                output.Object = !string.IsNullOrWhiteSpace(json) ? await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(json)) : new T();
             }
             catch
             {
-                output.Object = new T();
+                output.Object  = new T();
                 output.Success = false;
             }
 

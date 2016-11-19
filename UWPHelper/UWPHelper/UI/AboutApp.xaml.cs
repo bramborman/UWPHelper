@@ -16,9 +16,9 @@ namespace UWPHelper.UI
         public static readonly DependencyProperty AppLogoPathProperty           = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
         public static readonly DependencyProperty AppDeveloperMailProperty      = DependencyProperty.Register(nameof(AppDeveloperMail), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty LinksProperty                 = DependencyProperty.Register(nameof(Links), typeof(ObservableCollection<HyperlinkButton>), typeof(AboutApp), new PropertyMetadata(new ObservableCollection<HyperlinkButton>()));
+        public static readonly DependencyProperty IsGitHubLinkEnabledProperty   = DependencyProperty.Register(nameof(IsGitHubLinkEnabled), typeof(bool), typeof(AboutApp), null);
         public static readonly DependencyProperty GitHubProjectNameProperty     = DependencyProperty.Register(nameof(GitHubProjectName), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty GitHubLinkUrlProperty         = DependencyProperty.Register(nameof(GitHubLinkUrl), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty GitHubLinkVisibilityProperty  = DependencyProperty.Register(nameof(GitHubLinkVisibility), typeof(Visibility), typeof(AboutApp), new PropertyMetadata(Visibility.Collapsed));
         
         private PackageVersion Version
         {
@@ -69,6 +69,11 @@ namespace UWPHelper.UI
         {
             get { return (ObservableCollection<HyperlinkButton>)GetValue(LinksProperty); }
         }
+        public bool IsGitHubLinkEnabled
+        {
+            get { return (bool)GetValue(IsGitHubLinkEnabledProperty); }
+            set { SetValue(IsGitHubLinkEnabledProperty, value); }
+        }
         public string GitHubProjectName
         {
             get { return (string)GetValue(GitHubProjectNameProperty); }
@@ -78,11 +83,6 @@ namespace UWPHelper.UI
         {
             get { return (string)GetValue(GitHubLinkUrlProperty); }
             set { SetValue(GitHubLinkUrlProperty, value); }
-        }
-        public Visibility GitHubLinkVisibility
-        {
-            get { return (Visibility)GetValue(GitHubLinkVisibilityProperty); }
-            set { SetValue(GitHubLinkVisibilityProperty, value); }
         }
 
         public AboutApp()
