@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using UWPHelper.Utilities;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.Email;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -113,15 +114,17 @@ namespace UWPHelper.UI
             }
             else
             {
-                string mailContent = $@"mailto:{AppDeveloperMail}?subject={AppName} app: &body=
+                EmailMessage emailMessage = new EmailMessage();
+                emailMessage.To.Add(new EmailRecipient(AppDeveloperMail, AppPublisher));
+                emailMessage.Subject = $"{AppName} app: ";
+                emailMessage.Body = $@"
 
 Device family: {DeviceInfo.SystemFamily}
 Windows version: {DeviceInfo.SystemVersion}
 Device info: {DeviceInfo.DeviceManufacturer} {DeviceInfo.DeviceModel}
-App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision} ({DeviceInfo.PackageArchitecture})
-".Replace(" ", "%20").Replace("\r\n", "%0A");
+App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision} ({DeviceInfo.PackageArchitecture})";
 
-                await mailContent.LaunchAsUriAsync();
+                await EmailManager.ShowComposeNewEmailAsync(emailMessage);
             }
         }
 
