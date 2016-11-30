@@ -6,7 +6,7 @@ namespace UWPHelper.Utilities
     // Inspired by Rudy Huyn - http://www.rudyhuyn.com/blog/2016/03/01/delay-an-action-debounce-and-throttle/
     public sealed class Delayer
     {
-        DispatcherTimer timer;
+        private DispatcherTimer timer;
 
         public bool IsRunning
         {

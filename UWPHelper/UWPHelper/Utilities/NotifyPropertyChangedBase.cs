@@ -8,9 +8,9 @@ namespace UWPHelper.Utilities
 
     public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
-        const string PROPERTY_NOT_REGISTERED_EXCEPTION_FORMAT = "There is no registered property called {0}.";
+        private const string PROPERTY_NOT_REGISTERED_EXCEPTION_FORMAT = "There is no registered property called {0}.";
 
-        Dictionary<string, PropertyData> backingStore;
+        private Dictionary<string, PropertyData> backingStore;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

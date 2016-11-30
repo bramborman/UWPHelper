@@ -1,6 +1,6 @@
 ﻿using System;
 using UWPHelper.UI;
-using UWPHelper.Utilities;
+using Windows.ApplicationModel.Resources;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,8 +24,9 @@ namespace UWPHelper.SampleApp
                 if (AppData.ShowLoadingError)
                 {
                     AppData.ShowLoadingError = false;
+                    ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
 
-                    if (await new LoadingErrorDialog(ResourceLoaderHelper.GetString("LoadingErrorDialog/Settings"), ResourceLoaderHelper.GetString("LoadingErrorDialog/ContinueWith")).ShowAsync() == ContentDialogResult.Primary)
+                    if (await new LoadingErrorDialog(resourceLoader.GetString("LoadingErrorDialog/Settings"), resourceLoader.GetString("LoadingErrorDialog/ContinueWith")).ShowAsync() == ContentDialogResult.Primary)
                     {
                         App.Current.Exit();
                     }
@@ -54,14 +55,14 @@ namespace UWPHelper.SampleApp
             {
                 try
                 {
-                    await TX_Uri.Text.LaunchAsUriAsync();
+                    await Launcher.LaunchUriAsync(new Uri(TX_Uri.Text));
                 }
                 catch (Exception exception)
                 {
                     await new ContentDialog()
                     {
                         Content = exception,
-                        SecondaryButtonText = ResourceLoaderHelper.GetString("LaunchUriExceptionDialog/SecondaryButtonText")
+                        SecondaryButtonText = ResourceLoader.GetForCurrentView().GetString("LaunchUriExceptionDialog/SecondaryButtonText")
                     }.ShowAsync();
                 }
             }

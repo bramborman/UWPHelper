@@ -7,9 +7,9 @@ namespace UWPHelper.Utilities
 {
     public sealed class ThreadPoolTimer
     {
-        bool invokeTickOnDispatcher;
-        Timer timer;
-        TimeSpan _interval;
+        private bool invokeTickOnDispatcher;
+        private Timer timer;
+        private TimeSpan _interval;
 
         public bool IsEnabled { get; private set; }
         public TimeSpan Interval
@@ -68,7 +68,9 @@ namespace UWPHelper.Utilities
         public void Stop()
         {
             IsEnabled = false;
+
             timer.Dispose();
+            timer = null;
         }
     }
 }

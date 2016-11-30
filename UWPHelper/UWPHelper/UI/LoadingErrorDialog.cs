@@ -1,4 +1,4 @@
-﻿using UWPHelper.Utilities;
+﻿using Windows.ApplicationModel.Resources;
 
 namespace UWPHelper.UI
 {
@@ -11,11 +11,13 @@ namespace UWPHelper.UI
 
         public LoadingErrorDialog(string title, string continueWith)
         {
-            Title   = string.Format(ResourceLoaderHelper.GetString("LoadingErrorDialog/Title"), title);
-            Content = string.Format(ResourceLoaderHelper.GetString("LoadingErrorDialog/Content"), string.IsNullOrWhiteSpace(continueWith) ? "" : $" {continueWith}");
+            ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
+            
+            Title   = string.Format(resourceLoader.GetString("LoadingErrorDialog/Title"), title);
+            Content = string.Format(resourceLoader.GetString("LoadingErrorDialog/Content"), string.IsNullOrWhiteSpace(continueWith) ? "" : $" {continueWith}");
 
-            PrimaryButtonText   = ResourceLoaderHelper.GetString("LoadingErrorDialog/PrimaryButtonText");
-            SecondaryButtonText = ResourceLoaderHelper.GetString("LoadingErrorDialog/SecondaryButtonText");
+            PrimaryButtonText   = resourceLoader.GetString("LoadingErrorDialog/PrimaryButtonText");
+            SecondaryButtonText = resourceLoader.GetString("LoadingErrorDialog/SecondaryButtonText");
         }
     }
 }

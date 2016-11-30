@@ -4,9 +4,8 @@ namespace UWPHelper.Utilities
 {
     public static class DisplayRequestHelper
     {
-        static DisplayRequest displayRequest;
-
-        static bool _isActive;
+        private static DisplayRequest displayRequest;
+        private static bool _isActive;
 
         public static bool IsActive
         {

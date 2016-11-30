@@ -5,6 +5,8 @@ using UWPHelper.Utilities;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Email;
+using Windows.ApplicationModel.Resources;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -20,7 +22,9 @@ namespace UWPHelper.UI
         public static readonly DependencyProperty IsGitHubLinkEnabledProperty   = DependencyProperty.Register(nameof(IsGitHubLinkEnabled), typeof(bool), typeof(AboutApp), null);
         public static readonly DependencyProperty GitHubProjectNameProperty     = DependencyProperty.Register(nameof(GitHubProjectName), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty GitHubLinkUrlProperty         = DependencyProperty.Register(nameof(GitHubLinkUrl), typeof(string), typeof(AboutApp), null);
-        
+
+        private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
+
         private PackageVersion Version
         {
             get { return Package.Current.Id.Version; }
@@ -35,7 +39,7 @@ namespace UWPHelper.UI
         }
         private string AppVersion
         {
-            get { return $"{ResourceLoaderHelper.GetString("Version")} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision}"; }
+            get { return $"{resourceLoader.GetString("Version")} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision}"; }
         }
         private string AppPublisher
         {
@@ -43,7 +47,7 @@ namespace UWPHelper.UI
         }
         private string AppStoreLink
         {
-            get { return $"{AppName} {ResourceLoaderHelper.GetString("InWindowsStore")}"; }
+            get { return $"{AppName} {resourceLoader.GetString("InWindowsStore")}"; }
         }
 
         public string AppStoreId
@@ -97,20 +101,20 @@ namespace UWPHelper.UI
 
             if (content == AppStoreLink)
             {
-                await $@"ms-windows-store://pdp/?ProductId={AppStoreId}".LaunchAsUriAsync();
+                await Launcher.LaunchUriAsync(new Uri($@"ms-windows-store://pdp/?ProductId={AppStoreId}"));
             }
-            else if (content == ResourceLoaderHelper.GetString("RateApp/Content"))
+            else if (content == resourceLoader.GetString("RateApp/Content"))
             {
-                await $@"ms-windows-store://review/?ProductId={AppStoreId}".LaunchAsUriAsync();
+                await Launcher.LaunchUriAsync(new Uri($@"ms-windows-store://review/?ProductId={AppStoreId}"));
             }
-            else if (content == ResourceLoaderHelper.GetString("ShareApp/Content"))
+            else if (content == resourceLoader.GetString("ShareApp/Content"))
             {
                 DataTransferManager.GetForCurrentView().DataRequested += SharingDataRequested;
                 DataTransferManager.ShowShareUI();
             }
-            else if (content == ResourceLoaderHelper.GetString("MoreAppsByThisPublisher/Content"))
+            else if (content == resourceLoader.GetString("MoreAppsByThisPublisher/Content"))
             {
-                await $@"ms-windows-store://publisher/?name={AppPublisher}".LaunchAsUriAsync();
+                await Launcher.LaunchUriAsync(new Uri($@"ms-windows-store://publisher/?name={AppPublisher}"));
             }
             else
             {
@@ -130,7 +134,7 @@ App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Rev
 
         private async void OpenGitHubLink(object sender, RoutedEventArgs e)
         {
-            await GitHubLinkUrl.LaunchAsUriAsync();
+            await Launcher.LaunchUriAsync(new Uri(GitHubLinkUrl));
         }
 
         private void SharingDataRequested(DataTransferManager sender, DataRequestedEventArgs args)
