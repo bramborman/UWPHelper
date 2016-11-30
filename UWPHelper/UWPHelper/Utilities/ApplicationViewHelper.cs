@@ -8,9 +8,12 @@ namespace UWPHelper.Utilities
 {
     public static class ApplicationViewHelper
     {
+        private static readonly bool isApplicationViewTypePresent = ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView");
+        private static readonly bool isStatusBarTypePresent       = ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
+
         public static void SetTitleBarColors(ElementTheme requestedTheme)
         {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+            if (isApplicationViewTypePresent)
             {
                 ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
@@ -69,7 +72,7 @@ namespace UWPHelper.Utilities
 
         public static void SetStatusBarColors(ElementTheme requestedTheme, ApplicationTheme applicationTheme, DisplayOrientations currentOrientation)
         {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            if (isStatusBarTypePresent)
             {
                 StatusBar statusBar = StatusBar.GetForCurrentView();
 

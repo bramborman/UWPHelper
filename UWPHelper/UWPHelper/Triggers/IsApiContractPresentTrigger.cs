@@ -31,13 +31,13 @@ namespace UWPHelper.Triggers
 
             if (isApiContractPresentTrigger.ReadLocalValue(MajorVersionProperty) != DependencyProperty.UnsetValue)
             {
-                if (isApiContractPresentTrigger.ReadLocalValue(MinorVersionProperty) == DependencyProperty.UnsetValue)
+                if (isApiContractPresentTrigger.ReadLocalValue(MinorVersionProperty) != DependencyProperty.UnsetValue)
                 {
-                    isApiContractPresentTrigger.SetActive(ApiInformation.IsApiContractPresent(isApiContractPresentTrigger.ContractName, (ushort)isApiContractPresentTrigger.MajorVersion));
+                    isApiContractPresentTrigger.SetActive(ApiInformation.IsApiContractPresent(isApiContractPresentTrigger.ContractName, (ushort)isApiContractPresentTrigger.MajorVersion, (ushort)isApiContractPresentTrigger.MinorVersion));
                 }
                 else
                 {
-                    isApiContractPresentTrigger.SetActive(ApiInformation.IsApiContractPresent(isApiContractPresentTrigger.ContractName, (ushort)isApiContractPresentTrigger.MajorVersion, (ushort)isApiContractPresentTrigger.MinorVersion));
+                    isApiContractPresentTrigger.SetActive(ApiInformation.IsApiContractPresent(isApiContractPresentTrigger.ContractName, (ushort)isApiContractPresentTrigger.MajorVersion));
                 }
             }
         }
