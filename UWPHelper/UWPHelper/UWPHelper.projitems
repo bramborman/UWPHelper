@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToBoolInvertedConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToIntConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\Int32ComparisonConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToIntConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResourceLoaderConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringIsNullOrWhiteSpaceInvertedConverter.cs" />
@@ -41,6 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DelegateCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DeviceInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DisplayRequestHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\KeyboardHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\NotifyPropertyChangedBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\StorageFileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ThreadPoolTimer.cs" />
