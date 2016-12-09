@@ -11,6 +11,7 @@
     <converters:Int32ComparisonConverter x:Key="Int32ComparisonConverter"/>
     <converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
     <converters:ResourceLoaderConverter x:Key="ResourceLoaderConverter"/>
+    <converters:StringFormatConverter x:Key="StringFormatConverter"/>
     <converters:StringIsNullOrWhiteSpaceInvertedConverter x:Key="StringIsNullOrWhiteSpaceInvertedConverter"/>
     <converters:StringToUpperCaseConverter x:Key="StringToUpperCaseConverter"/>
 
@@ -21,11 +22,14 @@
     <Thickness x:Key="WordSpaceLeftMargin">4,0,0,0</Thickness>
     <Thickness x:Key="WordSpaceRightMargin">0,0,4,0</Thickness>
 
+    <Thickness x:Key="SliderHeaderMargin">0,0,0,14</Thickness>
+
     <Thickness x:Key="ButtonGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="ComboBoxGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="CheckBoxGapMargin">0,0,0,14</Thickness>
     <Thickness x:Key="PanelGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="RadioButtonGapMargin">0,0,0,14</Thickness>
+    <Thickness x:Key="SliderGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="TextBoxGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="TimePickerGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="ToggleSwitchGapMargin">0,0,0,10</Thickness>

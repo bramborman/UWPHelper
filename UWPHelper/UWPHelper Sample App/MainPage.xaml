@@ -80,13 +80,13 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBox x:Name="TX_Uri"
-                             x:Uid="Launcher"
-                             Text="{x:Bind AppData.Uri, Mode=TwoWay}"
-                             Grid.Column="0"
-                             Grid.Row="0"
-                             KeyDown="TX_Uri_KeyDown"
-                             />
+                    <ui:AdvancedTextBox x:Name="ATX_Uri"
+                                        x:Uid="Launcher"
+                                        Text="{x:Bind AppData.Uri, Mode=TwoWay}"
+                                        Grid.Column="0"
+                                        Grid.Row="0"
+                                        SubmitKeyDown="LaunchUri"
+                                        />
 
                     <Button x:Name="Bt_Launch"
                             x:Uid="LaunchButton"

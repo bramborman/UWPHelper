@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\Int32ComparisonConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToIntConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResourceLoaderConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringIsNullOrWhiteSpaceInvertedConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToUpperCaseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\DeviceFamilyTrigger.cs" />
@@ -30,6 +31,7 @@
       <DependentUpon>AboutApp.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UI\AdvancedContentDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\AdvancedTextBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\HyperLinkButtons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\ColoredPivot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\LoadingErrorDialog.cs" />

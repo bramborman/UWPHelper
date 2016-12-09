@@ -18,4 +18,4 @@ So to make it work, just follow these steps:
 5. Reload it using the "Reload project" option in the UWPHelper Sample App project's context menu
 6. You're done :-) Everything should work as expected now
 
-<sub>To remove all warnings, you'll have to generate new temponary signing key... To do that, go to Package.appxmanifest > Packaging and click the "Choose Certificate..." button. In the dialog that will then open, create new certificate using the "Create test certificate..." option in the "Configure certificate..." combobox</sub>
+<sub>To remove all warnings, you'll have to generate new temponary signing key... To do that, go to Package.appxmanifest > Packaging and click the "Choose Certificate..." button. In the dialog that will then open, create new certificate using the "Create test certificate..." option in the "Configure certificate..." combobox.</sub>

@@ -4,7 +4,6 @@ using Windows.ApplicationModel.Resources;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 namespace UWPHelper.SampleApp
 {
@@ -36,26 +35,17 @@ namespace UWPHelper.SampleApp
                     }
                 }
 
-                TX_Uri.SelectionStart = TX_Uri.Text.Length;
+                ATX_Uri.SelectionStart = ATX_Uri.Text.Length;
             };
         }
-
-        private void TX_Uri_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == VirtualKey.Enter)
-            {
-                e.Handled = true;
-                LaunchUri(this, null);
-            }
-        }
-
+        
         private async void LaunchUri(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(TX_Uri.Text))
+            if (!string.IsNullOrWhiteSpace(ATX_Uri.Text))
             {
                 try
                 {
-                    await Launcher.LaunchUriAsync(new Uri(TX_Uri.Text));
+                    await Launcher.LaunchUriAsync(new Uri(ATX_Uri.Text));
                 }
                 catch (Exception exception)
                 {
