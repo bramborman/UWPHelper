@@ -9,30 +9,46 @@ namespace UWPHelper.UI
     {
         public event RoutedEventHandler SubmitKeyDown;
         public event RoutedEventHandler SubmitKeyUp;
+        public event RoutedEventHandler EscapeKeyDown;
+        public event RoutedEventHandler EscapeKeyUp;
 
         protected override void OnKeyDown(KeyRoutedEventArgs e)
         {
-            if (e.Key == VirtualKey.Enter)
+            switch (e.Key)
             {
-                e.Handled = true;
-                SubmitKeyDown?.Invoke(this, new RoutedEventArgs());
-            }
-            else
-            {
-                base.OnKeyDown(e);
+                case VirtualKey.Enter:
+                    e.Handled = true;
+                    SubmitKeyDown?.Invoke(this, new RoutedEventArgs());
+                    break;
+
+                case VirtualKey.Escape:
+                    e.Handled = true;
+                    EscapeKeyDown?.Invoke(this, new RoutedEventArgs());
+                    break;
+                
+                default:
+                    base.OnKeyDown(e);
+                    break;
             }
         }
 
         protected override void OnKeyUp(KeyRoutedEventArgs e)
         {
-            if (e.Key == VirtualKey.Enter)
+            switch (e.Key)
             {
-                e.Handled = true;
-                SubmitKeyUp?.Invoke(this, new RoutedEventArgs());
-            }
-            else
-            {
-                base.OnKeyUp(e);
+                case VirtualKey.Enter:
+                    e.Handled = true;
+                    SubmitKeyUp?.Invoke(this, new RoutedEventArgs());
+                    break;
+
+                case VirtualKey.Escape:
+                    e.Handled = true;
+                    EscapeKeyUp?.Invoke(this, new RoutedEventArgs());
+                    break;
+
+                default:
+                    base.OnKeyUp(e);
+                    break;
             }
         }
     }
