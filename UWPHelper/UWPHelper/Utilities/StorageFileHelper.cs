@@ -13,7 +13,7 @@ namespace UWPHelper.Utilities
 
             try
             {
-                await FileIO.WriteTextAsync(await folder.TryGetItemAsync(fileName) as StorageFile ?? await folder.CreateFileAsync(fileName), await Task.Factory.StartNew(() => JsonConvert.SerializeObject(obj)));
+                await FileIO.WriteTextAsync(await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists), await Task.Factory.StartNew(() => JsonConvert.SerializeObject(obj)));
             }
             catch
             {
