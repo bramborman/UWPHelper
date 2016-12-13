@@ -70,7 +70,7 @@
                       />
         </Grid>
 
-        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto"
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
                       Grid.Row="1"
                       >
             <StackPanel Style="{StaticResource Content}">

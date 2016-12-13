@@ -45,7 +45,7 @@ namespace UWPHelper.SampleApp
 
                 if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
                 {
-                    ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(330, 460));
+                    ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(450, 460));
                 }
             }
 

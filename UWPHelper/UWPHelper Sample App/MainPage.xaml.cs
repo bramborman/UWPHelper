@@ -51,7 +51,7 @@ namespace UWPHelper.SampleApp
                 {
                     await new ContentDialog()
                     {
-                        Content = exception,
+                        Content             = exception,
                         SecondaryButtonText = ResourceLoader.GetForCurrentView().GetString("LaunchUriExceptionDialog/SecondaryButtonText")
                     }.ShowAsync();
                 }

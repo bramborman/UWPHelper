@@ -58,20 +58,13 @@
             </StackPanel>
         </StackPanel>
 
-        <TextBlock Style="{StaticResource Description}"
-                   Margin="{StaticResource AboutAppGapBottomMargin}"
-                   >
-            <Run x:Uid="JsonNETLinkBeginning"/>
-            <Hyperlink UnderlineStyle="None" NavigateUri="http://www.newtonsoft.com/json">Json.NET</Hyperlink>
-            <Run x:Uid="JsonNETLinkEnding"/>
-        </TextBlock>
-
         <!-- Inspired by an app called Bakaláři -->
         <local:FontIconHyperLinkButton Content="{x:Bind AppStoreLink}" Glyph="&#xE14D;" Click="Hyperlink_Click"/>
         <local:FontIconHyperLinkButton x:Uid="RateApp"                 Glyph="&#xE24A;" Click="Hyperlink_Click"/>
         <local:FontIconHyperLinkButton x:Uid="ShareApp"                Glyph="&#xE72D;" Click="Hyperlink_Click"/>
-        <local:FontIconHyperLinkButton x:Uid="MoreAppsByThisPublisher" Glyph="&#xE1A6;" Click="Hyperlink_Click"/>
+        <local:FontIconHyperLinkButton x:Uid="MoreAppsByThisPublisher" Glyph="&#xE1E4;" Click="Hyperlink_Click"/>
         <local:FontIconHyperLinkButton x:Uid="ContactDeveloper"        Glyph="&#xE715;" Click="Hyperlink_Click"/>
+        <local:FontIconHyperLinkButton x:Uid="ThirdPartySoftwareInfo"  Glyph="&#xE7C3;" Click="Hyperlink_Click"/>
         <local:PathIconHyperLinkButton x:Name="PHB_GitHubLink"
                                        x:DeferLoadStrategy="Lazy"
                                        Visibility="Collapsed"

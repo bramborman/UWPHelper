@@ -150,12 +150,6 @@
   <data name="SystemTheme.Content" xml:space="preserve">
     <value>Use system setting</value>
   </data>
-  <data name="JsonNETLinkBeginning.Text" xml:space="preserve">
-    <value>This app uses</value>
-  </data>
-  <data name="JsonNETLinkEnding.Text" xml:space="preserve">
-    <value>to store your data.</value>
-  </data>
   <data name="FeedbackText.Text" xml:space="preserve">
     <value>Got any ideas, suggestions or the app's not working like it should?
 Please submit a feedback and we'll use it for further development ;-)</value>
@@ -181,5 +175,14 @@ Would you like to close the app now?</value>
   </data>
   <data name="OnGitHub.Text" xml:space="preserve">
     <value>on GitHub</value>
+  </data>
+  <data name="ThirdPartySoftwareInfo.Content" xml:space="preserve">
+    <value>3rd party software licenses</value>
+  </data>
+  <data name="ThirdPartySoftwareInfoDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ThirdPartySoftwareInfoDialog.Title" xml:space="preserve">
+    <value>3rd party software licenses</value>
   </data>
 </root>

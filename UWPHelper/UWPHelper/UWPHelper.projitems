@@ -35,8 +35,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\HyperLinkButtons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\ColoredPivot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\LoadingErrorDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\ThirdPartySoftwareInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\ThemeSelector.xaml.cs">
       <DependentUpon>ThemeSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\ThirdPartySoftwareInfoDialog.xaml.cs">
+      <DependentUpon>ThirdPartySoftwareInfoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ApplicationViewHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DebugMessages.cs" />
@@ -59,6 +63,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)UI\ThemeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UI\ThirdPartySoftwareInfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

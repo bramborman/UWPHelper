@@ -1,5 +1,6 @@
 ﻿using Microsoft.Services.Store.Engagement;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UWPHelper.Utilities;
 using Windows.ApplicationModel;
@@ -14,14 +15,26 @@ namespace UWPHelper.UI
 {
     public sealed partial class AboutApp : UserControl
     {
-        public static readonly DependencyProperty AppStoreIdProperty            = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppUriProperty                = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppLogoPathProperty           = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
-        public static readonly DependencyProperty AppDeveloperMailProperty      = DependencyProperty.Register(nameof(AppDeveloperMail), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty LinksProperty                 = DependencyProperty.Register(nameof(Links), typeof(ObservableCollection<HyperlinkButton>), typeof(AboutApp), new PropertyMetadata(new ObservableCollection<HyperlinkButton>()));
-        public static readonly DependencyProperty IsGitHubLinkEnabledProperty   = DependencyProperty.Register(nameof(IsGitHubLinkEnabled), typeof(bool), typeof(AboutApp), null);
-        public static readonly DependencyProperty GitHubProjectNameProperty     = DependencyProperty.Register(nameof(GitHubProjectName), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty GitHubLinkUrlProperty         = DependencyProperty.Register(nameof(GitHubLinkUrl), typeof(string), typeof(AboutApp), null);
+        private const string JSON_NET_LICENSE =
+@"The MIT License (MIT)
+
+Copyright (c) 2007 James Newton-King
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ""Software""), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.";
+
+        public static readonly DependencyProperty AppStoreIdProperty             = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppUriProperty                 = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppLogoPathProperty            = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
+        public static readonly DependencyProperty AppDeveloperMailProperty       = DependencyProperty.Register(nameof(AppDeveloperMail), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty ThirdPartySoftwareInfoProperty = DependencyProperty.Register(nameof(ThirdPartySoftwareInfo), typeof(List<ThirdPartySoftwareInfo>), typeof(AboutApp), new PropertyMetadata(new List<ThirdPartySoftwareInfo> { new ThirdPartySoftwareInfo { Name = "Json.NET", License = JSON_NET_LICENSE } }));
+        public static readonly DependencyProperty IsGitHubLinkEnabledProperty    = DependencyProperty.Register(nameof(IsGitHubLinkEnabled), typeof(bool), typeof(AboutApp), null);
+        public static readonly DependencyProperty GitHubProjectNameProperty      = DependencyProperty.Register(nameof(GitHubProjectName), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty GitHubLinkUrlProperty          = DependencyProperty.Register(nameof(GitHubLinkUrl), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty LinksProperty = DependencyProperty.Register(nameof(Links), typeof(ObservableCollection<HyperlinkButton>), typeof(AboutApp), new PropertyMetadata(new ObservableCollection<HyperlinkButton>()));
 
         private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
 
@@ -70,9 +83,9 @@ namespace UWPHelper.UI
             get { return (string)GetValue(AppDeveloperMailProperty); }
             set { SetValue(AppDeveloperMailProperty, value); }
         }
-        public ObservableCollection<HyperlinkButton> Links
+        public List<ThirdPartySoftwareInfo> ThirdPartySoftwareInfo
         {
-            get { return (ObservableCollection<HyperlinkButton>)GetValue(LinksProperty); }
+            get { return (List<ThirdPartySoftwareInfo>)GetValue(ThirdPartySoftwareInfoProperty); }
         }
         public bool IsGitHubLinkEnabled
         {
@@ -88,6 +101,10 @@ namespace UWPHelper.UI
         {
             get { return (string)GetValue(GitHubLinkUrlProperty); }
             set { SetValue(GitHubLinkUrlProperty, value); }
+        }
+        public ObservableCollection<HyperlinkButton> Links
+        {
+            get { return (ObservableCollection<HyperlinkButton>)GetValue(LinksProperty); }
         }
 
         public AboutApp()
@@ -116,7 +133,7 @@ namespace UWPHelper.UI
             {
                 await Launcher.LaunchUriAsync(new Uri($@"ms-windows-store://publisher/?name={AppPublisher}"));
             }
-            else
+            else if (content == resourceLoader.GetString("ContactDeveloper/Content"))
             {
                 EmailMessage emailMessage = new EmailMessage();
                 emailMessage.To.Add(new EmailRecipient(AppDeveloperMail, AppPublisher));
@@ -129,6 +146,10 @@ Device info: {DeviceInfo.DeviceManufacturer} {DeviceInfo.DeviceModel}
 App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision} ({DeviceInfo.PackageArchitecture})";
 
                 await EmailManager.ShowComposeNewEmailAsync(emailMessage);
+            }
+            else
+            {
+                await new ThirdPartySoftwareInfoDialog(ThirdPartySoftwareInfo).ShowAsync();
             }
         }
 
