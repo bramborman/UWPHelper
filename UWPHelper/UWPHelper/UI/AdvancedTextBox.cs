@@ -27,10 +27,10 @@ namespace UWPHelper.UI
             set { SetValue(TextFallbackValueProperty, value); }
         }
 
-        public event RoutedEventHandler SubmitKeyDown;
-        public event RoutedEventHandler SubmitKeyUp;
-        public event RoutedEventHandler EscapeKeyDown;
-        public event RoutedEventHandler EscapeKeyUp;
+        public event KeyEventHandler SubmitKeyDown;
+        public event KeyEventHandler SubmitKeyUp;
+        public event KeyEventHandler EscapeKeyDown;
+        public event KeyEventHandler EscapeKeyUp;
 
         protected override void OnGotFocus(RoutedEventArgs e)
         {
@@ -57,23 +57,23 @@ namespace UWPHelper.UI
             switch (e.Key)
             {
                 case VirtualKey.Enter:
-                    RoutedEventHandler submitKeyDownHandler = SubmitKeyDown;
+                    KeyEventHandler submitKeyDownHandler = SubmitKeyDown;
 
                     if (submitKeyDownHandler != null)
                     {
                         e.Handled = true;
-                        submitKeyDownHandler.Invoke(this, new RoutedEventArgs());
+                        submitKeyDownHandler.Invoke(this, e);
                     }
 
                     break;
 
                 case VirtualKey.Escape:
-                    RoutedEventHandler escapeKeyDownHandler = EscapeKeyDown;
+                    KeyEventHandler escapeKeyDownHandler = EscapeKeyDown;
 
                     if (escapeKeyDownHandler != null)
                     {
                         e.Handled = true;
-                        escapeKeyDownHandler.Invoke(this, new RoutedEventArgs());
+                        escapeKeyDownHandler.Invoke(this, e);
                     }
 
                     break;
@@ -87,23 +87,23 @@ namespace UWPHelper.UI
             switch (e.Key)
             {
                 case VirtualKey.Enter:
-                    RoutedEventHandler submitKeyUpHandler = SubmitKeyUp;
+                    KeyEventHandler submitKeyUpHandler = SubmitKeyUp;
 
                     if (submitKeyUpHandler != null)
                     {
                         e.Handled = true;
-                        submitKeyUpHandler.Invoke(this, new RoutedEventArgs());
+                        submitKeyUpHandler.Invoke(this, e);
                     }
 
                     break;
 
                 case VirtualKey.Escape:
-                    RoutedEventHandler escapeKeyUpHandler = EscapeKeyUp;
+                    KeyEventHandler escapeKeyUpHandler = EscapeKeyUp;
 
                     if (escapeKeyUpHandler != null)
                     {
                         e.Handled = true;
-                        escapeKeyUpHandler.Invoke(this, new RoutedEventArgs());
+                        escapeKeyUpHandler.Invoke(this, e);
                     }
 
                     break;
