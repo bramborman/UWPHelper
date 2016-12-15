@@ -10,13 +10,13 @@ namespace UWPHelper.Utilities
     {
         private const string PROPERTY_NOT_REGISTERED_EXCEPTION_FORMAT = "There is no registered property called {0}.";
 
-        private Dictionary<string, PropertyData> backingStore;
+        private readonly Dictionary<string, PropertyData> backingStore = new Dictionary<string, PropertyData>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected NotifyPropertyChangedBase()
         {
-            backingStore = new Dictionary<string, PropertyData>();
+
         }
 
         protected void RegisterProperty(string name, Type type, object defaultValue)
@@ -26,11 +26,9 @@ namespace UWPHelper.Utilities
 
         protected void RegisterProperty(string name, Type type, object defaultValue, PropertyChangedAction propertyChangedAction)
         {
-            const string NULLABLE = "Nullable`1";
-
             try
             {
-                backingStore.Add(name, new PropertyData(type.Name == NULLABLE ? defaultValue : Convert.ChangeType(defaultValue, type), type, propertyChangedAction));
+                backingStore.Add(name, new PropertyData(type.Name == "Nullable`1" ? defaultValue : Convert.ChangeType(defaultValue, type), type, propertyChangedAction));
             }
             catch (Exception exception)
             {

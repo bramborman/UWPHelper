@@ -8,8 +8,9 @@ namespace UWPHelper.UI
     {
         public NumberTextBox()
         {
-            InputScope = new InputScope();
-            InputScope.Names.Add(new InputScopeName { NameValue = InputScopeNameValue.Number });
+            InputScope inputScope = new InputScope();
+            inputScope.Names.Add(new InputScopeName { NameValue = InputScopeNameValue.Number });
+            InputScope = inputScope;
         }
 
         protected override void OnGotFocus(RoutedEventArgs e)
@@ -27,12 +28,17 @@ namespace UWPHelper.UI
         private void TextValidation(TextBox sender, TextBoxTextChangingEventArgs args)
         {
             int cursorPosition = SelectionStart;
+            int index = 0;
 
-            for (int i = 0; i < Text.Length; i++)
+            while (index < Text.Length)
             {
-                if (!char.IsDigit(Text[i]))
+                if (!char.IsDigit(Text[index]))
                 {
-                    Text = Text.Remove(i, 1);
+                    Text = Text.Remove(index, 1);
+                }
+                else
+                {
+                    index++;
                 }
             }
 
