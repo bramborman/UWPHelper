@@ -79,7 +79,10 @@ namespace UWPHelper.UI
                     break;
             }
 
-            base.OnKeyDown(e);
+            if (!e.Handled)
+            {
+                base.OnKeyDown(e);
+            }
         }
 
         protected override void OnKeyUp(KeyRoutedEventArgs e)
@@ -109,7 +112,10 @@ namespace UWPHelper.UI
                     break;
             }
 
-            base.OnKeyUp(e);
+            if (!e.Handled)
+            {
+                base.OnKeyUp(e);
+            }
         }
     }
 }
