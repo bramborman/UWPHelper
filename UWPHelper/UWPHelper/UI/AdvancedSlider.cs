@@ -5,18 +5,34 @@ using Windows.UI.Xaml.Controls;
 
 namespace UWPHelper.UI
 {
+    public delegate void AdvancedSliderValueChangedDelayedEventHandler(object sender, AdvancedSliderValueChangedDelayedEventArgs e);
+
+    public sealed class AdvancedSliderValueChangedDelayedEventArgs
+    {
+        public double OldValue { get; }
+        public double NewValue { get; }
+
+        public AdvancedSliderValueChangedDelayedEventArgs(double oldValue, double newValue)
+        {
+            OldValue = oldValue;
+            NewValue = newValue;
+        }
+    }
+
     public class AdvancedSlider : Slider
     {
-        public static readonly DependencyProperty IsValueChangedDelayEnabledProperty    = DependencyProperty.Register(nameof(IsValueChangedDelayEnabled), typeof(bool), typeof(AdvancedSlider), new PropertyMetadata(false, OnIsValueChangedDelayEnabledPropertyChanged));
-        public static readonly DependencyProperty ValueChangedDelayMilisecondsProperty  = DependencyProperty.Register(nameof(ValueChangedDelayMiliseconds), typeof(double), typeof(AdvancedSlider), new PropertyMetadata(0.0, OnValueChangedDelayMilisecondsPropertyChanged));
+        public static readonly DependencyProperty IsValueChangedDelayedEnabledProperty = DependencyProperty.Register(nameof(IsValueChangedDelayedEnabled), typeof(bool), typeof(AdvancedSlider), new PropertyMetadata(false, OnIsValueChangedDelayEnabledPropertyChanged));
+        public static readonly DependencyProperty ValueChangedDelayMilisecondsProperty = DependencyProperty.Register(nameof(ValueChangedDelayMiliseconds), typeof(double), typeof(AdvancedSlider), new PropertyMetadata(0.0, OnValueChangedDelayMilisecondsPropertyChanged));
+
+        public event AdvancedSliderValueChangedDelayedEventHandler ValueChangedDelayed;
         
-        private double oldValue;
+        private double oldValueDelayed;
         private Delayer delayer;
 
-        public bool IsValueChangedDelayEnabled
+        public bool IsValueChangedDelayedEnabled
         {
-            get { return (bool)GetValue(IsValueChangedDelayEnabledProperty); }
-            set { SetValue(IsValueChangedDelayEnabledProperty, value); }
+            get { return (bool)GetValue(IsValueChangedDelayedEnabledProperty); }
+            set { SetValue(IsValueChangedDelayedEnabledProperty, value); }
         }
         public double ValueChangedDelayMiliseconds
         {
@@ -26,37 +42,29 @@ namespace UWPHelper.UI
 
         public AdvancedSlider()
         {
-            long valuePropertyChangedCallbackToken = 0;
-
-            valuePropertyChangedCallbackToken = RegisterPropertyChangedCallback(ValueProperty, (d, dp) =>
-            {
-                // Get the initial Value
-                oldValue = Value;
-                UnregisterPropertyChangedCallback(ValueProperty, valuePropertyChangedCallbackToken);
-            });
+            oldValueDelayed = Value;
         }
 
         public void ForceRaiseValueChanged()
         {
             delayer.Stop();
-            Delayer_Tick(null);
+            OnValueChangedDelayed(null);
         }
 
-        private void Delayer_Tick(Delayer obj)
+        private void OnValueChangedDelayed(Delayer obj)
         {
-            base.OnValueChanged(oldValue, Value);
+            ValueChangedDelayed?.Invoke(this, new AdvancedSliderValueChangedDelayedEventArgs(oldValueDelayed, Value));
+            oldValueDelayed = Value;
         }
 
         protected override void OnValueChanged(double oldValue, double newValue)
         {
-            if (!IsValueChangedDelayEnabled)
+            if (IsValueChangedDelayedEnabled)
             {
-                base.OnValueChanged(oldValue, newValue);
+                delayer?.Reset();
             }
-            else
-            {
-                delayer.Reset();
-            }
+
+            base.OnValueChanged(oldValue, newValue);
         }
 
         private static void OnIsValueChangedDelayEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -65,12 +73,13 @@ namespace UWPHelper.UI
 
             if ((bool)e.NewValue)
             {
-                advancedSlider.delayer = new Delayer(advancedSlider.ValueChangedDelayMiliseconds);
-                advancedSlider.delayer.Tick += advancedSlider.Delayer_Tick;
+                advancedSlider.oldValueDelayed = advancedSlider.Value;
+                advancedSlider.delayer         = new Delayer(advancedSlider.ValueChangedDelayMiliseconds);
+                advancedSlider.delayer.Tick   += advancedSlider.OnValueChangedDelayed;
             }
             else
             {
-                advancedSlider.delayer.Tick -= advancedSlider.Delayer_Tick;
+                advancedSlider.delayer.Tick -= advancedSlider.OnValueChangedDelayed;
                 advancedSlider.delayer = null;
             }
         }
@@ -84,7 +93,7 @@ namespace UWPHelper.UI
                 throw new ArgumentOutOfRangeException(nameof(advancedSlider.ValueChangedDelayMiliseconds));
             }
 
-            if (advancedSlider.IsValueChangedDelayEnabled)
+            if (advancedSlider.IsValueChangedDelayedEnabled)
             {
                 advancedSlider.delayer.Delay = TimeSpan.FromMilliseconds(advancedSlider.ValueChangedDelayMiliseconds);
             }
