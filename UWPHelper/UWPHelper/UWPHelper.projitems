@@ -31,6 +31,7 @@
       <DependentUpon>AboutApp.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UI\AdvancedContentDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\AdvancedSlider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\AdvancedTextBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\HyperLinkButtons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\ColoredPivot.cs" />

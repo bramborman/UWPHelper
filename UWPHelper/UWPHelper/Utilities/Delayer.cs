@@ -12,25 +12,30 @@ namespace UWPHelper.Utilities
         {
             get { return timer.IsEnabled; }
         }
+        public TimeSpan Delay
+        {
+            get { return timer.Interval; }
+            set { timer.Interval = value; }
+        }
 
-        public event EventHandler Tick;
+        public event Action<Delayer> Tick;
 
-        public Delayer(double secondsInterval) : this(TimeSpan.FromSeconds(secondsInterval))
+        public Delayer(double secondsDelay) : this(TimeSpan.FromSeconds(secondsDelay))
         {
 
         }
 
-        public Delayer(TimeSpan interval)
+        public Delayer(TimeSpan delay)
         {
             timer = new DispatcherTimer();
-            timer.Interval = interval;
+            timer.Interval = delay;
             timer.Tick += Timer_Tick;
         }
 
         private void Timer_Tick(object sender, object e)
         {
             timer.Stop();
-            Tick?.Invoke(this, new EventArgs());
+            Tick?.Invoke(this);
         }
 
         public void Stop()
