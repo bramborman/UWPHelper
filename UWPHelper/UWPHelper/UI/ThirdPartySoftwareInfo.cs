@@ -2,7 +2,7 @@
 {
     public sealed class ThirdPartySoftwareInfo
     {
-        public string Name { get; set; }
-        public string License { get; set; }
+        public string SoftwareName { get; set; }
+        public string SoftwareLicense { get; set; }
     }
 }
