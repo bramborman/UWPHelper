@@ -30,6 +30,7 @@
     <Thickness x:Key="PanelGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="RadioButtonGapMargin">0,0,0,14</Thickness>
     <Thickness x:Key="SliderGapMargin">0,0,0,20</Thickness>
+    <Thickness x:Key="TextBlockGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="TextBoxGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="TimePickerGapMargin">0,0,0,20</Thickness>
     <Thickness x:Key="ToggleSwitchGapMargin">0,0,0,10</Thickness>
@@ -48,7 +49,7 @@
     <text:FontWeight x:Key="PageTitleFontWeight">Bold</text:FontWeight>
     <Thickness x:Key="PageTitlePadding">12,0,0,0</Thickness>
 
-    <x:Double x:Key="AboutAppLinkIconSize">12</x:Double>
+    <x:Double x:Key="IconHyperLinkButtonIconSize">12</x:Double>
 
     <Style x:Key="Content" TargetType="StackPanel">
         <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -180,7 +181,7 @@
                                           >
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="{TemplateBinding Glyph}"
-                                          FontSize="{StaticResource AboutAppLinkIconSize}"
+                                          FontSize="{StaticResource IconHyperLinkButtonIconSize}"
                                           Margin="{StaticResource WordSpaceRightMargin}"
                                           />
                                 <ContentPresenter Content="{TemplateBinding Content}"/>
@@ -257,7 +258,7 @@
                                       Data="{TemplateBinding Data}"
                                       Fill="{TemplateBinding Foreground}"
                                       Stretch="Uniform"
-                                      Height="{StaticResource AboutAppLinkIconSize}"
+                                      Height="{StaticResource IconHyperLinkButtonIconSize}"
                                       Margin="{StaticResource WordSpaceRightMargin}"
                                       />
                                 <ContentPresenter Content="{TemplateBinding Content}"/>
@@ -322,7 +323,7 @@
                                           >
                             <StackPanel Orientation="Horizontal">
                                 <BitmapIcon UriSource="{TemplateBinding UriSource}"
-                                            Height="{StaticResource AboutAppLinkIconSize}"
+                                            Height="{StaticResource IconHyperLinkButtonIconSize}"
                                             Margin="{StaticResource WordSpaceRightMargin}"
                                             />
                                 <ContentPresenter Content="{TemplateBinding Content}"/>

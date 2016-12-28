@@ -37,7 +37,7 @@ namespace UWPHelper.Utilities
             try
             {
                 string json = await FileIO.ReadTextAsync(file);
-                output.Object = !string.IsNullOrWhiteSpace(json) ? await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(json)) : new T();
+                output.Object = !string.IsNullOrWhiteSpace(json) ? await Task.Run(() => JsonConvert.DeserializeObject<T>(json)) : new T();
             }
             catch
             {
