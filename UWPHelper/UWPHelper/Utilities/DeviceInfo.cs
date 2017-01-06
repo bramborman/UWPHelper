@@ -4,7 +4,7 @@ using Windows.System.Profile;
 
 namespace UWPHelper.Utilities
 {
-    // Base code taken from https://www.suchan.cz/2015/08/uwp-quick-tip-getting-device-os-and-app-info/
+    // Original taken from https://www.suchan.cz/2015/08/uwp-quick-tip-getting-device-os-and-app-info/
     public static class DeviceInfo
     {
         public static string SystemFamily { get; }

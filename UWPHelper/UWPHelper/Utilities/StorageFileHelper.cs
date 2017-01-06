@@ -20,7 +20,7 @@ namespace UWPHelper.Utilities
                 success = false;
             }
 
-            DebugMessages.OperationInfo(fileName, "saving", success);
+            DebugHelper.OperationInfo(fileName, "saving", success);
             return success;
         }
 
@@ -36,6 +36,7 @@ namespace UWPHelper.Utilities
 
             try
             {
+                // Reading from StorageFile could fail because of the file is used by another proccess
                 string json = await FileIO.ReadTextAsync(file);
                 output.Object = !string.IsNullOrWhiteSpace(json) ? await Task.Run(() => JsonConvert.DeserializeObject<T>(json)) : new T();
             }
@@ -45,7 +46,7 @@ namespace UWPHelper.Utilities
                 output.Success = false;
             }
 
-            DebugMessages.OperationInfo(file.Name, "loading", output.Success);
+            DebugHelper.OperationInfo(file.Name, "loading", output.Success);
             return output;
         }
 

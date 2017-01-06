@@ -24,7 +24,9 @@ namespace UWPHelper.SampleApp
             Suspending += OnSuspending;
         }
 
+#pragma warning disable IDE1006 // Naming Styles
         protected override async void OnActivated(IActivatedEventArgs args)
+#pragma warning restore IDE1006 // Naming Styles
         {
             bool loadAppData = AppData.Current == null;
             Task loadAppDataTask = null;
@@ -89,7 +91,9 @@ namespace UWPHelper.SampleApp
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
+#pragma warning disable IDE1006 // Naming Styles
         private async void OnSuspending(object sender, SuspendingEventArgs e)
+#pragma warning restore IDE1006 // Naming Styles
         {
             SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
 

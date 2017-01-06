@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using UWPHelper.UI;
 using UWPHelper.Utilities;
 using Windows.Storage;
@@ -63,6 +64,13 @@ namespace UWPHelper.SampleApp
 
         public static async Task LoadAsync()
         {
+#if DEBUG
+            if (Current != null)
+            {
+                throw new Exception("You're not doing it right ;)");
+            }
+#endif
+
             var loadObjectAsyncResult = await StorageFileHelper.LoadObjectAsync<AppData>(FILE_NAME, ApplicationData.Current.LocalFolder);
             Current             = loadObjectAsyncResult.Object;
             ShowLoadingError    = !loadObjectAsyncResult.Success;

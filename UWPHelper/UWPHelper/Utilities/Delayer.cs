@@ -27,8 +27,10 @@ namespace UWPHelper.Utilities
 
         public Delayer(TimeSpan delay)
         {
-            timer = new DispatcherTimer();
-            timer.Interval = delay;
+            timer = new DispatcherTimer()
+            {
+                Interval = delay
+            };
             timer.Tick += Timer_Tick;
         }
 

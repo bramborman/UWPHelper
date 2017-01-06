@@ -13,12 +13,7 @@ namespace UWPHelper.Utilities
         private readonly Dictionary<string, PropertyData> backingStore = new Dictionary<string, PropertyData>();
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        protected NotifyPropertyChangedBase()
-        {
-
-        }
-
+        
         protected void RegisterProperty(string name, Type type, object defaultValue)
         {
             RegisterProperty(name, type, defaultValue, null);

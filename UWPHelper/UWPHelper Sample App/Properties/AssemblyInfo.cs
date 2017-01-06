@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("UWPHelper Sample App")]
-[assembly: AssemblyCopyright("© 2016 Marian Dolinský")]
+[assembly: AssemblyCopyright("© 2017 Marian Dolinský")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -39,7 +39,7 @@ namespace UWPHelper.SampleApp
             };
         }
         
-        private async void LaunchUri(object sender, RoutedEventArgs e)
+        private async void LaunchUriAsync(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(ATX_Uri.Text))
             {

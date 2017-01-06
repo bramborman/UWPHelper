@@ -124,7 +124,7 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
             InitializeComponent();
         }
 
-        private async void Hyperlink_Click(object sender, RoutedEventArgs e)
+        private async void OpenHyperLinkAsync(object sender, RoutedEventArgs e)
         {
             string content = (string)(((HyperlinkButton)sender).Content);
 
@@ -165,7 +165,7 @@ App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Rev
             }
         }
 
-        private async void OpenGitHubLink(object sender, RoutedEventArgs e)
+        private async void OpenGitHubLinkAsync(object sender, RoutedEventArgs e)
         {
             await Launcher.LaunchUriAsync(new Uri(GitHubLinkUrl));
         }
@@ -181,7 +181,7 @@ App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Rev
             DataTransferManager.GetForCurrentView().DataRequested -= SharingDataRequested;
         }
         
-        private async void OpenFeedbackHub(object sender, RoutedEventArgs e)
+        private async void OpenFeedbackHubAsync(object sender, RoutedEventArgs e)
         {
             await StoreServicesFeedbackLauncher.GetDefault().LaunchAsync();
         }

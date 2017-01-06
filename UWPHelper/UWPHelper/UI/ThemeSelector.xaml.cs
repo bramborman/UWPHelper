@@ -18,7 +18,7 @@ namespace UWPHelper.UI
             get { return _isDefaultThemeAvailable; }
         }
 
-        private bool _IsDefaultThemeAvailable
+        private bool IsDefaultThemeAvailablePrivate
         {
             get { return _isDefaultThemeAvailable; }
         }
