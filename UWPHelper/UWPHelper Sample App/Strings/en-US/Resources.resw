@@ -58,7 +58,7 @@
     <value>Launcher</value>
   </data>
   <data name="LaunchButton.Content" xml:space="preserve">
-    <value>Launch</value>
+    <value>LAUNCH</value>
   </data>
   <data name="DeviceUsing.Text" xml:space="preserve">
     <value>You are now using a</value>

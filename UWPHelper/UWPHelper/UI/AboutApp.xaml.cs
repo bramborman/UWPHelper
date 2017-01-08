@@ -38,15 +38,13 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.";
         #endregion
 
-        public static readonly DependencyProperty AppStoreIdProperty             = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppUriProperty                 = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty AppLogoPathProperty            = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
-        public static readonly DependencyProperty AppDeveloperMailProperty       = DependencyProperty.Register(nameof(AppDeveloperMail), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty ThirdPartySoftwareInfoProperty = DependencyProperty.Register(nameof(ThirdPartySoftwareInfo), typeof(List<ThirdPartySoftwareInfo>), typeof(AboutApp), new PropertyMetadata(new List<ThirdPartySoftwareInfo> { new ThirdPartySoftwareInfo { SoftwareName = "UWPHelper", SoftwareLicense = UWPHELPER_LICENSE }, new ThirdPartySoftwareInfo { SoftwareName = "Json.NET", SoftwareLicense = JSON_NET_LICENSE } }));
-        public static readonly DependencyProperty IsGitHubLinkEnabledProperty    = DependencyProperty.Register(nameof(IsGitHubLinkEnabled), typeof(bool), typeof(AboutApp), null);
-        public static readonly DependencyProperty GitHubProjectNameProperty      = DependencyProperty.Register(nameof(GitHubProjectName), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty GitHubLinkUrlProperty          = DependencyProperty.Register(nameof(GitHubLinkUrl), typeof(string), typeof(AboutApp), null);
-        public static readonly DependencyProperty LinksProperty = DependencyProperty.Register(nameof(Links), typeof(ObservableCollection<HyperlinkButton>), typeof(AboutApp), new PropertyMetadata(new ObservableCollection<HyperlinkButton>()));
+        public static readonly DependencyProperty AppStoreIdProperty            = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppUriProperty                = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty AppLogoPathProperty           = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AppLogo.png"));
+        public static readonly DependencyProperty AppDeveloperMailProperty      = DependencyProperty.Register(nameof(AppDeveloperMail), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty IsGitHubLinkEnabledProperty   = DependencyProperty.Register(nameof(IsGitHubLinkEnabled), typeof(bool), typeof(AboutApp), null);
+        public static readonly DependencyProperty GitHubProjectNameProperty     = DependencyProperty.Register(nameof(GitHubProjectName), typeof(string), typeof(AboutApp), null);
+        public static readonly DependencyProperty GitHubLinkUrlProperty         = DependencyProperty.Register(nameof(GitHubLinkUrl), typeof(string), typeof(AboutApp), null);
 
         private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
 
@@ -95,10 +93,7 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
             get { return (string)GetValue(AppDeveloperMailProperty); }
             set { SetValue(AppDeveloperMailProperty, value); }
         }
-        public List<ThirdPartySoftwareInfo> ThirdPartySoftwareInfo
-        {
-            get { return (List<ThirdPartySoftwareInfo>)GetValue(ThirdPartySoftwareInfoProperty); }
-        }
+        public List<ThirdPartySoftwareInfo> ThirdPartySoftwareInfo { get; }
         public bool IsGitHubLinkEnabled
         {
             get { return (bool)GetValue(IsGitHubLinkEnabledProperty); }
@@ -114,13 +109,17 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
             get { return (string)GetValue(GitHubLinkUrlProperty); }
             set { SetValue(GitHubLinkUrlProperty, value); }
         }
-        public ObservableCollection<HyperlinkButton> Links
-        {
-            get { return (ObservableCollection<HyperlinkButton>)GetValue(LinksProperty); }
-        }
+        public ObservableCollection<HyperlinkButton> Links { get; }
 
         public AboutApp()
         {
+            ThirdPartySoftwareInfo = new List<ThirdPartySoftwareInfo>
+            {
+                new ThirdPartySoftwareInfo { SoftwareName = "UWPHelper", SoftwareLicense = UWPHELPER_LICENSE },
+                new ThirdPartySoftwareInfo { SoftwareName = "Json.NET", SoftwareLicense = JSON_NET_LICENSE }
+            };
+            Links = new ObservableCollection<HyperlinkButton>();
+
             InitializeComponent();
         }
 

@@ -89,6 +89,7 @@
 
                     <Button x:Name="Bt_Launch"
                             x:Uid="LaunchButton"
+                            FontWeight="SemiBold"
                             Margin="5,0,0,0"
                             VerticalAlignment="Bottom"
                             Grid.Column="1"

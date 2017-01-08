@@ -58,7 +58,7 @@
     <value>Spouštěč</value>
   </data>
   <data name="LaunchButton.Content" xml:space="preserve">
-    <value>Spustit</value>
+    <value>SPUSTIT</value>
   </data>
   <data name="DeviceUsing.Text" xml:space="preserve">
     <value>Právě používáte</value>
