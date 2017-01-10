@@ -18,8 +18,11 @@ namespace UWPHelper.UI
         public static readonly DependencyProperty DisplayModeProperty           = DependencyProperty.Register(nameof(DisplayMode), typeof(SplitViewDisplayMode), typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.Overlay, DisplayModePropertyChanged));
         public static readonly DependencyProperty CompactPaneLengthProperty     = DependencyProperty.Register(nameof(CompactPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(DEFAULT_ICON_WIDTH));
         public static readonly DependencyProperty OpenPaneWidthProperty         = DependencyProperty.Register(nameof(OpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(320.0));
+        public static readonly DependencyProperty InitialPageTypeProperty       = DependencyProperty.Register(nameof(InitialPageType), typeof(Type), typeof(HamburgerMenu), null);
+        public static readonly DependencyProperty HeaderVisibilityProperty      = DependencyProperty.Register(nameof(HeaderVisibility), typeof(Visibility), typeof(HamburgerMenu), null);
         
         private bool navigationLocked;
+        private HamburgerMenuItem selectedHamburgerMenuItem;
         private SystemNavigationManager _systemNavigationManager;
 
         private SystemNavigationManager SystemNavigationManager
@@ -32,21 +35,6 @@ namespace UWPHelper.UI
                 }
 
                 return _systemNavigationManager;
-            }
-        }
-        private HamburgerMenuItem SelectedHamburgerMenuItem
-        {
-            get
-            {
-                Type pageType = Fr_Content.Content.GetType();
-                return (HamburgerMenuItem)(LV_PrimaryItems.Items.FirstOrDefault(i => ((HamburgerMenuItem)i).PageType == pageType) ?? LV_SecondaryItems.Items.FirstOrDefault(i => ((HamburgerMenuItem)i).PageType == pageType));
-            }
-        }
-        private ListView ActiveHamburgerMenu
-        {
-            get
-            {
-                return LV_PrimaryItems.Items.IndexOf(SelectedHamburgerMenuItem) != -1 ? LV_PrimaryItems : LV_SecondaryItems;
             }
         }
         
@@ -70,11 +58,27 @@ namespace UWPHelper.UI
             get { return (double)GetValue(OpenPaneWidthProperty); }
             set { SetValue(OpenPaneWidthProperty, value); }
         }
-        
-        public Type InitialPageType { get; set; }
+        public Type InitialPageType
+        {
+            get { return (Type)GetValue(InitialPageTypeProperty); }
+            set { SetValue(InitialPageTypeProperty, value); }
+        }
+        public Visibility HeaderVisibility
+        {
+            get { return (Visibility)GetValue(HeaderVisibilityProperty); }
+            set { SetValue(HeaderVisibilityProperty, value); }
+        }
+
+        public Frame ContentFrame
+        {
+            get { return Fr_Content; }
+        }
         public ObservableCollection<HamburgerMenuItem> PrimaryItems { get; }
         public ObservableCollection<HamburgerMenuItem> SecondaryItems { get; }
-        
+
+        public event RoutedEventHandler Navigated;
+        public event RoutedEventHandler Navigating;    
+            
         public HamburgerMenu()
         {
             PrimaryItems    = new ObservableCollection<HamburgerMenuItem>();
@@ -112,11 +116,13 @@ namespace UWPHelper.UI
 
         private void Fr_Content_Navigating(object sender, NavigatingCancelEventArgs e)
         {
+            Navigating?.Invoke(this, new RoutedEventArgs());
+
             if (Fr_Content.Content != null)
             {
                 // Remove highlight from previously selected item in hamburger menu
                 navigationLocked = true;
-                SelectedHamburgerMenuItem.IsSelected = false;
+                selectedHamburgerMenuItem.IsSelected = false;
                 navigationLocked = false;
             }
         }
@@ -127,11 +133,16 @@ namespace UWPHelper.UI
             navigationLocked = true;
 
             // Highlight the right item in hamburger menu using SelectedIndex (using SelectedItem was buggy)
-            ListView activeHamburgerMenu = ActiveHamburgerMenu;
-            activeHamburgerMenu.SelectedIndex = activeHamburgerMenu.Items.IndexOf(SelectedHamburgerMenuItem);
+            Type pageType = Fr_Content.Content.GetType();
+            selectedHamburgerMenuItem = PrimaryItems.FirstOrDefault(i => i.PageType == pageType) ?? SecondaryItems.First(i => i.PageType == pageType);
+
+            ListView activeHamburgerMenu      = PrimaryItems.Contains(selectedHamburgerMenuItem) ? LV_PrimaryItems : LV_SecondaryItems;
+            activeHamburgerMenu.SelectedIndex = activeHamburgerMenu.Items.IndexOf(selectedHamburgerMenuItem);
 
             navigationLocked = false;
             SV_HamburgerMenu.IsPaneOpen = false;
+            
+            Navigated?.Invoke(this, new RoutedEventArgs());
         }
 
         private void SetBackButtonVisibility()

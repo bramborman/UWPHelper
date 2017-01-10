@@ -22,7 +22,6 @@
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="ListView">
-                            <Setter Property="Background" Value="Transparent"/>
                             <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
                             <Setter Property="ItemContainerTransitions">
                                 <Setter.Value>
@@ -33,12 +32,14 @@
                     </Grid.Resources>
                     
                     <ListView x:Name="LV_PrimaryItems"
+                              Background="{x:Bind Background, Mode=OneWay}"
                               ItemsSource="{x:Bind PrimaryItems}"
                               Margin="0,48,0,0"
                               SelectionChanged="Navigate"
                               />
 
                     <ListView x:Name="LV_SecondaryItems"
+                              Background="{x:Bind Background, Mode=OneWay}"
                               ItemsSource="{x:Bind SecondaryItems}"
                               VerticalAlignment="Bottom"
                               SelectionChanged="Navigate"
@@ -55,6 +56,7 @@
                     <ContentPresenter x:Name="CP_PageTitle"
                                       Content="{Binding ElementName=Fr_Content, Path=Content.Name}"
                                       Padding="{StaticResource HamburgerMenuPageTitlePadding}"
+                                      Visibility="{x:Bind HeaderVisibility, Mode=OneWay}"
                                       Style="{StaticResource PageTitle}"
                                       Grid.Row="0"
                                       />
