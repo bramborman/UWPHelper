@@ -7,10 +7,10 @@ namespace UWPHelper.Utilities
 {
     public sealed class ThreadPoolTimer
     {
-        private bool invokeTickOnDispatcher;
         private Timer timer;
         private TimeSpan _interval;
 
+        private bool InvokeOnDispatcher { get; }
         public bool IsEnabled { get; private set; }
         public TimeSpan Interval
         {
@@ -31,14 +31,17 @@ namespace UWPHelper.Utilities
 
         public event EventHandler Tick;
 
-        public ThreadPoolTimer(bool invokeTickOnDispatcher)
+        public ThreadPoolTimer(bool invokeOnDispatcher)
         {
-            this.invokeTickOnDispatcher = invokeTickOnDispatcher;
+            InvokeOnDispatcher = invokeOnDispatcher;
         }
 
         private void SetTimer()
         {
-            timer.Change(new TimeSpan(0), Interval);
+            lock (timer)
+            {
+                timer.Change(new TimeSpan(0), Interval);
+            }
         }
 
         public void Start()
@@ -49,18 +52,24 @@ namespace UWPHelper.Utilities
             }
             else
             {
-                timer = new Timer(
-                    async state =>
+                TimerCallback timerCallback;
+
+                if (!InvokeOnDispatcher)
+                {
+                    timerCallback = state =>
                     {
-                        if (invokeTickOnDispatcher)
-                        {
-                            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => Tick?.Invoke(this, new EventArgs()));
-                        }
-                        else
-                        {
-                            Tick?.Invoke(this, new EventArgs());
-                        }
-                    }, null, new TimeSpan(0), Interval);
+                        Tick?.Invoke(this, new EventArgs());
+                    };
+                }
+                else
+                {
+                    timerCallback = async state =>
+                    {
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => Tick?.Invoke(this, new EventArgs()));
+                    };
+                }
+
+                timer = new Timer(timerCallback, null, new TimeSpan(0), Interval);
                 IsEnabled = true;
             }
         }
@@ -69,8 +78,11 @@ namespace UWPHelper.Utilities
         {
             IsEnabled = false;
 
-            timer.Dispose();
-            timer = null;
+            lock (timer)
+            {
+                timer.Dispose();
+                timer = null;
+            }
         }
     }
 }
