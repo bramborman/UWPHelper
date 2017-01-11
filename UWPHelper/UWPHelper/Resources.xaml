@@ -8,7 +8,6 @@
     <converters:BoolToBoolInvertedConverter x:Key="BoolToBoolInvertedConverter"/>
     <converters:BoolToIntConverter x:Key="BoolToIntConverter"/>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-    <converters:Int32ComparisonConverter x:Key="Int32ComparisonConverter"/>
     <converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
     <converters:ResourceLoaderConverter x:Key="ResourceLoaderConverter"/>
     <converters:StringFormatConverter x:Key="StringFormatConverter"/>

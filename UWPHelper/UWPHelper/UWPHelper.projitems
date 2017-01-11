@@ -17,7 +17,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToBoolInvertedConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToIntConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\Int32ComparisonConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToIntConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResourceLoaderConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
