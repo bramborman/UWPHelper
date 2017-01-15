@@ -55,6 +55,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DisplayRequestHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\KeyboardHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\NotifyPropertyChangedBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Range.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\StorageFileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ThreadPoolTimer.cs" />
   </ItemGroup>
