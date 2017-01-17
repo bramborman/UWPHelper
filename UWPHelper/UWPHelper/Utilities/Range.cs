@@ -2,7 +2,7 @@
 
 namespace UWPHelper.Utilities
 {
-    public sealed class Range : NotifyPropertyChangedBase, IEquatable<Range>
+    public class Range : NotifyPropertyChangedBase, IEquatable<Range>
     {
         public int Min
         {

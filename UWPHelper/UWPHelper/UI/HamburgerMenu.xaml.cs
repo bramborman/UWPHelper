@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Core;
@@ -20,6 +21,7 @@ namespace UWPHelper.UI
         public static readonly DependencyProperty OpenPaneWidthProperty         = DependencyProperty.Register(nameof(OpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(320.0));
         public static readonly DependencyProperty InitialPageTypeProperty       = DependencyProperty.Register(nameof(InitialPageType), typeof(Type), typeof(HamburgerMenu), null);
         public static readonly DependencyProperty HeaderVisibilityProperty      = DependencyProperty.Register(nameof(HeaderVisibility), typeof(Visibility), typeof(HamburgerMenu), null);
+        public static readonly DependencyProperty SelectedIndexProperty         = DependencyProperty.Register(nameof(SelectedIndex), typeof(int), typeof(HamburgerMenu), new PropertyMetadata(0, SelectedIndexPropertyChanged));
         
         private bool navigationLocked;
         private HamburgerMenuItem selectedHamburgerMenuItem;
@@ -68,10 +70,30 @@ namespace UWPHelper.UI
             get { return (Visibility)GetValue(HeaderVisibilityProperty); }
             set { SetValue(HeaderVisibilityProperty, value); }
         }
+        public int SelectedIndex
+        {
+            get { return (int)GetValue(SelectedIndexProperty); }
+            set { SetValue(SelectedIndexProperty, value); }
+        }
 
         public Frame ContentFrame
         {
             get { return Fr_Content; }
+        }
+        public IEnumerable<HamburgerMenuItem> Items
+        {
+            get
+            {
+                foreach (HamburgerMenuItem primaryItem in PrimaryItems)
+                {
+                    yield return primaryItem;
+                }
+
+                foreach (HamburgerMenuItem secondaryItem in SecondaryItems)
+                {
+                    yield return secondaryItem;
+                }
+            }
         }
         public ObservableCollection<HamburgerMenuItem> PrimaryItems { get; }
         public ObservableCollection<HamburgerMenuItem> SecondaryItems { get; }
@@ -136,8 +158,10 @@ namespace UWPHelper.UI
             Type pageType = Fr_Content.Content.GetType();
             selectedHamburgerMenuItem = PrimaryItems.FirstOrDefault(i => i.PageType == pageType) ?? SecondaryItems.First(i => i.PageType == pageType);
 
-            ListView activeHamburgerMenu      = PrimaryItems.Contains(selectedHamburgerMenuItem) ? LV_PrimaryItems : LV_SecondaryItems;
-            activeHamburgerMenu.SelectedIndex = activeHamburgerMenu.Items.IndexOf(selectedHamburgerMenuItem);
+            ListView activeListView      = PrimaryItems.Contains(selectedHamburgerMenuItem) ? LV_PrimaryItems : LV_SecondaryItems;
+            activeListView.SelectedIndex = activeListView.Items.IndexOf(selectedHamburgerMenuItem);
+
+            SelectedIndex = activeListView == LV_PrimaryItems ? LV_PrimaryItems.SelectedIndex : (LV_SecondaryItems.SelectedIndex + LV_PrimaryItems.Items.Count);
 
             navigationLocked = false;
             SV_HamburgerMenu.IsPaneOpen = false;
@@ -186,6 +210,33 @@ namespace UWPHelper.UI
             else
             {
                 hamburgerMenu.CP_PageTitle.Padding = (Thickness)hamburgerMenu.Resources["HamburgerMenuPageTitlePadding"];
+            }
+        }
+
+        private static void SelectedIndexPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            int newValue = (int)e.NewValue;
+            HamburgerMenu hamburgerMenu = (HamburgerMenu)d;
+            ListView primaryListView = hamburgerMenu.LV_PrimaryItems;
+            ListView secondaryListView = hamburgerMenu.LV_SecondaryItems;
+
+            int primaryListViewMaxIndex     = primaryListView.Items.Count - 1;
+            int secondaryListViewMaxIndex   = primaryListView.Items.Count + secondaryListView.Items.Count - 1;
+
+            if (newValue < 0 || newValue > primaryListViewMaxIndex + secondaryListViewMaxIndex)
+            {
+                throw new ArgumentOutOfRangeException(nameof(SelectedIndex), $"Value does not fall withing the expected range (0 - {primaryListViewMaxIndex + secondaryListViewMaxIndex})");
+            }
+            else
+            {
+                if (newValue <= primaryListViewMaxIndex)
+                {
+                    primaryListView.SelectedIndex = newValue;
+                }
+                else
+                {
+                    secondaryListView.SelectedIndex = newValue - primaryListView.Items.Count;
+                }
             }
         }
     }
