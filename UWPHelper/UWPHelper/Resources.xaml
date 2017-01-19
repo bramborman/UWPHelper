@@ -1298,7 +1298,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="ui:ColoredPivot">
+    <Style TargetType="ui:AdvancedPivot">
         <Setter Property="HeaderBackground" Value="{StaticResource PageTitleBackgroundBrush}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HeaderTemplate">
@@ -1327,7 +1327,7 @@
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ui:ColoredPivot">
+                <ControlTemplate TargetType="ui:AdvancedPivot">
                     <Grid x:Name="RootElement"
                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                           VerticalAlignment="{TemplateBinding VerticalAlignment}"

@@ -4,9 +4,9 @@ using Windows.UI.Xaml.Media;
 
 namespace UWPHelper.UI
 {
-    public sealed class ColoredPivot : Pivot
+    public sealed class AdvancedPivot : Pivot
     {
-        public static readonly DependencyProperty HeaderBackgroundProperty = DependencyProperty.Register(nameof(HeaderBackground), typeof(Brush), typeof(ColoredPivot), null);
+        public static readonly DependencyProperty HeaderBackgroundProperty = DependencyProperty.Register(nameof(HeaderBackground), typeof(Brush), typeof(AdvancedPivot), null);
 
         public Brush HeaderBackground
         {
@@ -14,9 +14,9 @@ namespace UWPHelper.UI
             set { SetValue(HeaderBackgroundProperty, value); }
         }
 
-        public ColoredPivot()
+        public AdvancedPivot()
         {
-            DefaultStyleKey = typeof(ColoredPivot);
+            DefaultStyleKey = typeof(AdvancedPivot);
         }
     }
 }
