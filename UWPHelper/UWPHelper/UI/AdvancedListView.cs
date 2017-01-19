@@ -1,7 +1,5 @@
-﻿using UWPHelper.Utilities;
-using Windows.Foundation;
+﻿using Windows.Foundation;
 using Windows.System;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,18 +33,18 @@ namespace UWPHelper.UI
             ((MenuFlyout)FlyoutBase.GetAttachedFlyout(this)).ShowAt(targetElement, point);
         }
 
-        private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        private void OnKeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (args.Handled || AdvancedContentDialog.IsOpened)
+            if (e.Handled || AdvancedContentDialog.IsOpened)
             {
                 return;
             }
 
-            if (args.VirtualKey == VirtualKey.Application)
+            if (e.Key == VirtualKey.Application)
             {
                 if (FocusManager.GetFocusedElement() is ListViewItem focusedElement)
                 {
-                    args.Handled = true;
+                    e.Handled = true;
                     FocusedItem = focusedElement.Content;
                     OpenContextMenu(focusedElement, new Point(focusedElement.ActualWidth / 2, focusedElement.ActualHeight / 2));
                 }
@@ -60,12 +58,12 @@ namespace UWPHelper.UI
             if ((bool)e.NewValue)
             {
                 advancedListView.RightTapped += advancedListView.OpenContextMenu;
-                KeyboardHelper.CoreKeyDown   += advancedListView.CoreWindow_KeyDown;
+                advancedListView.KeyDown     += advancedListView.OnKeyDown;
             }
             else
             {
                 advancedListView.RightTapped -= advancedListView.OpenContextMenu;
-                KeyboardHelper.CoreKeyDown   -= advancedListView.CoreWindow_KeyDown;
+                advancedListView.KeyDown     -= advancedListView.OnKeyDown;
             }
         }
     }
