@@ -4,6 +4,7 @@
                     xmlns:ui="using:UWPHelper.UI"
                     xmlns:text="using:Windows.UI.Text"
                     >
+    <converters:AutomaticTypeConverter x:Key="AutomaticTypeConverter"/>
     <converters:BoolToBoolConverter x:Key="BoolToBoolConverter"/>
     <converters:BoolToBoolInvertedConverter x:Key="BoolToBoolInvertedConverter"/>
     <converters:BoolToIntConverter x:Key="BoolToIntConverter"/>

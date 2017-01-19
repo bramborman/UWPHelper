@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringIsNullOrWhiteSpaceInvertedConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToUpperCaseConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\AutomaticTypeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsApiContractPresentTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Triggers\IsTypePresentTrigger.cs" />
