@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("UWPHelper Sample App")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("UWPHelper")]
+[assembly: AssemblyDescription("A set of useful UWP tools such as converters, triggers, custom controls and helpers.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("UWPHelper Sample App")]
+[assembly: AssemblyProduct("UWPHelper")]
 [assembly: AssemblyCopyright("© 2017 Marian Dolinský")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
