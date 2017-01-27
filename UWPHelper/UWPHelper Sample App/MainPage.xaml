@@ -46,14 +46,13 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <ContentPresenter x:Name="CP_PageTitle"
-                          x:Uid="PageTitle"
-                          Style="{StaticResource PageTitle}"
-                          Grid.Row="0"
-                          />
+        <ui:PageHeader x:Name="PH_Header"
+                       x:Uid="PageHeader"
+                       Grid.Row="0"
+                       />
 
         <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-              Width="{Binding ElementName=CP_PageTitle, Path=ActualHeight}"
+              Width="{Binding ElementName=PH_Header, Path=ActualHeight}"
               HorizontalAlignment="Right"
               Grid.Row="0"
               >
@@ -72,7 +71,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto"
                       Grid.Row="1"
                       >
-            <StackPanel Style="{StaticResource Content}">
+            <StackPanel Style="{StaticResource ContentStackPanel}">
                 <Grid Margin="{StaticResource PanelGapMargin}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>

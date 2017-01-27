@@ -78,7 +78,7 @@
   <data name="LoadingErrorDialog.ContinueWith" xml:space="preserve">
     <value>with default settings</value>
   </data>
-  <data name="PageTitle.Content" xml:space="preserve">
+  <data name="PageHeader.Content" xml:space="preserve">
     <value>UWPHELPER SAMPLE APP</value>
   </data>
   <data name="AppName" xml:space="preserve">

@@ -137,16 +137,17 @@
     </Compile>
     <Compile Include="UI\AdvancedContentDialog.cs" />
     <Compile Include="UI\AdvancedListView.cs" />
-    <Compile Include="UI\AdvancedPivot.cs" />
+    <Compile Include="UI\AdvancedPivot\AdvancedPivot.cs" />
     <Compile Include="UI\AdvancedSlider.cs" />
     <Compile Include="UI\AdvancedTextBox.cs" />
-    <Compile Include="UI\HamburgerMenu.xaml.cs">
+    <Compile Include="UI\HamburgerMenu\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\HamburgerMenuItems.cs" />
-    <Compile Include="UI\HyperLinkButtons.cs" />
+    <Compile Include="UI\HamburgerMenu\HamburgerMenuItems.cs" />
+    <Compile Include="UI\IconHyperlinkButtons\IconHyperlinkButtons.cs" />
     <Compile Include="UI\LoadingErrorDialog.cs" />
     <Compile Include="UI\NumberTextBox.cs" />
+    <Compile Include="UI\PageHeader\PageHeader.cs" />
     <Compile Include="UI\ThemeSelector.xaml.cs">
       <DependentUpon>ThemeSelector.xaml</DependentUpon>
     </Compile>
@@ -172,13 +173,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="UI\AboutApp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\HamburgerMenu.xaml">
+    <Page Include="UI\AdvancedPivot\AdvancedPivot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="UI\HamburgerMenu\HamburgerMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\HamburgerMenu\HamburgerMenuItems.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\IconHyperlinkButtons\IconHyperlinkButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="UI\PageHeader\PageHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\ThemeSelector.xaml">
       <SubType>Designer</SubType>

@@ -20,11 +20,11 @@ namespace UWPHelper.UI
         public static readonly DependencyProperty CompactPaneLengthProperty     = DependencyProperty.Register(nameof(CompactPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(DEFAULT_ICON_WIDTH));
         public static readonly DependencyProperty OpenPaneWidthProperty         = DependencyProperty.Register(nameof(OpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(320.0));
         public static readonly DependencyProperty InitialPageTypeProperty       = DependencyProperty.Register(nameof(InitialPageType), typeof(Type), typeof(HamburgerMenu), null);
-        public static readonly DependencyProperty HeaderVisibilityProperty      = DependencyProperty.Register(nameof(HeaderVisibility), typeof(Visibility), typeof(HamburgerMenu), null);
         public static readonly DependencyProperty SelectedIndexProperty         = DependencyProperty.Register(nameof(SelectedIndex), typeof(int), typeof(HamburgerMenu), new PropertyMetadata(0, SelectedIndexPropertyChanged));
+        public static readonly DependencyProperty HeaderStyleProperty           = DependencyProperty.Register(nameof(HeaderStyle), typeof(Style), typeof(HamburgerMenu), null);
         
         private bool navigationLocked;
-        private HamburgerMenuItem selectedHamburgerMenuItem;
+        private IconHamburgerMenuItem selectedHamburgerMenuItem;
         private SystemNavigationManager _systemNavigationManager;
 
         private SystemNavigationManager SystemNavigationManager
@@ -65,46 +65,46 @@ namespace UWPHelper.UI
             get { return (Type)GetValue(InitialPageTypeProperty); }
             set { SetValue(InitialPageTypeProperty, value); }
         }
-        public Visibility HeaderVisibility
-        {
-            get { return (Visibility)GetValue(HeaderVisibilityProperty); }
-            set { SetValue(HeaderVisibilityProperty, value); }
-        }
         public int SelectedIndex
         {
             get { return (int)GetValue(SelectedIndexProperty); }
             set { SetValue(SelectedIndexProperty, value); }
+        }
+        public Style HeaderStyle
+        {
+            get { return (Style)GetValue(HeaderStyleProperty); }
+            set { SetValue(HeaderStyleProperty, value); }
         }
 
         public Frame ContentFrame
         {
             get { return Fr_Content; }
         }
-        public IEnumerable<HamburgerMenuItem> Items
+        public IEnumerable<IconHamburgerMenuItem> Items
         {
             get
             {
-                foreach (HamburgerMenuItem primaryItem in PrimaryItems)
+                foreach (IconHamburgerMenuItem primaryItem in PrimaryItems)
                 {
                     yield return primaryItem;
                 }
 
-                foreach (HamburgerMenuItem secondaryItem in SecondaryItems)
+                foreach (IconHamburgerMenuItem secondaryItem in SecondaryItems)
                 {
                     yield return secondaryItem;
                 }
             }
         }
-        public ObservableCollection<HamburgerMenuItem> PrimaryItems { get; }
-        public ObservableCollection<HamburgerMenuItem> SecondaryItems { get; }
+        public ObservableCollection<IconHamburgerMenuItem> PrimaryItems { get; }
+        public ObservableCollection<IconHamburgerMenuItem> SecondaryItems { get; }
 
         public event RoutedEventHandler Navigated;
         public event RoutedEventHandler Navigating;    
             
         public HamburgerMenu()
         {
-            PrimaryItems    = new ObservableCollection<HamburgerMenuItem>();
-            SecondaryItems  = new ObservableCollection<HamburgerMenuItem>();
+            PrimaryItems    = new ObservableCollection<IconHamburgerMenuItem>();
+            SecondaryItems  = new ObservableCollection<IconHamburgerMenuItem>();
 
             InitializeComponent();
         }
@@ -123,7 +123,7 @@ namespace UWPHelper.UI
         {
             if (!navigationLocked)
             {
-                HamburgerMenuItem selectedHamburgerMenuItem = (HamburgerMenuItem)((ListView)sender).SelectedItem;
+                IconHamburgerMenuItem selectedHamburgerMenuItem = (IconHamburgerMenuItem)((ListView)sender).SelectedItem;
                 Fr_Content.Navigate(selectedHamburgerMenuItem.PageType);
             }
         }
@@ -205,11 +205,11 @@ namespace UWPHelper.UI
 
             if (displayMode == SplitViewDisplayMode.CompactInline || displayMode == SplitViewDisplayMode.CompactOverlay)
             {
-                hamburgerMenu.CP_PageTitle.Padding = (Thickness)hamburgerMenu.Resources["HamburgerMenuCompactDisplayModePageTitlePadding"];
+                hamburgerMenu.PH_Header.Padding = (Thickness)hamburgerMenu.Resources["HamburgerMenuCompactDisplayModePageHeaderPadding"];
             }
             else
             {
-                hamburgerMenu.CP_PageTitle.Padding = (Thickness)hamburgerMenu.Resources["HamburgerMenuPageTitlePadding"];
+                hamburgerMenu.PH_Header.Padding = (Thickness)hamburgerMenu.Resources["HamburgerMenuPageHeaderPadding"];
             }
         }
 

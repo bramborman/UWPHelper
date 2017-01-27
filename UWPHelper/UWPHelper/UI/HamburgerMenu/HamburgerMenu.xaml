@@ -2,14 +2,21 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="using:UWPHelper.UI"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              d:DesignWidth="250"
              d:DesignHeight="400"
              >
     <UserControl.Resources>
-        <Thickness x:Key="HamburgerMenuPageTitlePadding">60,0,0,0</Thickness>
-        <Thickness x:Key="HamburgerMenuCompactDisplayModePageTitlePadding">12,0,0,0</Thickness>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///UWPHelper/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Thickness x:Key="HamburgerMenuPageHeaderPadding">60,0,0,0</Thickness>
+            <Thickness x:Key="HamburgerMenuCompactDisplayModePageHeaderPadding">12,0,0,0</Thickness>
+        </ResourceDictionary>
     </UserControl.Resources>
     
     <Grid>
@@ -53,13 +60,12 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <ContentPresenter x:Name="CP_PageTitle"
-                                      Content="{Binding ElementName=Fr_Content, Path=Content.Name}"
-                                      Padding="{StaticResource HamburgerMenuPageTitlePadding}"
-                                      Visibility="{x:Bind HeaderVisibility, Mode=OneWay}"
-                                      Style="{StaticResource PageTitle}"
-                                      Grid.Row="0"
-                                      />
+                    <ui:PageHeader x:Name="PH_Header"
+                                   Content="{Binding ElementName=Fr_Content, Path=Content.Name}"
+                                   Padding="{StaticResource HamburgerMenuPageHeaderPadding}"
+                                   Style="{x:Bind HeaderStyle, Mode=OneWay}"
+                                   Grid.Row="0"
+                                   />
 
                     <Frame x:Name="Fr_Content"
                            Grid.Row="1"

@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="using:UWPHelper.UI"
+                    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///UWPHelper/UI/AdvancedPivot/AdvancedPivot.xaml"/>
+        <ResourceDictionary Source="ms-appx:///UWPHelper/UI/HamburgerMenu/HamburgerMenuItems.xaml"/>
+        <ResourceDictionary Source="ms-appx:///UWPHelper/UI/IconHyperlinkButtons/IconHyperlinkButtons.xaml"/>
+        <ResourceDictionary Source="ms-appx:///UWPHelper/UI/PageHeader/PageHeader.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

@@ -11,7 +11,7 @@ namespace UWPHelper.UI
 
         public LoadingErrorDialog(string title, string continueWith)
         {
-            ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
+            ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("UWPHelper/Resources");
             
             Title   = string.Format(resourceLoader.GetString("LoadingErrorDialog/Title"), title);
             Content = string.Format(resourceLoader.GetString("LoadingErrorDialog/Content"), string.IsNullOrWhiteSpace(continueWith) ? "" : $" {continueWith}");

@@ -7,13 +7,21 @@
              d:DesignWidth="100"
              d:DesignHeight="100"
              >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///UWPHelper/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <ComboBox x:Uid="Theme"
               SelectedIndex="{x:Bind Theme, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
               Margin="{StaticResource ComboBoxGapMargin}"
               Width="{x:Bind ComboBoxWidth, Mode=OneWay}"
               Style="{x:Bind ComboBoxStyle, Mode=OneWay}"
               >
-        <ComboBoxItem x:Uid="SystemTheme" Visibility="{x:Bind IsDefaultThemeAvailablePrivate, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <ComboBoxItem x:Uid="SystemTheme" Visibility="{x:Bind DefaultThemeVisibility}"/>
         <ComboBoxItem x:Uid="LightTheme"/>
         <ComboBoxItem x:Uid="DarkTheme"/>
     </ComboBox>
