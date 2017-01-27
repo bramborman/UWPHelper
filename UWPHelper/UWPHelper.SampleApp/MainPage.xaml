@@ -149,7 +149,7 @@
                                x:DeferLoadStrategy="Lazy"
                                Visibility="Collapsed"
                                />
-                    
+
                     <TextBlock x:Uid="Device"
                                Margin="{StaticResource WordSpaceLeftMargin}"
                                />
