@@ -35,17 +35,21 @@ namespace UWPHelper.Triggers
 
         private void UpdateTrigger(DisplayOrientations currentOrientation)
         {
-            if (currentOrientation == DisplayOrientations.Portrait || currentOrientation == DisplayOrientations.PortraitFlipped)
+            switch (currentOrientation)
             {
-                SetActive(Orientation == Orientation.Portrait);
-            }
-            else if (currentOrientation == DisplayOrientations.Landscape || currentOrientation == DisplayOrientations.LandscapeFlipped)
-            {
-                SetActive(Orientation == Orientation.Landscape);
-            }
-            else// if (currentOrientation == DisplayOrientations.None)
-            {
-                SetActive(Orientation == Orientation.None);
+                case DisplayOrientations.Portrait:
+                case DisplayOrientations.PortraitFlipped:
+                    SetActive(Orientation == Orientation.Portrait);
+                    break;
+                
+                case DisplayOrientations.Landscape:
+                case DisplayOrientations.LandscapeFlipped:
+                    SetActive(Orientation == Orientation.Landscape);
+                    break;
+                
+                case DisplayOrientations.None:
+                    SetActive(Orientation == Orientation.None);
+                    break;
             }
         }
     }

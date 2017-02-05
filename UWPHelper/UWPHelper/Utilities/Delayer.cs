@@ -15,7 +15,15 @@ namespace UWPHelper.Utilities
         public TimeSpan Delay
         {
             get { return timer.Interval; }
-            set { timer.Interval = value; }
+            set
+            {
+                if (value < TimeSpan.Zero)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
+
+                timer.Interval = value;
+            }
         }
 
         public event Action<Delayer> Tick;
@@ -27,11 +35,10 @@ namespace UWPHelper.Utilities
 
         public Delayer(TimeSpan delay)
         {
-            timer = new DispatcherTimer()
-            {
-                Interval = delay
-            };
+            timer = new DispatcherTimer();
             timer.Tick += Timer_Tick;
+
+            Delay = delay;
         }
 
         private void Timer_Tick(object sender, object e)

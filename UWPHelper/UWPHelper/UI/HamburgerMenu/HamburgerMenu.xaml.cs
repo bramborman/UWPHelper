@@ -113,11 +113,6 @@ namespace UWPHelper.UI
         {
             SV_HamburgerMenu.IsPaneOpen = !SV_HamburgerMenu.IsPaneOpen;
         }
-
-        public void Navigate(Type pageType)
-        {
-            Fr_Content.Navigate(pageType);
-        }
         
         private void Navigate(object sender, SelectionChangedEventArgs e)
         {
@@ -132,7 +127,7 @@ namespace UWPHelper.UI
         {
             if (Fr_Content.Content == null)
             {
-                Fr_Content.Navigate(InitialPageType);
+                Fr_Content.Navigate(InitialPageType ?? throw new ArgumentNullException(nameof(InitialPageType)));
             }
         }
 

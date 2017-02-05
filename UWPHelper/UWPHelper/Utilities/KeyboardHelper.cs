@@ -18,12 +18,12 @@ namespace UWPHelper.Utilities
             remove { Window.Current.CoreWindow.KeyUp -= value; }
         }
 
-        public static bool IsDown(VirtualKey key)
+        public static bool IsKeyDown(VirtualKey key)
         {
-            return IsInState(key, CoreVirtualKeyStates.Down);
+            return IsKeyInState(key, CoreVirtualKeyStates.Down);
         }
 
-        public static bool IsInState(VirtualKey key, CoreVirtualKeyStates state)
+        public static bool IsKeyInState(VirtualKey key, CoreVirtualKeyStates state)
         {
             return Window.Current.CoreWindow.GetKeyState(key).HasFlag(state);
         }

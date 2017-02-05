@@ -1,16 +1,22 @@
-﻿using Windows.ApplicationModel.Resources;
+﻿using System;
+using Windows.ApplicationModel.Resources;
 
 namespace UWPHelper.UI
 {
     public sealed class LoadingErrorDialog : AdvancedContentDialog
     {
-        public LoadingErrorDialog(string title) : this(title, "")
+        public LoadingErrorDialog(string title) : this(title, null)
         {
 
         }
 
         public LoadingErrorDialog(string title, string continueWith)
         {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                throw new ArgumentNullException(nameof(title));
+            }
+
             ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("UWPHelper/Resources");
             
             Title   = string.Format(resourceLoader.GetString("LoadingErrorDialog/Title"), title);

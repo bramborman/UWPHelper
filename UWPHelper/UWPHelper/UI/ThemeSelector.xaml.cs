@@ -11,7 +11,7 @@ namespace UWPHelper.UI
         public static readonly DependencyProperty ComboBoxStyleProperty = DependencyProperty.Register(nameof(ComboBoxStyle), typeof(Style), typeof(ThemeSelector), null);
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(nameof(Theme), typeof(ElementTheme), typeof(ThemeSelector), null);
 
-        public static bool IsDefaultThemeAvailable { get; }
+        public static bool IsDefaultThemeAvailable { get; } = AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile" || (AnalyticsInfo.VersionInfo.DeviceFamily != "Windows.Holographic" && ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 3, 0));
 
         private Visibility DefaultThemeVisibility
         {
@@ -36,12 +36,7 @@ namespace UWPHelper.UI
             get { return (ElementTheme)GetValue(ThemeProperty); }
             set { SetValue(ThemeProperty, value); }
         }
-
-        static ThemeSelector()
-        {
-            IsDefaultThemeAvailable = AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile" || (AnalyticsInfo.VersionInfo.DeviceFamily != "Windows.Holographic" && ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 3, 0));
-        }
-
+        
         public ThemeSelector()
         {
             InitializeComponent();
