@@ -5,7 +5,7 @@
   <Properties>
     <DisplayName>ms-resource:AppName</DisplayName>
     <PublisherDisplayName>Marian Dolinský</PublisherDisplayName>
-    <Logo>Assets\Icons\StoreLogo.png</Logo>
+    <Logo>Assets\Store\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
@@ -15,22 +15,22 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="UWPHelper.SampleApp.App">
-      <uap:VisualElements DisplayName="ms-resource:AppName" Square150x150Logo="Assets\Icons\Medium150x150Logo.png" Square44x44Logo="Assets\Icons\AppList44x44Logo.png" Description="ms-resource:AppDescription" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Icons\Wide310x150Logo.png" Square310x310Logo="Assets\Icons\Large310x310Logo.png" Square71x71Logo="Assets\Icons\Small71x71Logo.png">
+      <uap:VisualElements DisplayName="ms-resource:AppName" Square150x150Logo="Assets\Medium\Medium150x150Logo.png" Square44x44Logo="Assets\AppList\AppList44x44Logo.png" Description="ms-resource:AppDescription" BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide\Wide310x150Logo.png" Square310x310Logo="Assets\Large\Large310x310Logo.png" Square71x71Logo="Assets\Small\Small71x71Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
             <uap:ShowOn Tile="wide310x150Logo" />
             <uap:ShowOn Tile="square310x310Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\Icons\SplashScreen.png" BackgroundColor="transparent" />
+        <uap:SplashScreen Image="Assets\SplashScreen\SplashScreen.png" BackgroundColor="transparent" />
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="uwphelper" />
+          <uap:Protocol Name="md-uwphelper" />
         </uap:Extension>
         <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="md-uwphelper" />
+          <uap:Protocol Name="uwphelper" />
         </uap:Extension>
       </Extensions>
     </Application>
