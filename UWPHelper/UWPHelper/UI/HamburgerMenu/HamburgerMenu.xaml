@@ -37,7 +37,7 @@
                             </Setter>
                         </Style>
                     </Grid.Resources>
-                    
+
                     <ListView x:Name="LV_PrimaryItems"
                               Background="{x:Bind Background, Mode=OneWay}"
                               ItemsSource="{x:Bind PrimaryItems}"
@@ -53,28 +53,27 @@
                               />
                 </Grid>
             </SplitView.Pane>
-            <SplitView.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-                    <ui:PageHeader x:Name="PH_Header"
-                                   Content="{Binding ElementName=Fr_Content, Path=Content.Name}"
-                                   Padding="{StaticResource HamburgerMenuPageHeaderPadding}"
-                                   Style="{x:Bind HeaderStyle, Mode=OneWay}"
-                                   Grid.Row="0"
-                                   />
+                <ui:PageHeader x:Name="PH_Header"
+                               Content="{Binding ElementName=Fr_Content, Path=Content.Name}"
+                               Padding="{StaticResource HamburgerMenuPageHeaderPadding}"
+                               Style="{x:Bind HeaderStyle, Mode=OneWay}"
+                               Grid.Row="0"
+                               />
 
-                    <Frame x:Name="Fr_Content"
-                           Grid.Row="1"
-                           Loaded="Fr_Content_Loaded"
-                           Navigating="Fr_Content_Navigating"
-                           Navigated="Fr_Content_Navigated"
-                           />
-                </Grid>
-            </SplitView.Content>
+                <Frame x:Name="Fr_Content"
+                       Grid.Row="1"
+                       Loaded="Fr_Content_Loaded"
+                       Navigating="Fr_Content_Navigating"
+                       Navigated="Fr_Content_Navigated"
+                       />
+            </Grid>
         </SplitView>
 
         <Button Content="&#xE700;"

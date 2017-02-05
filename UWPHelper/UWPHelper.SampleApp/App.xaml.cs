@@ -14,12 +14,8 @@ namespace UWPHelper.SampleApp
 {
     public sealed partial class App : Application
     {
-        public static new App Current { get; private set; }
-
         public App()
         {
-            Current = this;
-
             InitializeComponent();
             Suspending += OnSuspending;
         }
@@ -56,18 +52,8 @@ namespace UWPHelper.SampleApp
             if (loadAppData)
             {
                 await loadAppDataTask;
+                BarsHelper.Current.Initialize(() => AppData.Current.Theme, AppData.Current, nameof(AppData.Theme));
                 AppData.Current.SetTheme();
-
-                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-                {
-                    Window.Current.VisibilityChanged += (sender, e) =>
-                    {
-                        if (AppData.Current.Theme == ElementTheme.Default && e.Visible)
-                        {
-                            ApplicationViewHelper.SetStatusBarColors(AppData.Current.Theme, RequestedTheme);
-                        }
-                    };
-                }
             }
 
             if (launchArgs?.PrelaunchActivated != true)

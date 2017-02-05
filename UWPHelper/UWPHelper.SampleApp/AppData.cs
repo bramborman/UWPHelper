@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Threading.Tasks;
 using UWPHelper.UI;
 using UWPHelper.Utilities;
@@ -13,8 +14,9 @@ namespace UWPHelper.SampleApp
         private const string FILE_NAME = "AppData.json";
 
         public static AppData Current { get; private set; }
-        public static bool ShowLoadingError { get; set; }
 
+        [JsonIgnore]
+        public bool ShowLoadingError { get; set; }
         public int Foo
         {
             get { return (int)GetValue(nameof(Foo)); }
@@ -53,8 +55,6 @@ namespace UWPHelper.SampleApp
         public void SetTheme()
         {
             ((Frame)Window.Current.Content).RequestedTheme = Theme;
-            ApplicationViewHelper.SetTitleBarColors(Theme);
-            ApplicationViewHelper.SetStatusBarColors(Theme, App.Current.RequestedTheme);
         }
 
         public Task SaveAsync()
@@ -72,8 +72,8 @@ namespace UWPHelper.SampleApp
 #endif
 
             var loadObjectAsyncResult = await StorageFileHelper.LoadObjectAsync<AppData>(FILE_NAME, ApplicationData.Current.LocalFolder);
-            Current             = loadObjectAsyncResult.Object;
-            ShowLoadingError    = !loadObjectAsyncResult.Success;
+            Current                  = loadObjectAsyncResult.Object;
+            Current.ShowLoadingError = !loadObjectAsyncResult.Success;
 
             Current.PropertyChanged += async (sender, e) =>
             {

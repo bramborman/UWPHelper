@@ -49,7 +49,7 @@ namespace UWPHelper.SampleApp
                 }
                 catch (Exception exception)
                 {
-                    await new ContentDialog()
+                    await new AdvancedContentDialog()
                     {
                         Content             = exception,
                         SecondaryButtonText = ResourceLoader.GetForCurrentView().GetString("LaunchUriExceptionDialog/SecondaryButtonText")
