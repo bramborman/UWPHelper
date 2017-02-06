@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("UWPHelper")]
 [assembly: AssemblyDescription("A set of useful UWP tools such as converters, triggers, custom controls and helpers.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Marian Dolinský")]
 [assembly: AssemblyProduct("UWPHelper")]
 [assembly: AssemblyCopyright("© 2017 Marian Dolinský")]
 [assembly: AssemblyTrademark("")]

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 1749.9999 1750"
+   height="1750"
+   width="1750"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="TestLogo_Inkscape.svg">
+  <sodipodi:namedview
+     pagecolor="#116bb3"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview7"
+     showgrid="false"
+     inkscape:zoom="0.26971429"
+     inkscape:cx="263.37954"
+     inkscape:cy="810.3422"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,916.38784)"
+     id="layer1">
+    <path
+       id="path3347"
+       d="m -6.1035156e-5,-41.38786 0,-656.24998 874.999931035156,0 875.00003,0 0,656.24998 0,656.25002 -875.00003,0 -874.999931035156,0 0,-656.25002 z m 1639.999961035156,0 0,-546.24998 -765.00003,0 -764.99993,0 0,546.24998 0,546.25002 764.99993,0 765.00003,0 0,-546.25002 z m -1421.24996,382.50003 0,-55 328.12499,0 328.12494,0 0,55 0,55 -328.12494,0 -328.12499,0 0,-55 z m 874.99996,-163.75006 0,-218.74997 218.75,0 218.75,0 0,218.74997 0,218.75006 -218.75,0 -218.75,0 0,-218.75006 z m 327.5,0 0,-108.75002 -108.75,0 -108.75,0 0,108.75002 0,108.75006 108.75,0 108.75,0 0,-108.75006 z M 218.74994,13.61214 l 0,-55 328.12499,0 328.12494,0 0,55 0,54.99995 -328.12494,0 -328.12499,0 0,-54.99995 z m 0,-328.12499 0,-164.375 656.24993,0 656.25003,0 0,164.375 0,164.37499 -656.25003,0 -656.24993,0 0,-164.37499 z m 1202.49996,0 0,-54.375 -546.25003,0 -546.24994,0 0,54.375 0,54.375 546.24994,0 546.25003,0 0,-54.375 z"
+       style="fill:#fefefe"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
