@@ -8,8 +8,6 @@ namespace UWPHelper.Utilities
 
     public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
-        private const string PROPERTY_NOT_REGISTERED_EXCEPTION_FORMAT = "There is no registered property called {0}.";
-
         private readonly Dictionary<string, PropertyData> backingStore = new Dictionary<string, PropertyData>();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -120,7 +118,7 @@ namespace UWPHelper.Utilities
         {
             internal object Value { get; set; }
             internal Type Type { get; }
-            internal PropertyChangedAction PropertyChangedAction { get; set; }
+            internal PropertyChangedAction PropertyChangedAction { get; }
 
             internal PropertyData(object defaultValue, Type type, PropertyChangedAction propertyChangedAction)
             {
