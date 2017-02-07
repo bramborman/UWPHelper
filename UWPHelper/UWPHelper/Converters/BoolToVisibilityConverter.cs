@@ -8,12 +8,18 @@ namespace UWPHelper.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return System.Convert.ToBoolean(value) ? Visibility.Visible : Visibility.Collapsed;
-        }
+            bool boolValue = System.Convert.ToBoolean(value);
+            ConvertersHelper.TryInvertBool(parameter, ref boolValue);
 
+            return boolValue ? Visibility.Visible : Visibility.Collapsed;
+        }
+        
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return (Visibility)value == Visibility.Visible;
+            bool output = (Visibility)value == Visibility.Visible;
+            ConvertersHelper.TryInvertBool(parameter, ref output);
+
+            return output;
         }
     }
 }

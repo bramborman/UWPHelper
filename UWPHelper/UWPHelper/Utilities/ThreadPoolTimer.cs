@@ -17,6 +17,11 @@ namespace UWPHelper.Utilities
             get { return _interval; }
             set
             {
+                if (value < TimeSpan.Zero)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
+
                 if (_interval != value)
                 {
                     _interval = value;

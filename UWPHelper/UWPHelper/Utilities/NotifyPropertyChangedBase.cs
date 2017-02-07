@@ -8,8 +8,6 @@ namespace UWPHelper.Utilities
 
     public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
-        private const string PROPERTY_NOT_REGISTERED_EXCEPTION_FORMAT = "There is no registered property called {0}.";
-
         private readonly Dictionary<string, PropertyData> backingStore = new Dictionary<string, PropertyData>();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -21,6 +19,13 @@ namespace UWPHelper.Utilities
 
         protected void RegisterProperty(string name, Type type, object defaultValue, PropertyChangedAction propertyChangedAction)
         {
+            CheckName(name);
+
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             try
             {
                 backingStore.Add(name, new PropertyData(type.Name == "Nullable`1" ? defaultValue : Convert.ChangeType(defaultValue, type), type, propertyChangedAction));
@@ -29,7 +34,7 @@ namespace UWPHelper.Utilities
             {
                 if (backingStore.ContainsKey(name))
                 {
-                    throw new ArgumentException($"This class already contains property named {name}.");
+                    throw new ArgumentException($"This class already contains registered property named {name}.");
                 }
 
                 throw exception;
@@ -44,6 +49,7 @@ namespace UWPHelper.Utilities
             }
             catch (Exception exception)
             {
+                CheckName(propertyName);
                 CheckPropertyName(propertyName);
                 throw exception;
             }
@@ -81,8 +87,17 @@ namespace UWPHelper.Utilities
             }
             catch (Exception exception)
             {
+                CheckName(propertyName);
                 CheckPropertyName(propertyName);
                 throw exception;
+            }
+        }
+
+        private void CheckName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Value cannot be empty or null.", nameof(name));
             }
         }
         
@@ -101,11 +116,11 @@ namespace UWPHelper.Utilities
 
         private class PropertyData
         {
-            public object Value { get; set; }
-            public Type Type { get; }
-            public PropertyChangedAction PropertyChangedAction { get; set; }
+            internal object Value { get; set; }
+            internal Type Type { get; }
+            internal PropertyChangedAction PropertyChangedAction { get; }
 
-            public PropertyData(object defaultValue, Type type, PropertyChangedAction propertyChangedAction)
+            internal PropertyData(object defaultValue, Type type, PropertyChangedAction propertyChangedAction)
             {
                 Value = defaultValue;
                 Type  = type;

@@ -7,6 +7,14 @@
                              mc:Ignorable="d"
                              x:Uid="ThirdPartySoftwareInfoDialog"
                              >
+    <local:AdvancedContentDialog.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///UWPHelper/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </local:AdvancedContentDialog.Resources>
+    
     <ScrollViewer HorizontalScrollMode="Disabled"
                   VerticalScrollBarVisibility="Auto"
                   Padding="0,0,20,0"

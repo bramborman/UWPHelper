@@ -3,17 +3,22 @@ using Windows.UI.Xaml.Data;
 
 namespace UWPHelper.Converters
 {
-    // Use for binding bool? to bool or vice versa
     public sealed class BoolToBoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return System.Convert.ToBoolean(value);
+            bool output = System.Convert.ToBoolean(value);
+            ConvertersHelper.TryInvertBool(parameter, ref output);
+
+            return output;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return System.Convert.ToBoolean(value);
+            bool output = System.Convert.ToBoolean(value);
+            ConvertersHelper.TryInvertBool(parameter, ref output);
+
+            return output;
         }
     }
 }
