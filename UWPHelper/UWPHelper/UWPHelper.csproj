@@ -160,7 +160,7 @@
     <Compile Include="UI\ThirdPartySoftwareInfoDialog.xaml.cs">
       <DependentUpon>ThirdPartySoftwareInfoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\BarsColorHelper.cs" />
+    <Compile Include="Utilities\BarsHelper.cs" />
     <Compile Include="Utilities\DebugHelper.cs" />
     <Compile Include="Utilities\Delayer.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />

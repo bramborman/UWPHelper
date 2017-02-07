@@ -33,7 +33,7 @@ namespace UWPHelper.Utilities
         public bool UseDarkerStatusBarOnLandscapeOrientation
         {
             get { return _useDarkerStatusBarOnLandscapeOrientation; }
-            private set
+            set
             {
                 if (_useDarkerStatusBarOnLandscapeOrientation != value)
                 {
@@ -49,6 +49,11 @@ namespace UWPHelper.Utilities
                         {
                             DisplayInformation.GetForCurrentView().OrientationChanged -= DisplayInformation_OrientationChanged;
                         }
+                    }
+
+                    if (IsInitialized)
+                    {
+                        SetStatusBarColors();
                     }
                 }
             }
@@ -190,7 +195,7 @@ namespace UWPHelper.Utilities
         {
             if (!IsInitialized)
             {
-                throw new InvalidOperationException($"Object is not initialized. Call the {nameof(Initialize)} method first.");
+                throw new InvalidOperationException($"{nameof(BarsHelper)} is not initialized. Call the {nameof(Initialize)} method first.");
             }
         }
 
