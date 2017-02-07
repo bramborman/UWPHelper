@@ -20,6 +20,8 @@ namespace UWPHelper.Utilities
         private INotifyPropertyChanged themePropertyParent;
         private string themePropertyName;
 
+        private bool _useDarkerStatusBarOnLandscapeOrientation;
+
         public bool IsInitialized { get; private set; }
         public bool IsAutomaticallyUpdated
         {
@@ -28,7 +30,29 @@ namespace UWPHelper.Utilities
                 return themePropertyParent != null;
             }
         }
-        public bool UseDarkerStatusBarOnLandscapeOrientation { get; private set; }
+        public bool UseDarkerStatusBarOnLandscapeOrientation
+        {
+            get { return _useDarkerStatusBarOnLandscapeOrientation; }
+            private set
+            {
+                if (_useDarkerStatusBarOnLandscapeOrientation != value)
+                {
+                    _useDarkerStatusBarOnLandscapeOrientation = value;
+
+                    if (isStatusBarTypePresent)
+                    {
+                        if (_useDarkerStatusBarOnLandscapeOrientation)
+                        {
+                            DisplayInformation.GetForCurrentView().OrientationChanged += DisplayInformation_OrientationChanged;
+                        }
+                        else
+                        {
+                            DisplayInformation.GetForCurrentView().OrientationChanged -= DisplayInformation_OrientationChanged;
+                        }
+                    }
+                }
+            }
+        }
 
         static BarsHelper()
         {
@@ -170,6 +194,11 @@ namespace UWPHelper.Utilities
             }
         }
 
+        private void DisplayInformation_OrientationChanged(DisplayInformation sender, object args)
+        {
+            SetStatusBarColors(sender.CurrentOrientation);
+        }
+
         public void SetBarsColors()
         {
             SetTitleBarColors();
@@ -226,8 +255,13 @@ namespace UWPHelper.Utilities
                 titleBar.ButtonPressedForegroundColor   = titleBar.ButtonForegroundColor;
             }
         }
-        
+
         public void SetStatusBarColors()
+        {
+            SetStatusBarColors(DisplayInformation.GetForCurrentView().CurrentOrientation);
+        }
+        
+        private void SetStatusBarColors(DisplayOrientations currentOrientation)
         {
             CheckIsInitialized();
 
@@ -238,9 +272,7 @@ namespace UWPHelper.Utilities
                 ElementTheme requestedTheme = themeGetter();
                 ElementTheme applicationRequestedTheme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
                 bool lightTheme = (requestedTheme == ElementTheme.Default ? applicationRequestedTheme : requestedTheme) == ElementTheme.Light;
-
-                DisplayOrientations currentOrientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
-
+                
                 if (UseDarkerStatusBarOnLandscapeOrientation && (currentOrientation == DisplayOrientations.Landscape || currentOrientation == DisplayOrientations.LandscapeFlipped))
                 {
                     if (lightTheme)
