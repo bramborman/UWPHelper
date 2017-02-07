@@ -116,6 +116,7 @@
     <None Include="NuGet\UWPHelper.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="NuGet\UWPHelper.targets" />
     <None Include="project.json" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\cs-CZ\Resources.resw" />
