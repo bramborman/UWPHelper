@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>UWPHelper</id>
-    <version>1.4.5-rc2</version>
+    <version>1.4.5-rc3</version>
     <title>UWPHelper</title>
     <authors>Marian Dolinský</authors>
     <owners>Marian Dolinský</owners>
@@ -29,7 +29,7 @@
 
         <!-- Resource files go together with the reference library. -->
         <file src="..\bin\x86\Release\UWPHelper.pri" target="ref\uap10.0"/>
-        <file src="..\bin\x86\Release\UWPHelper\*" target="ref\uap10.0\UWPHelper"/>
+        <file src="..\bin\x86\Release\UWPHelper\**" target="ref\uap10.0\UWPHelper"/>
 
         <!-- The architecture-specific files go in architecture-specific directories. -->
         <file src="..\bin\x86\Release\UWPHelper.dll" target="runtimes\win10-x86\lib\uap10.0"/>
