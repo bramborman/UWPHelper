@@ -2,13 +2,13 @@
 <package>
   <metadata>
     <id>UWPHelper</id>
-    <version>1.4.5-rc1</version>
+    <version>1.4.5-rc2</version>
     <title>UWPHelper</title>
     <authors>Marian Dolinský</authors>
     <owners>Marian Dolinský</owners>
     <licenseUrl>https://github.com/bramborman/UWPHelper/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/bramborman/UWPHelper</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/bramborman/UWPHelper/master/UWPHelper_Logo.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/bramborman/UWPHelper/master/Assets/UWPHelper_Logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A set of useful UWP tools such as converters, triggers, custom controls and helpers. </description>
     <releaseNotes>First release</releaseNotes>
@@ -25,11 +25,11 @@
         <file src="..\bin\Reference\Release\UWPHelper.dll" target="ref\uap10.0"/>
 
         <!-- XML documentation file goes together with the reference library. -->
-        <!--<file src="..\bin\x86\Release\UWPHelper.xml" target="ref\uap10.0"/>-->
+        <!--TODO: <file src="..\bin\x86\Release\UWPHelper.xml" target="ref\uap10.0"/>-->
 
         <!-- Resource files go together with the reference library. -->
         <file src="..\bin\x86\Release\UWPHelper.pri" target="ref\uap10.0"/>
-        <file src="..\bin\x86\Release\UWPHelper\*" target="ref\uap10.0\MultiArchitectureUwpLibrary"/>
+        <file src="..\bin\x86\Release\UWPHelper\*" target="ref\uap10.0\UWPHelper"/>
 
         <!-- The architecture-specific files go in architecture-specific directories. -->
         <file src="..\bin\x86\Release\UWPHelper.dll" target="runtimes\win10-x86\lib\uap10.0"/>
