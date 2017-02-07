@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="58714MarianDolinsk.UWPHelperSampleApp" Publisher="CN=25AB577D-CD73-454E-B3F3-D78D41E3AFFA" Version="1.4.5.0" />
+  <Identity Name="58714MarianDolinsk.UWPHelperSampleApp" Publisher="CN=25AB577D-CD73-454E-B3F3-D78D41E3AFFA" Version="1.4.6.0" />
   <mp:PhoneIdentity PhoneProductId="b8a8f13b-dbb4-4346-9f36-4881bff739f4" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>ms-resource:AppName</DisplayName>
@@ -27,10 +27,10 @@
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="md-uwphelper" />
+          <uap:Protocol Name="uwphelper" />
         </uap:Extension>
         <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="uwphelper" />
+          <uap:Protocol Name="md-uwphelper" />
         </uap:Extension>
       </Extensions>
     </Application>
