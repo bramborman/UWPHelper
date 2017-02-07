@@ -124,9 +124,9 @@
   <ItemGroup>
     <Compile Include="Converters\AutomaticTypeConverter.cs" />
     <Compile Include="Converters\BoolToBoolConverter.cs" />
-    <Compile Include="Converters\BoolToBoolInvertedConverter.cs" />
     <Compile Include="Converters\BoolToIntConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\ConvertersHelper.cs" />
     <Compile Include="Converters\EnumToIntConverter.cs" />
     <Compile Include="Converters\ResourceLoaderConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />

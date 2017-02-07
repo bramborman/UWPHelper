@@ -27,7 +27,7 @@ namespace UWPHelper.SampleApp
 
                     if (await new LoadingErrorDialog(resourceLoader.GetString("LoadingErrorDialog/Settings"), resourceLoader.GetString("LoadingErrorDialog/ContinueWith")).ShowAsync() == ContentDialogResult.Primary)
                     {
-                        App.Current.Exit();
+                        Application.Current.Exit();
                     }
                     else
                     {

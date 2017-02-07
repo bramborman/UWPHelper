@@ -7,12 +7,18 @@ namespace UWPHelper.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return System.Convert.ToInt32(value);
-        }
+            bool boolValue = System.Convert.ToBoolean(value);
+            ConvertersHelper.TryInvertBool(parameter, ref boolValue);
 
+            return System.Convert.ToInt32(boolValue);
+        }
+        
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return System.Convert.ToBoolean(value);
+            bool output = System.Convert.ToBoolean(value);
+            ConvertersHelper.TryInvertBool(parameter, ref output);
+
+            return output;
         }
     }
 }

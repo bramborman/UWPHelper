@@ -9,7 +9,7 @@ namespace UWPHelper.Converters
         {
             return (int)value;
         }
-
+        
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return Enum.ToObject(targetType, value);

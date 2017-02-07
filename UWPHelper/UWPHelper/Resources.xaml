@@ -5,7 +5,6 @@
                     >
     <converters:AutomaticTypeConverter x:Key="AutomaticTypeConverter"/>
     <converters:BoolToBoolConverter x:Key="BoolToBoolConverter"/>
-    <converters:BoolToBoolInvertedConverter x:Key="BoolToBoolInvertedConverter"/>
     <converters:BoolToIntConverter x:Key="BoolToIntConverter"/>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <converters:EnumToIntConverter x:Key="EnumToIntConverter"/>

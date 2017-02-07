@@ -48,7 +48,10 @@ namespace UWPHelper.SampleApp
             RegisterProperty(nameof(Foo), typeof(int), 0);
             RegisterProperty(nameof(CheckBoxChecked), typeof(bool?), true);
             RegisterProperty(nameof(SampleEnum), typeof(SampleEnum), SampleEnum.Zero);
-            RegisterProperty(nameof(Theme), typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark, (oldValue, newValue) => Current?.SetTheme());
+            RegisterProperty(nameof(Theme), typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark, (oldValue, newValue) =>
+            {
+                Current?.SetTheme();
+            });
             RegisterProperty(nameof(Uri), typeof(string), "");
         }
 
@@ -72,8 +75,8 @@ namespace UWPHelper.SampleApp
 #endif
 
             var loadObjectAsyncResult = await StorageFileHelper.LoadObjectAsync<AppData>(FILE_NAME, ApplicationData.Current.LocalFolder);
-            Current                  = loadObjectAsyncResult.Object;
-            Current.ShowLoadingError = !loadObjectAsyncResult.Success;
+            Current                   = loadObjectAsyncResult.Object;
+            Current.ShowLoadingError  = !loadObjectAsyncResult.Success;
 
             Current.PropertyChanged += async (sender, e) =>
             {

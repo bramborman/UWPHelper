@@ -99,7 +99,7 @@
 
                 <CheckBox x:Name="CX_Collapsed"
                           x:Uid="Collapsed"
-                          IsChecked="{x:Bind CX_Visible.IsChecked, Converter={StaticResource BoolToBoolInvertedConverter}, Mode=TwoWay}"
+                          IsChecked="{x:Bind CX_Visible.IsChecked, Converter={StaticResource BoolToBoolConverter}, ConverterParameter=Invert, Mode=TwoWay}"
                           />
                 <CheckBox x:Name="CX_Visible"
                           x:Uid="Visible"
