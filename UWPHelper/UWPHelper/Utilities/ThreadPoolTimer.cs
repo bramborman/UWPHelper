@@ -7,6 +7,9 @@ namespace UWPHelper.Utilities
 {
     public sealed class ThreadPoolTimer
     {
+        private readonly object locker = new object();
+        private readonly TimerCallback timerCallback;
+
         private Timer timer;
         private TimeSpan _interval;
 
@@ -39,11 +42,26 @@ namespace UWPHelper.Utilities
         public ThreadPoolTimer(bool invokeOnDispatcher)
         {
             InvokeOnDispatcher = invokeOnDispatcher;
+
+            if (invokeOnDispatcher)
+            {
+                timerCallback = state =>
+                {
+                    Tick?.Invoke(this, new EventArgs());
+                };
+            }
+            else
+            {
+                timerCallback = async state =>
+                {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => Tick?.Invoke(this, new EventArgs()));
+                };
+            }
         }
 
         private void SetTimer()
         {
-            lock (timer)
+            lock (locker)
             {
                 timer.Change(new TimeSpan(0), Interval);
             }
@@ -57,23 +75,6 @@ namespace UWPHelper.Utilities
             }
             else
             {
-                TimerCallback timerCallback;
-
-                if (!InvokeOnDispatcher)
-                {
-                    timerCallback = state =>
-                    {
-                        Tick?.Invoke(this, new EventArgs());
-                    };
-                }
-                else
-                {
-                    timerCallback = async state =>
-                    {
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => Tick?.Invoke(this, new EventArgs()));
-                    };
-                }
-
                 timer = new Timer(timerCallback, null, new TimeSpan(0), Interval);
                 IsEnabled = true;
             }
@@ -83,7 +84,7 @@ namespace UWPHelper.Utilities
         {
             IsEnabled = false;
 
-            lock (timer)
+            lock (locker)
             {
                 timer.Dispose();
                 timer = null;

@@ -13,7 +13,10 @@ namespace UWPHelper.Utilities
 
             try
             {
-                await FileIO.WriteTextAsync(await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists), await Task.Factory.StartNew(() => JsonConvert.SerializeObject(obj)));
+                StorageFile file    = await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
+                string json         = await Task.Factory.StartNew(() => JsonConvert.SerializeObject(obj));
+
+                await FileIO.WriteTextAsync(file, json);
             }
             catch
             {
@@ -36,7 +39,7 @@ namespace UWPHelper.Utilities
 
             try
             {
-                // Reading from StorageFile could fail because of the file is used by another proccess
+                // Reading from StorageFile could fail while the file is used by another proccess
                 string json = await FileIO.ReadTextAsync(file);
                 output.Object = !string.IsNullOrWhiteSpace(json) ? await Task.Run(() => JsonConvert.DeserializeObject<T>(json)) : new T();
             }
@@ -52,8 +55,8 @@ namespace UWPHelper.Utilities
 
         public sealed class LoadObjectAsyncResult<T> where T : class, new()
         {
-            public T Object { get; set; }
-            public bool Success { get; set; }
+            public T Object { get; internal set; }
+            public bool Success { get; internal set; }
 
             public LoadObjectAsyncResult()
             {
