@@ -19,7 +19,7 @@ namespace UWPHelper.Utilities
 
         protected void RegisterProperty(string name, Type type, object defaultValue, PropertyChangedAction propertyChangedAction)
         {
-            CheckName(name);
+            ValidateName(name);
 
             if (type == null)
             {
@@ -49,8 +49,8 @@ namespace UWPHelper.Utilities
             }
             catch (Exception exception)
             {
-                CheckName(propertyName);
-                CheckPropertyName(propertyName);
+                ValidateName(propertyName);
+                ValidatePropertyName(propertyName);
                 throw exception;
             }
         }
@@ -87,13 +87,13 @@ namespace UWPHelper.Utilities
             }
             catch (Exception exception)
             {
-                CheckName(propertyName);
-                CheckPropertyName(propertyName);
+                ValidateName(propertyName);
+                ValidatePropertyName(propertyName);
                 throw exception;
             }
         }
 
-        private void CheckName(string name)
+        private void ValidateName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -101,7 +101,7 @@ namespace UWPHelper.Utilities
             }
         }
         
-        private void CheckPropertyName(string propertyName)
+        private void ValidatePropertyName(string propertyName)
         {
             if (!backingStore.ContainsKey(propertyName))
             {

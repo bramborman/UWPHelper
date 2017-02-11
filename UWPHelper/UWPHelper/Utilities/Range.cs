@@ -9,7 +9,7 @@ namespace UWPHelper.Utilities
             get { return (int)GetValue(nameof(Min)); }
             set
             {
-                CheckValues(value, Max);
+                ValidateValues(value, Max);
                 SetValue(nameof(Min), ref value);
             }
         }
@@ -18,7 +18,7 @@ namespace UWPHelper.Utilities
             get { return (int)GetValue(nameof(Max)); }
             set
             {
-                CheckValues(Min, value);
+                ValidateValues(Min, value);
                 SetValue(nameof(Max), ref value);
             }
         }
@@ -30,13 +30,13 @@ namespace UWPHelper.Utilities
 
         public Range(int min, int max)
         {
-            CheckValues(min, max);
+            ValidateValues(min, max);
 
             RegisterProperty(nameof(Min), typeof(int), min);
             RegisterProperty(nameof(Max), typeof(int), max);
         }
 
-        private void CheckValues(int min, int max)
+        private void ValidateValues(int min, int max)
         {
             if (min > max)
             {

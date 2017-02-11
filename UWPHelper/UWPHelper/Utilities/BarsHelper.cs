@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -16,11 +15,12 @@ namespace UWPHelper.Utilities
 
         public static BarsHelper Current { get; private set; }
 
-        private Func<ElementTheme> themeGetter;
+        private Func<ElementTheme> requestedThemeGetter;
         private INotifyPropertyChanged themePropertyParent;
         private string themePropertyName;
 
         private bool _useDarkerStatusBarOnLandscapeOrientation;
+        private BarsHelperColorMode? _colorMode;
 
         public bool IsInitialized { get; private set; }
         public bool IsAutomaticallyUpdated
@@ -58,59 +58,126 @@ namespace UWPHelper.Utilities
                 }
             }
         }
+        public BarsHelperColorMode ColorMode
+        {
+            get { return _colorMode.Value; }
+            set
+            {
+                if (_colorMode != value || _colorMode == null)
+                {
+                    _colorMode = value;
+
+                    if (!IsUsingCustomColorsSetter || ColorsSetter == null)
+                    {
+                        AccentColorHelper.CurrentInternal.IsActive = _colorMode == BarsHelperColorMode.Accent;
+
+                        switch (_colorMode)
+                        {
+                            case BarsHelperColorMode.Default:
+                                ColorsSetter = BarsHelperColorsSetterDefault.Current;
+                                break;
+
+                            case BarsHelperColorMode.Accent:
+                                ColorsSetter = BarsHelperColorsSetterAccent.Current;
+                                break;
+                        }
+                    }
+
+                    if (IsAutomaticallyUpdated)
+                    {
+                        SetBarsColors();
+                    }
+                }
+            }
+        }
+        public bool IsUsingCustomColorsSetter
+        {
+            get
+            {
+                return !(ColorsSetter is BarsHelperColorsSetterDefault || ColorsSetter is BarsHelperColorsSetterAccent);
+            }
+        }
+        public IBarsHelperColorsSetter ColorsSetter { get; private set; }
 
         static BarsHelper()
         {
             Current = new BarsHelper();
         }
 
+        // Prevent from creating new instances
         private BarsHelper()
         {
             IsInitialized                               = false;
             UseDarkerStatusBarOnLandscapeOrientation    = false;
         }
-
-        public void Initialize(ElementTheme requestedTheme)
+        
+        public void Initialize(BarsHelperColorMode colorMode, Func<ElementTheme> requestedThemeGetter)
         {
-            Initialize(false, () => requestedTheme, null, null);
+            ValidateRequestedThemeGetter(requestedThemeGetter);
+            Initialize(false, colorMode, null, requestedThemeGetter, null, null);
         }
 
-        public void Initialize(Func<ElementTheme> themeGetter)
+        public void Initialize(BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter)
         {
-            CheckThemeGetter(themeGetter);
-            Initialize(false, themeGetter, null, null);
+            ValidateColorsSetter(colorsSetter);
+            ValidateRequestedThemeGetter(requestedThemeGetter);
+
+            Initialize(false, colorMode, colorsSetter, requestedThemeGetter, null, null);
         }
 
-        public void Initialize(Func<ElementTheme> themeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
+        public void Initialize(BarsHelperColorMode colorMode, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
         {
-            CheckThemeGetter(themeGetter);
-            CheckThemePropertyParent(themePropertyParent);
-            CheckThemePropertyName(themePropertyName);
+            ValidateRequestedThemeGetter(requestedThemeGetter);
+            ValidateThemePropertyParent(themePropertyParent);
+            ValidateThemePropertyName(themePropertyName);
 
-            Initialize(false, themeGetter, themePropertyParent, themePropertyName);
+            Initialize(false, colorMode, null, requestedThemeGetter, themePropertyParent, themePropertyName);
         }
 
-        public void Reinitialize(ElementTheme requestedTheme)
+        public void Initialize(BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
         {
-            Initialize(true, () => requestedTheme, null, null);
-        }
+            ValidateColorsSetter(colorsSetter);
+            ValidateRequestedThemeGetter(requestedThemeGetter);
+            ValidateThemePropertyParent(themePropertyParent);
+            ValidateThemePropertyName(themePropertyName);
 
-        public void Reinitialize(Func<ElementTheme> themeGetter)
-        {
-            CheckThemeGetter(themeGetter);
-            Initialize(true, themeGetter, null, null);
-        }
-
-        public void Reinitialize(Func<ElementTheme> themeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
-        {
-            CheckThemeGetter(themeGetter);
-            CheckThemePropertyParent(themePropertyParent);
-            CheckThemePropertyName(themePropertyName);
-
-            Initialize(true, themeGetter, themePropertyParent, themePropertyName);
+            Initialize(false, colorMode, colorsSetter, requestedThemeGetter, themePropertyParent, themePropertyName);
         }
         
-        private void Initialize(bool reinitialization, Func<ElementTheme> themeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
+        public void Reinitialize(BarsHelperColorMode colorMode, Func<ElementTheme> requestedThemeGetter)
+        {
+            ValidateRequestedThemeGetter(requestedThemeGetter);
+            Initialize(true, colorMode, null, requestedThemeGetter, null, null);
+        }
+
+        public void Reinitialize(BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter)
+        {
+            ValidateColorsSetter(colorsSetter);
+            ValidateRequestedThemeGetter(requestedThemeGetter);
+
+            Initialize(true, colorMode, colorsSetter, requestedThemeGetter, null, null);
+        }
+
+        public void Reinitialize(BarsHelperColorMode colorMode, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
+        {
+            ValidateRequestedThemeGetter(requestedThemeGetter);
+            ValidateThemePropertyParent(themePropertyParent);
+            ValidateThemePropertyName(themePropertyName);
+
+            Initialize(true, colorMode, null, requestedThemeGetter, themePropertyParent, themePropertyName);
+        }
+
+        public void Reinitialize(BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
+        {
+            ValidateColorsSetter(colorsSetter);
+            ValidateRequestedThemeGetter(requestedThemeGetter);
+            ValidateThemePropertyParent(themePropertyParent);
+            ValidateThemePropertyName(themePropertyName);
+
+            Initialize(true, colorMode, colorsSetter, requestedThemeGetter, themePropertyParent, themePropertyName);
+        }
+        
+        private void Initialize(bool reinitialization, BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
         {
             if (!reinitialization && IsInitialized)
             {
@@ -118,8 +185,10 @@ namespace UWPHelper.Utilities
             }
             
             IsInitialized = true;
-
-            this.themeGetter = themeGetter;
+            
+            ColorsSetter                = ColorsSetter;
+            ColorMode                   = colorMode;
+            this.requestedThemeGetter   = requestedThemeGetter;
             
             if (this.themePropertyParent != null)
             {
@@ -161,21 +230,29 @@ namespace UWPHelper.Utilities
 
         private void Window_VisibilityChanged(object sender, VisibilityChangedEventArgs e)
         {
-            if (themeGetter() == ElementTheme.Default && e.Visible)
+            if (requestedThemeGetter() == ElementTheme.Default && e.Visible)
             {
                 SetStatusBarColors();
             }
         }
 
-        private void CheckThemeGetter(Func<ElementTheme> themeGetter)
+        private void ValidateColorsSetter(IBarsHelperColorsSetter colorsSetter)
         {
-            if (themeGetter == null)
+            if (colorsSetter == null)
             {
-                throw new ArgumentNullException(nameof(themeGetter));
+                throw new ArgumentNullException(nameof(colorsSetter));
+            }
+        }
+        
+        private void ValidateRequestedThemeGetter(Func<ElementTheme> requestedThemeGetter)
+        {
+            if (requestedThemeGetter == null)
+            {
+                throw new ArgumentNullException(nameof(requestedThemeGetter));
             }
         }
 
-        private void CheckThemePropertyParent(INotifyPropertyChanged themePropertyParent)
+        private void ValidateThemePropertyParent(INotifyPropertyChanged themePropertyParent)
         {
             if (themePropertyParent == null)
             {
@@ -183,7 +260,7 @@ namespace UWPHelper.Utilities
             }
         }
 
-        private void CheckThemePropertyName(string themePropertyName)
+        private void ValidateThemePropertyName(string themePropertyName)
         {
             if (string.IsNullOrWhiteSpace(themePropertyName))
             {
@@ -191,7 +268,7 @@ namespace UWPHelper.Utilities
             }
         }
 
-        private void CheckIsInitialized()
+        private void ValidateInitialization()
         {
             if (!IsInitialized)
             {
@@ -212,52 +289,11 @@ namespace UWPHelper.Utilities
 
         public void SetTitleBarColors()
         {
-            CheckIsInitialized();
+            ValidateInitialization();
 
             if (isApplicationViewTypePresent && ApplicationView.GetForCurrentView().TitleBar is ApplicationViewTitleBar titleBar)
             {
-                switch (themeGetter())
-                {
-                    case ElementTheme.Default:
-                        titleBar.BackgroundColor                = null;
-                        titleBar.ForegroundColor                = null;
-                        titleBar.InactiveForegroundColor        = null;
-
-                        titleBar.ButtonHoverBackgroundColor     = null;
-                        titleBar.ButtonPressedBackgroundColor   = null;
-
-                        break;
-                        
-                    case ElementTheme.Light:
-                        titleBar.BackgroundColor                = Colors.White;
-                        titleBar.ForegroundColor                = Colors.Black;
-                        titleBar.InactiveForegroundColor        = Color.FromArgb(0xFF, 0x99, 0x99, 0x99);
-
-                        titleBar.ButtonHoverBackgroundColor     = Color.FromArgb(0xFF, 0xE6, 0xE6, 0xE6);
-                        titleBar.ButtonPressedBackgroundColor   = Color.FromArgb(0xFF, 0xCC, 0xCC, 0xCC);
-
-                        break;
-
-                    case ElementTheme.Dark:
-                        titleBar.BackgroundColor                = Colors.Black;
-                        titleBar.ForegroundColor                = Colors.White;
-                        titleBar.InactiveForegroundColor        = Color.FromArgb(0xFF, 0x66, 0x66, 0x66);
-
-                        titleBar.ButtonHoverBackgroundColor     = Color.FromArgb(0xFF, 0x19, 0x19, 0x19);
-                        titleBar.ButtonPressedBackgroundColor   = Color.FromArgb(0xFF, 0x33, 0x33, 0x33);
-
-                        break;
-                }
-            
-                titleBar.InactiveBackgroundColor        = titleBar.BackgroundColor;
-
-                titleBar.ButtonBackgroundColor          = titleBar.BackgroundColor;
-                titleBar.ButtonForegroundColor          = titleBar.ForegroundColor;
-
-                titleBar.ButtonHoverForegroundColor     = titleBar.ButtonForegroundColor;
-                titleBar.ButtonInactiveBackgroundColor  = titleBar.InactiveBackgroundColor;
-                titleBar.ButtonInactiveForegroundColor  = titleBar.InactiveForegroundColor;
-                titleBar.ButtonPressedForegroundColor   = titleBar.ButtonForegroundColor;
+                ColorsSetter.SetTitleBarColors(titleBar, requestedThemeGetter());
             }
         }
 
@@ -268,47 +304,11 @@ namespace UWPHelper.Utilities
         
         private void SetStatusBarColors(DisplayOrientations currentOrientation)
         {
-            CheckIsInitialized();
+            ValidateInitialization();
 
             if (isStatusBarTypePresent && StatusBar.GetForCurrentView() is StatusBar statusBar)
             {
-                statusBar.BackgroundOpacity = 1;
-
-                ElementTheme requestedTheme = themeGetter();
-                ElementTheme applicationRequestedTheme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
-                bool lightTheme = (requestedTheme == ElementTheme.Default ? applicationRequestedTheme : requestedTheme) == ElementTheme.Light;
-                
-                if (UseDarkerStatusBarOnLandscapeOrientation && (currentOrientation == DisplayOrientations.Landscape || currentOrientation == DisplayOrientations.LandscapeFlipped))
-                {
-                    if (lightTheme)
-                    {
-                        statusBar.BackgroundColor = Color.FromArgb(0xFF, 0xF2, 0xF2, 0xF2);
-                    }
-                    else
-                    {
-                        statusBar.BackgroundColor = Color.FromArgb(0xFF, 0x17, 0x17, 0x17);
-                    }
-                }
-                else
-                {
-                    if (lightTheme)
-                    {
-                        statusBar.BackgroundColor = Color.FromArgb(0xFF, 0xE6, 0xE6, 0xE6);
-                    }
-                    else
-                    {
-                        statusBar.BackgroundColor = Color.FromArgb(0xFF, 0x1F, 0x1F, 0x1F);
-                    }
-                }
-
-                if (lightTheme)
-                {
-                    statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x5C, 0x5C, 0x5C);
-                }
-                else
-                {
-                    statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xC7, 0xC7, 0xC7);
-                }
+                ColorsSetter.SetStatusBarColors(statusBar, requestedThemeGetter(), UseDarkerStatusBarOnLandscapeOrientation, currentOrientation);
             }
         }
     }

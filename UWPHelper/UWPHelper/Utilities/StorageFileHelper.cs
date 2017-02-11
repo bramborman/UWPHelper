@@ -9,8 +9,8 @@ namespace UWPHelper.Utilities
     {
         public static async Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder, CreationCollisionOption creationCollisionOption = CreationCollisionOption.OpenIfExists)
         {
-            CheckFileName(fileName);
-            CheckFolder(folder);
+            ValidateFileName(fileName);
+            ValidateFolder(folder);
 
             bool success = true;
 
@@ -32,8 +32,8 @@ namespace UWPHelper.Utilities
 
         public static async Task<LoadObjectAsyncResult<T>> LoadObjectAsync<T>(string fileName, StorageFolder folder) where T : class, new()
         {
-            CheckFileName(fileName);
-            CheckFolder(folder);
+            ValidateFileName(fileName);
+            ValidateFolder(folder);
 
             StorageFile file = await folder.TryGetItemAsync(fileName) as StorageFile;
             return file != null ? await LoadObjectAsync<T>(file) : new LoadObjectAsyncResult<T>(new T(), true);
@@ -65,7 +65,7 @@ namespace UWPHelper.Utilities
             return new LoadObjectAsyncResult<T>(obj, success);
         }
 
-        private static void CheckFileName(string fileName)
+        private static void ValidateFileName(string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
@@ -73,7 +73,7 @@ namespace UWPHelper.Utilities
             }
         }
 
-        private static void CheckFolder(StorageFolder folder)
+        private static void ValidateFolder(StorageFolder folder)
         {
             if (folder == null)
             {
