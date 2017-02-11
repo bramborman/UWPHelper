@@ -27,7 +27,7 @@ namespace UWPHelper.Utilities
         {
             get
             {
-                return themePropertyParent != null;
+                return themePropertyParent != null || ColorMode == BarsHelperColorMode.Accent;
             }
         }
         public bool UseDarkerStatusBarOnLandscapeOrientation
@@ -187,7 +187,6 @@ namespace UWPHelper.Utilities
             IsInitialized = true;
             
             ColorsSetter                = ColorsSetter;
-            ColorMode                   = colorMode;
             this.requestedThemeGetter   = requestedThemeGetter;
             
             if (this.themePropertyParent != null)
@@ -213,6 +212,7 @@ namespace UWPHelper.Utilities
             }
 
             this.themePropertyName = themePropertyName;
+            ColorMode = colorMode;
 
             if (IsAutomaticallyUpdated)
             {
