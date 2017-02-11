@@ -142,17 +142,25 @@
     </Compile>
     <Compile Include="UI\AdvancedContentDialog.cs" />
     <Compile Include="UI\AdvancedListView.cs" />
-    <Compile Include="UI\AdvancedPivot\AdvancedPivot.cs" />
+    <Compile Include="UI\AdvancedPivot.cs">
+      <DependentUpon>AdvancedPivot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\AdvancedSlider.cs" />
     <Compile Include="UI\AdvancedTextBox.cs" />
-    <Compile Include="UI\HamburgerMenu\HamburgerMenu.xaml.cs">
+    <Compile Include="UI\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\HamburgerMenu\HamburgerMenuItems.cs" />
-    <Compile Include="UI\IconHyperlinkButtons\IconHyperlinkButtons.cs" />
+    <Compile Include="UI\HamburgerMenuItems.cs">
+      <DependentUpon>HamburgerMenuItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\IconHyperlinkButtons.cs">
+      <DependentUpon>IconHyperlinkButtons.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\LoadingErrorDialog.cs" />
     <Compile Include="UI\NumberTextBox.cs" />
-    <Compile Include="UI\PageHeader\PageHeader.cs" />
+    <Compile Include="UI\PageHeader.cs">
+      <DependentUpon>PageHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ThemeSelector.xaml.cs">
       <DependentUpon>ThemeSelector.xaml</DependentUpon>
     </Compile>
@@ -162,9 +170,15 @@
     </Compile>
     <Compile Include="Utilities\AccentColorHelper.cs" />
     <Compile Include="Utilities\BarsHelper.cs" />
-    <Compile Include="Utilities\BarsHelperColorMode.cs" />
-    <Compile Include="Utilities\BarsHelperColorsSetterAccent.cs" />
-    <Compile Include="Utilities\BarsHelperColorsSetterDefault.cs" />
+    <Compile Include="Utilities\BarsHelperColorMode.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\BarsHelperColorsSetterAccent.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\BarsHelperColorsSetterDefault.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\ColorHelper.cs" />
     <Compile Include="Utilities\IBarsHelperColorsSetter.cs" />
     <Compile Include="Utilities\DebugHelper.cs" />
@@ -193,25 +207,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\AdvancedPivot\AdvancedPivot.xaml">
+    <Page Include="UI\AdvancedPivot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="UI\HamburgerMenu\HamburgerMenu.xaml">
+    <Page Include="UI\HamburgerMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\HamburgerMenu\HamburgerMenuItems.xaml">
+    <Page Include="UI\HamburgerMenuItems.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\IconHyperlinkButtons\IconHyperlinkButtons.xaml">
+    <Page Include="UI\IconHyperlinkButtons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="UI\PageHeader\PageHeader.xaml">
+    <Page Include="UI\PageHeader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
