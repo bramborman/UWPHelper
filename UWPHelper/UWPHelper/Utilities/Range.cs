@@ -23,6 +23,11 @@ namespace UWPHelper.Utilities
             }
         }
 
+        public Range() : this(0, 0)
+        {
+
+        }
+
         public Range(int min, int max)
         {
             CheckValues(min, max);
