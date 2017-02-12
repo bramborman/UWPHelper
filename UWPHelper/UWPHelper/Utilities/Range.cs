@@ -6,20 +6,20 @@ namespace UWPHelper.Utilities
     {
         public int Min
         {
-            get { return (int)GetValue(nameof(Min)); }
+            get { return (int)GetValue(); }
             set
             {
                 ValidateValues(value, Max);
-                SetValue(nameof(Min), ref value);
+                SetValue(ref value);
             }
         }
         public int Max
         {
-            get { return (int)GetValue(nameof(Max)); }
+            get { return (int)GetValue(); }
             set
             {
                 ValidateValues(Min, value);
-                SetValue(nameof(Max), ref value);
+                SetValue(ref value);
             }
         }
 

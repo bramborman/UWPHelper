@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace UWPHelper.Utilities
 {
@@ -41,7 +42,7 @@ namespace UWPHelper.Utilities
             }
         }
 
-        protected object GetValue(string propertyName)
+        protected object GetValue([CallerMemberName]string propertyName = null)
         {
             try
             {
@@ -51,21 +52,22 @@ namespace UWPHelper.Utilities
             {
                 ValidateName(propertyName);
                 ValidatePropertyName(propertyName);
+
                 throw exception;
             }
         }
 
-        protected void ForceSetValue<T>(string propertyName, ref T newValue)
+        protected void ForceSetValue<T>(ref T newValue, [CallerMemberName]string propertyName = null)
         {
-            SetValue(propertyName, ref newValue, true);
+            SetValue(ref newValue, propertyName, true);
         }
 
-        protected void SetValue<T>(string propertyName, ref T newValue)
+        protected void SetValue<T>(ref T newValue, [CallerMemberName]string propertyName = null)
         {
-            SetValue(propertyName, ref newValue, false);
+            SetValue(ref newValue, propertyName, false);
         }
 
-        private void SetValue<T>(string propertyName, ref T newValue, bool forceSetValue)
+        private void SetValue<T>(ref T newValue, string propertyName, bool forceSetValue)
         {
             try
             {
@@ -89,6 +91,7 @@ namespace UWPHelper.Utilities
             {
                 ValidateName(propertyName);
                 ValidatePropertyName(propertyName);
+
                 throw exception;
             }
         }
@@ -109,8 +112,9 @@ namespace UWPHelper.Utilities
             }
         }
 
-        protected void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
+            ValidateName(propertyName);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 

@@ -38,26 +38,34 @@ namespace UWPHelper.Utilities
 
         public bool IsActive
         {
-            get { return (bool)GetValue(nameof(IsActive)); }
-            set { SetValue(nameof(IsActive), ref value); }
+            get { return (bool)GetValue(); }
+            set { SetValue(ref value); }
         }
         public Color AccentColor
         {
             get
             {
                 ValidateActivation();
-                return (Color)GetValue(nameof(AccentColor));
+                return (Color)GetValue();
             }
-            private set { SetValue(nameof(AccentColor), ref value); }
+            private set
+            {
+                ValidateActivation();
+                SetValue(ref value);
+            }
         }
         public ElementTheme AccentContrastingTheme
         {
             get
             {
                 ValidateActivation();
-                return (ElementTheme)GetValue(nameof(AccentContrastingTheme));
+                return (ElementTheme)GetValue();
             }
-            private set { SetValue(nameof(AccentContrastingTheme), ref value); }
+            private set
+            {
+                ValidateActivation();
+                SetValue(ref value);
+            }
         }
         
         // Prevent from creating new instances

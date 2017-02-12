@@ -19,28 +19,28 @@ namespace UWPHelper.SampleApp
         public bool ShowLoadingError { get; set; }
         public int Foo
         {
-            get { return (int)GetValue(nameof(Foo)); }
-            set { SetValue(nameof(Foo), ref value); }
+            get { return (int)GetValue(); }
+            set { SetValue(ref value); }
         }
         public bool? CheckBoxChecked
         {
-            get { return (bool?)GetValue(nameof(CheckBoxChecked)); }
-            set { SetValue(nameof(CheckBoxChecked), ref value); }
+            get { return (bool?)GetValue(); }
+            set { SetValue(ref value); }
         }
         public SampleEnum SampleEnum
         {
-            get { return (SampleEnum)GetValue(nameof(SampleEnum)); }
-            set { SetValue(nameof(SampleEnum), ref value); }
+            get { return (SampleEnum)GetValue(); }
+            set { SetValue(ref value); }
         }
         public ElementTheme Theme
         {
-            get { return (ElementTheme)GetValue(nameof(Theme)); }
-            set { SetValue(nameof(Theme), ref value); }
+            get { return (ElementTheme)GetValue(); }
+            set { SetValue(ref value); }
         }
         public string Uri
         {
-            get { return (string)GetValue(nameof(Uri)); }
-            set { SetValue(nameof(Uri), ref value); }
+            get { return (string)GetValue(); }
+            set { SetValue(ref value); }
         }
 
         public AppData()
