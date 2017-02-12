@@ -130,7 +130,7 @@
     <Compile Include="Converters\EnumToIntConverter.cs" />
     <Compile Include="Converters\ResourceLoaderConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
-    <Compile Include="Converters\StringIsNullOrWhiteSpaceInvertedConverter.cs" />
+    <Compile Include="Converters\StringIsNullOrWhiteSpaceConverter.cs" />
     <Compile Include="Converters\StringToUpperCaseConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Triggers\DeviceFamilyTrigger.cs" />
@@ -180,12 +180,14 @@
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\ColorHelper.cs" />
-    <Compile Include="Utilities\IBarsHelperColorsSetter.cs" />
     <Compile Include="Utilities\DebugHelper.cs" />
     <Compile Include="Utilities\Delayer.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />
     <Compile Include="Utilities\DeviceInfo.cs" />
     <Compile Include="Utilities\DisplayRequestHelper.cs" />
+    <Compile Include="Utilities\IBarsHelperColorsSetter.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\KeyboardHelper.cs" />
     <Compile Include="Utilities\NotifyPropertyChangedBase.cs" />
     <Compile Include="Utilities\Range.cs" />

@@ -10,7 +10,7 @@
     <converters:EnumToIntConverter x:Key="EnumToIntConverter"/>
     <converters:ResourceLoaderConverter x:Key="ResourceLoaderConverter"/>
     <converters:StringFormatConverter x:Key="StringFormatConverter"/>
-    <converters:StringIsNullOrWhiteSpaceInvertedConverter x:Key="StringIsNullOrWhiteSpaceInvertedConverter"/>
+    <converters:StringIsNullOrWhiteSpaceConverter x:Key="StringIsNullOrWhiteSpaceConverter"/>
     <converters:StringToUpperCaseConverter x:Key="StringToUpperCaseConverter"/>
 
     <Thickness x:Key="ContentDialogContentMargin">0,7,0,0</Thickness>

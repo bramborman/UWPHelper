@@ -3,11 +3,14 @@ using Windows.UI.Xaml.Data;
 
 namespace UWPHelper.Converters
 {
-    public sealed class StringIsNullOrWhiteSpaceInvertedConverter : IValueConverter
+    public sealed class StringIsNullOrWhiteSpaceConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return !string.IsNullOrWhiteSpace((string)value);
+            bool output = string.IsNullOrWhiteSpace((string)value);
+            ConvertersHelper.TryInvertBool(parameter, ref output);
+
+            return output;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

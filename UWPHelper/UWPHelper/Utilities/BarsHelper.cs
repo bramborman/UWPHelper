@@ -65,21 +65,26 @@ namespace UWPHelper.Utilities
             {
                 if (_colorMode != value || _colorMode == null)
                 {
+                    if (!IsUsingCustomColorsSetter && _colorMode == BarsHelperColorMode.Accent)
+                    {
+                        AccentColorHelper.CurrentInternal.IsActive = false;
+                        AccentColorHelper.CurrentInternal.PropertyChanged -= AccentColorHelper_PropertyChanged;
+                    }
+
                     _colorMode = value;
 
                     if (!IsUsingCustomColorsSetter || ColorsSetter == null)
                     {
-                        AccentColorHelper.CurrentInternal.IsActive = _colorMode == BarsHelperColorMode.Accent;
-
-                        switch (_colorMode)
+                        if (_colorMode == BarsHelperColorMode.Themed)
                         {
-                            case BarsHelperColorMode.Default:
-                                ColorsSetter = BarsHelperColorsSetterDefault.Current;
-                                break;
+                            ColorsSetter = BarsHelperColorsSetterDefault.Current;
+                        }
+                        else
+                        {
+                            AccentColorHelper.CurrentInternal.IsActive = true;
+                            ColorsSetter = BarsHelperColorsSetterAccent.Current;
 
-                            case BarsHelperColorMode.Accent:
-                                ColorsSetter = BarsHelperColorsSetterAccent.Current;
-                                break;
+                            AccentColorHelper.CurrentInternal.PropertyChanged += AccentColorHelper_PropertyChanged;
                         }
                     }
 
@@ -90,6 +95,7 @@ namespace UWPHelper.Utilities
                 }
             }
         }
+
         public bool IsUsingCustomColorsSetter
         {
             get
@@ -233,6 +239,14 @@ namespace UWPHelper.Utilities
             if (requestedThemeGetter() == ElementTheme.Default && e.Visible)
             {
                 SetStatusBarColors();
+            }
+        }
+
+        private void AccentColorHelper_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(AccentColorHelper.AccentColor) || e.PropertyName == nameof(AccentColorHelper.AccentContrastingTheme))
+            {
+                SetBarsColors();
             }
         }
 
