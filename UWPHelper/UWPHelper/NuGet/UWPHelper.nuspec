@@ -6,7 +6,7 @@
     <title>UWPHelper</title>
     <authors>Marian Dolinský</authors>
     <owners>Marian Dolinský</owners>
-    <licenseUrl>https://github.com/bramborman/UWPHelper/blob/master/LICENSE</licenseUrl>
+    <licenseUrl>https://github.com/bramborman/UWPHelper/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/bramborman/UWPHelper</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/bramborman/UWPHelper/master/Assets/UWPHelper_Logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

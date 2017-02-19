@@ -10,7 +10,7 @@ namespace UWPHelper.Utilities
             set
             {
                 ValidateValues(value, Max);
-                SetValue(ref value);
+                SetValue(value);
             }
         }
         public int Max
@@ -19,7 +19,7 @@ namespace UWPHelper.Utilities
             set
             {
                 ValidateValues(Min, value);
-                SetValue(ref value);
+                SetValue(value);
             }
         }
 

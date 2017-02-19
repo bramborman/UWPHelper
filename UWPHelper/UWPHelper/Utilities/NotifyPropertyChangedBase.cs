@@ -57,17 +57,17 @@ namespace UWPHelper.Utilities
             }
         }
 
-        protected void ForceSetValue<T>(ref T newValue, [CallerMemberName]string propertyName = null)
+        protected void ForceSetValue<T>(T newValue, [CallerMemberName]string propertyName = null)
         {
-            SetValue(ref newValue, propertyName, true);
+            SetValue(newValue, propertyName, true);
         }
 
-        protected void SetValue<T>(ref T newValue, [CallerMemberName]string propertyName = null)
+        protected void SetValue<T>(T newValue, [CallerMemberName]string propertyName = null)
         {
-            SetValue(ref newValue, propertyName, false);
+            SetValue(newValue, propertyName, false);
         }
 
-        private void SetValue<T>(ref T newValue, string propertyName, bool forceSetValue)
+        private void SetValue<T>(T newValue, string propertyName, bool forceSetValue)
         {
             try
             {

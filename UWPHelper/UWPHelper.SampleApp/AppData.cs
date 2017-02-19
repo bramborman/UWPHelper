@@ -20,27 +20,27 @@ namespace UWPHelper.SampleApp
         public int Foo
         {
             get { return (int)GetValue(); }
-            set { SetValue(ref value); }
+            set { SetValue(value); }
         }
         public bool? CheckBoxChecked
         {
             get { return (bool?)GetValue(); }
-            set { SetValue(ref value); }
+            set { SetValue(value); }
         }
         public SampleEnum SampleEnum
         {
             get { return (SampleEnum)GetValue(); }
-            set { SetValue(ref value); }
+            set { SetValue(value); }
         }
         public ElementTheme Theme
         {
             get { return (ElementTheme)GetValue(); }
-            set { SetValue(ref value); }
+            set { SetValue(value); }
         }
         public string Uri
         {
             get { return (string)GetValue(); }
-            set { SetValue(ref value); }
+            set { SetValue(value); }
         }
 
         public AppData()

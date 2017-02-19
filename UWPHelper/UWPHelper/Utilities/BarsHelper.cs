@@ -51,6 +51,7 @@ namespace UWPHelper.Utilities
 
                     if (isStatusBarTypePresent)
                     {
+                        //TODO: Use WeakEventListener
                         if (_useDarkerStatusBarOnLandscapeOrientation)
                         {
                             DisplayInformation.GetForCurrentView().OrientationChanged += DisplayInformation_OrientationChanged;
@@ -203,6 +204,11 @@ namespace UWPHelper.Utilities
 
         private void InitializeForCurrentView(bool reinitialization, BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
         {
+            if (reinitialization && !IsInitialized)
+            {
+                throw new InvalidOperationException($"Cannot reinitialize - {nameof(BarsHelper)} must be initialized before.");
+            }
+
             InitializeForCurrentView(reinitialization);
             
             ColorsSetter                = ColorsSetter;
@@ -251,12 +257,8 @@ namespace UWPHelper.Utilities
 
                 barsReferenceHolder = barsReferenceHolders.FirstOrDefault(b =>
                 {
-                    if (b.TitleBar.TryGetTarget(out ApplicationViewTitleBar titleBar))
-                    {
-                        return currentTitleBar == titleBar;
-                    }
-
-                    return false;
+                    b.TitleBar.TryGetTarget(out ApplicationViewTitleBar titleBar);
+                    return titleBar == currentTitleBar;
                 });
             }
 
@@ -268,12 +270,8 @@ namespace UWPHelper.Utilities
                 {
                     barsReferenceHolder = barsReferenceHolders.FirstOrDefault(b =>
                     {
-                        if (b.StatusBar.TryGetTarget(out StatusBar statusBar))
-                        {
-                            return currentStatusBar == statusBar;
-                        }
-
-                        return false;
+                        b.StatusBar.TryGetTarget(out StatusBar statusBar);
+                        return statusBar == currentStatusBar;
                     });
                 }
             }

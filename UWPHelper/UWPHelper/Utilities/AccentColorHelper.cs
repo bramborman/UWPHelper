@@ -39,7 +39,7 @@ namespace UWPHelper.Utilities
         public bool IsActive
         {
             get { return (bool)GetValue(); }
-            set { SetValue(ref value); }
+            set { SetValue(value); }
         }
         public Color AccentColor
         {
@@ -51,7 +51,7 @@ namespace UWPHelper.Utilities
             private set
             {
                 ValidateActivation();
-                SetValue(ref value);
+                SetValue(value);
             }
         }
         public ElementTheme AccentContrastingTheme
@@ -64,10 +64,10 @@ namespace UWPHelper.Utilities
             private set
             {
                 ValidateActivation();
-                SetValue(ref value);
+                SetValue(value);
             }
         }
-        
+
         // Prevent from creating new instances
         private AccentColorHelper()
         {
@@ -102,7 +102,7 @@ namespace UWPHelper.Utilities
 
         private void GetAccentColor()
         {
-            AccentColor = (Color)Application.Current.Resources["SystemAccentColor"];;
+            AccentColor = (Color)Application.Current.Resources["SystemAccentColor"];
         }
 
         private void ValidateActivation()
@@ -112,5 +112,11 @@ namespace UWPHelper.Utilities
                 throw new InvalidOperationException($"Cannot use this class when it's not activated. You must set the {nameof(AccentColorHelper)}.{nameof(IsActive)} property value to true.");
             }
         }
+
+        // TODO:
+        // public static AccentColorHelper GetForCurrentView()
+        // {
+        //     
+        // }
     }
 }
