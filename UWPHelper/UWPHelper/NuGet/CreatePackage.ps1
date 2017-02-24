@@ -1,5 +1,7 @@
-﻿# Any assembly matching this filter will be transformed into an AnyCPU assembly.
-$referenceDllFilter = "UWPHelper.dll"
+﻿$projectName = "UWPHelper"
+
+# Any assembly matching this filter will be transformed into an AnyCPU assembly.
+$referenceDllFilter = $projectName + ".dll"
 
 $programfilesx86 = "${Env:ProgramFiles(x86)}"
 $corflags = Join-Path $programfilesx86 "Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\x64\CorFlags.exe"
@@ -10,8 +12,8 @@ If (!(Test-Path $corflags))
 }
 
 $solutionRoot = Resolve-Path ..\..
-$topLevelDirectories = Get-ChildItem $solutionRoot -Directory
-$binDirectories = $topLevelDirectories | %{ Get-ChildItem $_.FullName -Directory -Filter "bin" }
+$topLevelDirectory = Get-ChildItem $solutionRoot -Directory -Name $projectName
+$binDirectories = $topLevelDirectory | ForEach-Object{ Get-ChildItem $_.FullName -Directory -Filter "bin" }
 
 # Create reference assemblies, because otherwise the NuGet packages cannot be used.
 # This creates them for all outputs that match the filter, in all output directories of all projects.

@@ -5,7 +5,7 @@ using Windows.UI.Core;
 
 namespace UWPHelper.Utilities
 {
-    public sealed class ThreadPoolTimer
+    public sealed class ThreadPoolTimer : IDisposable
     {
         private readonly object locker = new object();
         private readonly TimerCallback timerCallback;
@@ -13,7 +13,8 @@ namespace UWPHelper.Utilities
         private Timer timer;
         private TimeSpan _interval;
 
-        private bool InvokeOnDispatcher { get; }
+        public bool IsInvokedOnDispatcher { get; }
+        public bool IsDisposedOnStop { get; }
         public bool IsEnabled { get; private set; }
         public TimeSpan Interval
         {
@@ -39,22 +40,31 @@ namespace UWPHelper.Utilities
 
         public event EventHandler Tick;
 
-        public ThreadPoolTimer(bool invokeOnDispatcher)
+        public ThreadPoolTimer() : this(true, true)
         {
-            InvokeOnDispatcher = invokeOnDispatcher;
+
+        }
+        
+        public ThreadPoolTimer(bool invokeOnDispatcher, bool disposeOnStop)
+        {
+            IsInvokedOnDispatcher   = invokeOnDispatcher;
+            IsDisposedOnStop        = disposeOnStop;
 
             if (invokeOnDispatcher)
             {
-                timerCallback = state =>
+                timerCallback = async state =>
                 {
-                    Tick?.Invoke(this, new EventArgs());
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        Tick?.Invoke(this, new EventArgs());
+                    });
                 };
             }
             else
             {
-                timerCallback = async state =>
+                timerCallback = state =>
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => Tick?.Invoke(this, new EventArgs()));
+                    Tick?.Invoke(this, new EventArgs());
                 };
             }
         }
@@ -69,21 +79,34 @@ namespace UWPHelper.Utilities
 
         public void Start()
         {
-            if (IsEnabled)
+            if (IsEnabled || !IsDisposedOnStop)
             {
                 SetTimer();
             }
-            else
+            else if (IsDisposedOnStop)
             {
                 timer = new Timer(timerCallback, null, new TimeSpan(0), Interval);
-                IsEnabled = true;
             }
+
+            IsEnabled = true;
         }
 
         public void Stop()
         {
             IsEnabled = false;
 
+            if (IsDisposedOnStop)
+            {
+                Dispose();
+            }
+            else
+            {
+                timer.Change(Timeout.Infinite, Timeout.Infinite);
+            }
+        }
+
+        public void Dispose()
+        {
             lock (locker)
             {
                 timer.Dispose();
