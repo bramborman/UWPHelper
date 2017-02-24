@@ -39,14 +39,15 @@ namespace UWPHelper.Utilities
         }
 
         public event EventHandler Tick;
-
-        public ThreadPoolTimer() : this(true, true)
+        
+        public ThreadPoolTimer(TimeSpan interval) : this(interval, true, true)
         {
 
         }
         
-        public ThreadPoolTimer(bool invokeOnDispatcher, bool disposeOnStop)
+        public ThreadPoolTimer(TimeSpan interval, bool invokeOnDispatcher, bool disposeOnStop)
         {
+            Interval                = interval;
             IsInvokedOnDispatcher   = invokeOnDispatcher;
             IsDisposedOnStop        = disposeOnStop;
 

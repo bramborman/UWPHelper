@@ -27,12 +27,7 @@ namespace UWPHelper.Utilities
         }
 
         public event Action<Delayer> Tick;
-
-        public Delayer(double secondsDelay) : this(TimeSpan.FromSeconds(secondsDelay))
-        {
-
-        }
-
+        
         public Delayer(TimeSpan delay)
         {
             timer = new DispatcherTimer();
