@@ -12,7 +12,7 @@ If (!(Test-Path $corflags))
 }
 
 $solutionRoot = Resolve-Path ..\..
-$topLevelDirectory = Get-ChildItem $solutionRoot -Directory -Name $projectName
+$topLevelDirectory = Get-ChildItem $solutionRoot -Directory -Filter $projectName
 $binDirectories = $topLevelDirectory | ForEach-Object{ Get-ChildItem $_.FullName -Directory -Filter "bin" }
 
 # Create reference assemblies, because otherwise the NuGet packages cannot be used.
