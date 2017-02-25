@@ -7,7 +7,6 @@ namespace UWPHelper.Utilities
 {
     public sealed class ThreadPoolTimer : IDisposable
     {
-        private readonly object locker = new object();
         private readonly TimerCallback timerCallback;
 
         private Timer timer;
@@ -21,18 +20,13 @@ namespace UWPHelper.Utilities
             get { return _interval; }
             set
             {
-                if (value < TimeSpan.Zero)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                }
-
                 if (_interval != value)
                 {
                     _interval = value;
 
                     if (IsEnabled)
                     {
-                        SetTimer();
+                        SetTimerInterval();
                     }
                 }
             }
@@ -70,23 +64,25 @@ namespace UWPHelper.Utilities
             }
         }
 
-        private void SetTimer()
+        private void SetTimerInterval()
         {
-            lock (locker)
-            {
-                timer.Change(new TimeSpan(0), Interval);
-            }
+            timer.Change(TimeSpan.Zero, Interval);
         }
 
         public void Start()
         {
-            if (IsEnabled || !IsDisposedOnStop)
+            if (IsEnabled)
             {
-                SetTimer();
+                return;
             }
-            else if (IsDisposedOnStop)
+
+            if (timer == null)
             {
-                timer = new Timer(timerCallback, null, new TimeSpan(0), Interval);
+                timer = new Timer(timerCallback, null, TimeSpan.Zero, Interval);
+            }
+            else
+            {
+                SetTimerInterval();
             }
 
             IsEnabled = true;
@@ -94,24 +90,26 @@ namespace UWPHelper.Utilities
 
         public void Stop()
         {
-            IsEnabled = false;
-
-            if (IsDisposedOnStop)
-            {
-                Dispose();
-            }
-            else
-            {
-                timer.Change(Timeout.Infinite, Timeout.Infinite);
-            }
+            Stop(false);
         }
 
         public void Dispose()
         {
-            lock (locker)
+            Stop(true);
+        }
+
+        private void Stop(bool dispose)
+        {
+            IsEnabled = false;
+
+            if (IsDisposedOnStop || dispose)
             {
                 timer.Dispose();
                 timer = null;
+            }
+            else
+            {
+                timer.Change(Timeout.Infinite, Timeout.Infinite);
             }
         }
     }
