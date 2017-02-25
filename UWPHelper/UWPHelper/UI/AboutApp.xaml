@@ -102,7 +102,7 @@
                     >
                 <TextBlock>
                     <Run Text="&#xE939;" FontFamily="Segoe MDL2 Assets"/>
-                    <Run x:Uid="Feedback"/>
+                    <Run x:Uid="Feedback" FontWeight="SemiBold"/>
                 </TextBlock>
             </Button>
 

@@ -121,7 +121,7 @@
     <value>O aplikaci</value>
   </data>
   <data name="Feedback.Text" xml:space="preserve">
-    <value>Zpětná vazba</value>
+    <value>ZPĚTNÁ VAZBA</value>
   </data>
   <data name="InWindowsStore" xml:space="preserve">
     <value>ve Windows Store</value>

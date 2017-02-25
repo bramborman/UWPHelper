@@ -121,7 +121,7 @@
     <value>About</value>
   </data>
   <data name="Feedback.Text" xml:space="preserve">
-    <value>Feedback</value>
+    <value>FEEDBACK</value>
   </data>
   <data name="InWindowsStore" xml:space="preserve">
     <value>in Windows Store</value>

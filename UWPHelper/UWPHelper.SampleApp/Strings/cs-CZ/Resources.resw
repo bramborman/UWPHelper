@@ -79,13 +79,13 @@
     <value>s výchozím nastavením</value>
   </data>
   <data name="PageHeader.Content" xml:space="preserve">
-    <value>UWPHELPER UKÁZKOVÁ APLIKACE</value>
+    <value>UWPHELPER PŘEDVÁDĚCÍ APLIKACE</value>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>UWPHelper Ukázková Aplikace</value>
+    <value>UWPHelper Předváděcí Aplikace</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
-    <value>UWPHelper Ukázková Aplikace</value>
+    <value>UWPHelper Předváděcí Aplikace</value>
   </data>
   <data name="SampleEnum.Zero.Content" xml:space="preserve">
     <value>Nula</value>
