@@ -140,6 +140,9 @@
     <Compile Include="UI\AboutApp.xaml.cs">
       <DependentUpon>AboutApp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\AboutAppDialog.xaml.cs">
+      <DependentUpon>AboutAppDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\AdvancedContentDialog.cs" />
     <Compile Include="UI\AdvancedListView.cs" />
     <Compile Include="UI\AdvancedPivot.cs">
@@ -206,6 +209,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="UI\AboutApp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\AboutAppDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

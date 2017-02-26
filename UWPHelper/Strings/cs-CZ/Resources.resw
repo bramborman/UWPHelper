@@ -185,4 +185,7 @@ Přejete si aplikaci nyní zavřít?</value>
   <data name="ThirdPartySoftwareInfoDialog.SecondaryButtonText" xml:space="preserve">
     <value>Zavřít</value>
   </data>
+  <data name="AboutAppDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
 </root>

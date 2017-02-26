@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Email;
 using Windows.ApplicationModel.Resources;
+using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -37,7 +38,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.";
         #endregion
-
+        
         public static readonly DependencyProperty AppStoreIdProperty            = DependencyProperty.Register(nameof(AppStoreId), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty AppUriProperty                = DependencyProperty.Register(nameof(AppUri), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty AppLogoPathProperty           = DependencyProperty.Register(nameof(AppLogoPath), typeof(string), typeof(AboutApp), new PropertyMetadata(@"ms-appx:Assets/AboutAppIcon.png"));
@@ -45,7 +46,7 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
         public static readonly DependencyProperty IsGitHubLinkEnabledProperty   = DependencyProperty.Register(nameof(IsGitHubLinkEnabled), typeof(bool), typeof(AboutApp), null);
         public static readonly DependencyProperty GitHubProjectNameProperty     = DependencyProperty.Register(nameof(GitHubProjectName), typeof(string), typeof(AboutApp), null);
         public static readonly DependencyProperty GitHubLinkUrlProperty         = DependencyProperty.Register(nameof(GitHubLinkUrl), typeof(string), typeof(AboutApp), null);
-
+        
         private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("UWPHelper/Resources");
 
         private PackageVersion Version
@@ -72,7 +73,7 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
         {
             get { return $"{AppName} {resourceLoader.GetString("InWindowsStore")}"; }
         }
-
+        
         public string AppStoreId
         {
             get { return (string)GetValue(AppStoreIdProperty); }
@@ -110,6 +111,9 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
             set { SetValue(GitHubLinkUrlProperty, value); }
         }
         public ObservableCollection<HyperlinkButton> Links { get; }
+
+        public event TypedEventHandler<AboutApp, EventArgs> ThirdPartySoftwareInfoDialogOpening;
+        public event TypedEventHandler<AboutApp, EventArgs> ThirdPartySoftwareInfoDialogClosed;
 
         public AboutApp()
         {
@@ -160,7 +164,9 @@ App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Rev
             }
             else
             {
+                ThirdPartySoftwareInfoDialogOpening?.Invoke(this, new EventArgs());
                 await new ThirdPartySoftwareInfoDialog(ThirdPartySoftwareInfo).ShowAsync();
+                ThirdPartySoftwareInfoDialogClosed?.Invoke(this, new EventArgs());
             }
         }
 
@@ -171,10 +177,11 @@ App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Rev
 
         private void SharingDataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
-            args.Request.Data.Properties.Title = AppName;
-            args.Request.Data.Properties.Description = AppStoreLink;
-            args.Request.Data.SetText($@"{AppStoreLink} (https://www.microsoft.com/store/apps/{AppStoreId})");
-            args.Request.Data.SetWebLink(new Uri($"https://www.microsoft.com/store/apps/{AppStoreId}"));
+            args.Request.Data.Properties.Title          = AppName;
+            args.Request.Data.Properties.Description    = AppStoreLink;
+
+            args.Request.Data.SetText(AppStoreLink + @" (https://www.microsoft.com/store/apps/" + AppStoreId + ")");
+            args.Request.Data.SetWebLink(new Uri("https://www.microsoft.com/store/apps/" + AppStoreId));
             args.Request.Data.SetApplicationLink(new Uri(AppUri));
 
             DataTransferManager.GetForCurrentView().DataRequested -= SharingDataRequested;
