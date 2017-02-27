@@ -1,9 +1,10 @@
 ﻿using System;
+using UWPHelper.Utilities;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 
-namespace UWPHelper.Utilities
+namespace UWPHelper.UI
 {
     public sealed class AccentColorHelper : NotifyPropertyChangedBase
     {

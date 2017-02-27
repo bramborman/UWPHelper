@@ -3,7 +3,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace UWPHelper.Utilities
+namespace UWPHelper.UI
 {
     public sealed class BarsHelperColorsSetterDefault : IBarsHelperColorsSetter
     {

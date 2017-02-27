@@ -171,15 +171,15 @@
     <Compile Include="UI\ThirdPartySoftwareInfoDialog.xaml.cs">
       <DependentUpon>ThirdPartySoftwareInfoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\AccentColorHelper.cs" />
-    <Compile Include="Utilities\BarsHelper.cs" />
-    <Compile Include="Utilities\BarsHelperColorMode.cs">
+    <Compile Include="UI\AccentColorHelper.cs" />
+    <Compile Include="UI\BarsHelper.cs" />
+    <Compile Include="UI\BarsHelperColorMode.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\BarsHelperColorsSetterAccent.cs">
+    <Compile Include="UI\BarsHelperColorsSetterAccent.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\BarsHelperColorsSetterDefault.cs">
+    <Compile Include="UI\BarsHelperColorsSetterDefault.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\ColorHelper.cs" />
@@ -188,7 +188,7 @@
     <Compile Include="Utilities\DelegateCommand.cs" />
     <Compile Include="Utilities\DeviceInfo.cs" />
     <Compile Include="Utilities\DisplayRequestHelper.cs" />
-    <Compile Include="Utilities\IBarsHelperColorsSetter.cs">
+    <Compile Include="UI\IBarsHelperColorsSetter.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\KeyboardHelper.cs" />

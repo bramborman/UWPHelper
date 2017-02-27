@@ -2,7 +2,7 @@
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace UWPHelper.Utilities
+namespace UWPHelper.UI
 {
     public interface IBarsHelperColorsSetter
     {

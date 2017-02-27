@@ -8,7 +8,7 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace UWPHelper.Utilities
+namespace UWPHelper.UI
 {
     public sealed partial class BarsHelper
     {

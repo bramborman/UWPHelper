@@ -1,4 +1,4 @@
-﻿namespace UWPHelper.Utilities
+﻿namespace UWPHelper.UI
 {
     public enum BarsHelperColorMode
     {
