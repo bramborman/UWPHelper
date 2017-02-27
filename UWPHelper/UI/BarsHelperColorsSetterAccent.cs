@@ -1,4 +1,5 @@
-﻿using Windows.Graphics.Display;
+﻿using UWPHelper.Utilities;
+using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
