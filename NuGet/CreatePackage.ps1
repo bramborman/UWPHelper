@@ -25,7 +25,7 @@ If (!(Test-Path $corFlags))
 }
 
 
-$solutionRoot 		= Resolve-Path ..\..
+$solutionRoot 		= Resolve-Path ..\
 $topLevelDirectory 	= Get-ChildItem $solutionRoot -Directory -Filter $projectName
 $binDirectories 	= $topLevelDirectory | ForEach-Object{ Get-ChildItem $_.FullName -Directory -Filter "bin" }
 

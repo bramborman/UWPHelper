@@ -112,11 +112,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="NuGet\CreatePackage.ps1" />
-    <None Include="NuGet\UWPHelper.nuspec">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="NuGet\UWPHelper.targets" />
     <None Include="project.json" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\cs-CZ\Resources.resw" />

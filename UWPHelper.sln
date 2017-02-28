@@ -25,6 +25,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{5BE145
 		Assets\UWPHelper.SampleApp Icon.png = Assets\UWPHelper.SampleApp Icon.png
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{59997A3D-F79F-45AE-B5B4-66744DA841F5}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\CreatePackage.ps1 = NuGet\CreatePackage.ps1
+		NuGet\UWPHelper.nuspec = NuGet\UWPHelper.nuspec
+		NuGet\UWPHelper.targets = NuGet\UWPHelper.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -71,5 +78,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5BE145D9-41D8-4029-BB13-43FA5DA62822} = {1ED198B6-A7F3-4B45-9BCF-F3EF89F1CCBA}
+		{59997A3D-F79F-45AE-B5B4-66744DA841F5} = {1ED198B6-A7F3-4B45-9BCF-F3EF89F1CCBA}
 	EndGlobalSection
 EndGlobal
