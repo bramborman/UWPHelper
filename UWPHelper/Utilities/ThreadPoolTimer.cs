@@ -104,7 +104,7 @@ namespace UWPHelper.Utilities
 
             if (IsDisposedOnStop || dispose)
             {
-                timer.Dispose();
+                timer?.Dispose();
                 timer = null;
             }
             else
