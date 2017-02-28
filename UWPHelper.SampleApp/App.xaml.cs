@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using UWPHelper.Utilities;
+using UWPHelper.UI;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
