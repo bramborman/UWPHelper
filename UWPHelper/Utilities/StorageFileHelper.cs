@@ -7,7 +7,12 @@ namespace UWPHelper.Utilities
 {
     public static class StorageFileHelper
     {
-        public static async Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder, CreationCollisionOption creationCollisionOption = CreationCollisionOption.OpenIfExists)
+        public static Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder)
+        {
+            return SaveObjectAsync(obj, fileName, folder, CreationCollisionOption.OpenIfExists);
+        }
+
+        public static async Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder, CreationCollisionOption creationCollisionOption)
         {
             ValidateFileName(fileName);
             ValidateFolder(folder);
