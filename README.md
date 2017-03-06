@@ -6,5 +6,7 @@ UWPHelper is a set of useful UWP tools such as converters, triggers, custom cont
 
 ## DOWNLOAD FROM NUGET [HERE][2]
 
+<sub>You need Visual Studio 2017 with C# 7.0 to be able to compile this projects.</sub>
+
 [1]: https://www.microsoft.com/store/apps/9nblggh4r69s
 [2]: https://www.nuget.org/packages/UWPHelper/
