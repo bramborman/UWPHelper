@@ -8,12 +8,13 @@ namespace UWPHelper.Triggers
         public static readonly DependencyProperty ContractNameProperty = DependencyProperty.Register(nameof(ContractName), typeof(string), typeof(IsApiContractPresentTrigger), new PropertyMetadata(null, OnPropertyChanged));
         public static readonly DependencyProperty MajorVersionProperty = DependencyProperty.Register(nameof(MajorVersion), typeof(int), typeof(IsApiContractPresentTrigger), new PropertyMetadata(null, OnPropertyChanged));
         public static readonly DependencyProperty MinorVersionProperty = DependencyProperty.Register(nameof(MinorVersion), typeof(int), typeof(IsApiContractPresentTrigger), new PropertyMetadata(null, OnPropertyChanged));
-        
+
         public string ContractName
         {
             get { return (string)GetValue(ContractNameProperty); }
             set { SetValue(ContractNameProperty, value); }
         }
+        // Cannot use ushort here, since XAML is unable to assign numbers to it
         public int MajorVersion
         {
             get { return (int)GetValue(MajorVersionProperty); }
@@ -31,13 +32,13 @@ namespace UWPHelper.Triggers
 
             if (isApiContractPresentTrigger.ReadLocalValue(MajorVersionProperty) != DependencyProperty.UnsetValue)
             {
-                if (isApiContractPresentTrigger.ReadLocalValue(MinorVersionProperty) != DependencyProperty.UnsetValue)
+                if (isApiContractPresentTrigger.ReadLocalValue(MinorVersionProperty) == DependencyProperty.UnsetValue)
                 {
-                    isApiContractPresentTrigger.SetActive(ApiInformation.IsApiContractPresent(isApiContractPresentTrigger.ContractName, (ushort)isApiContractPresentTrigger.MajorVersion, (ushort)isApiContractPresentTrigger.MinorVersion));
+                    isApiContractPresentTrigger.SetActive(ApiInformation.IsApiContractPresent(isApiContractPresentTrigger.ContractName, (ushort)isApiContractPresentTrigger.MajorVersion));
                 }
                 else
                 {
-                    isApiContractPresentTrigger.SetActive(ApiInformation.IsApiContractPresent(isApiContractPresentTrigger.ContractName, (ushort)isApiContractPresentTrigger.MajorVersion));
+                    isApiContractPresentTrigger.SetActive(ApiInformation.IsApiContractPresent(isApiContractPresentTrigger.ContractName, (ushort)isApiContractPresentTrigger.MajorVersion, (ushort)isApiContractPresentTrigger.MinorVersion));
                 }
             }
         }
