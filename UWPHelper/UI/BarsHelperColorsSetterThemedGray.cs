@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 
 namespace UWPHelper.UI
 {
-    public sealed class BarsHelperColorsSetterDefault : IBarsHelperColorsSetter
+    public sealed class BarsHelperColorsSetterThemedGray : IBarsHelperColorsSetter
     {
         public void SetTitleBarColors(ApplicationViewTitleBar titleBar, ElementTheme requestedTheme)
         {

@@ -67,8 +67,8 @@ namespace UWPHelper.UI
 
                     switch (_colorMode)
                     {
-                        case BarsHelperColorMode.Themed:
-                            colorsSetter = new BarsHelperColorsSetterDefault();
+                        case BarsHelperColorMode.ThemedGray:
+                            colorsSetter = new BarsHelperColorsSetterThemedGray();
                             break;
                         
                         case BarsHelperColorMode.Accent:
@@ -144,7 +144,7 @@ namespace UWPHelper.UI
         {
             switch (colorMode)
             {
-                case BarsHelperColorMode.Themed:
+                case BarsHelperColorMode.ThemedGray:
                     if (isStatusBarTypePresent)
                     {
                         if (initialize)

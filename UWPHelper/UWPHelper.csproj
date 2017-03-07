@@ -145,6 +145,9 @@
     </Compile>
     <Compile Include="UI\AdvancedSlider.cs" />
     <Compile Include="UI\AdvancedTextBox.cs" />
+    <Compile Include="UI\BarsHelperColorsSetterThemedGray.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
@@ -172,9 +175,6 @@
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\BarsHelperColorsSetterAccent.cs">
-      <DependentUpon>BarsHelper.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\BarsHelperColorsSetterDefault.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\ColorHelper.cs" />
