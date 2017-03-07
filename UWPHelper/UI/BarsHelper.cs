@@ -176,7 +176,10 @@ namespace UWPHelper.UI
 
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
-            TrySetStatusBarColorsAsync();
+            if (e.WindowActivationState != CoreWindowActivationState.Deactivated)
+            {
+                TrySetStatusBarColorsAsync();
+            }
         }
 
         private void DisplayInformation_OrientationChanged(DisplayInformation sender, object args)

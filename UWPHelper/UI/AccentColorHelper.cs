@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UWPHelper.Utilities;
 using Windows.Foundation;
 using Windows.UI;
@@ -11,8 +10,6 @@ namespace UWPHelper.UI
     public sealed class AccentColorHelper : NotifyPropertyChangedBase
     {
         private static readonly Dictionary<int, AccentColorHelper> accentColorHelpers = new Dictionary<int, AccentColorHelper>();
-        
-        private WeakReference<CoreWindow> CoreWindowReference { get; set; }
         
         public Color AccentColor
         {
@@ -42,21 +39,14 @@ namespace UWPHelper.UI
             RegisterProperty(nameof(AccentContrastingTheme), typeof(ElementTheme), ElementTheme.Default);
 
             UpdateAccentColor();
-
-            if (CoreWindowReference.TryGetTarget(out CoreWindow currentCoreWindow))
+            
+            ViewHelper.GetCurrentCoreWindow().Activated += (sender, args) =>
             {
-                currentCoreWindow.Activated += (sender, args) =>
+                if (args.WindowActivationState != CoreWindowActivationState.Deactivated)
                 {
-                    if (args.WindowActivationState != CoreWindowActivationState.Deactivated)
-                    {
-                        UpdateAccentColor();
-                    }
-                };
-            }
-            else
-            {
-                throw new Exception($"Unable to initialize {nameof(AccentColorHelper)} for current view.");
-            }
+                    UpdateAccentColor();
+                }
+            };
         }
         
         private void UpdateAccentColor()
@@ -70,10 +60,7 @@ namespace UWPHelper.UI
 
             if (!accentColorHelpers.ContainsKey(currentViewId))
             {
-                accentColorHelpers.Add(currentViewId, new AccentColorHelper
-                {
-                    CoreWindowReference = new WeakReference<CoreWindow>(ViewHelper.GetCurrentCoreWindow())
-                });
+                accentColorHelpers.Add(currentViewId, new AccentColorHelper());
             }
 
             return accentColorHelpers[currentViewId];
