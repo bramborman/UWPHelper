@@ -7,19 +7,6 @@ namespace UWPHelper.UI
 {
     public sealed class BarsHelperColorsSetterDefault : IBarsHelperColorsSetter
     {
-        public static BarsHelperColorsSetterDefault Current { get; }
-
-        static BarsHelperColorsSetterDefault()
-        {
-            Current = new BarsHelperColorsSetterDefault();
-        }
-
-        // Prevent from creating new instances
-        private BarsHelperColorsSetterDefault()
-        {
-
-        }
-
         public void SetTitleBarColors(ApplicationViewTitleBar titleBar, ElementTheme requestedTheme)
         {
             switch (requestedTheme)

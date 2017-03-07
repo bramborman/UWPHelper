@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using UWPHelper.Utilities;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -8,116 +10,73 @@ namespace UWPHelper.UI
 {
     public sealed class AccentColorHelper : NotifyPropertyChangedBase
     {
-        private static AccentColorHelper _currentInternal;
-        private static AccentColorHelper _current;
-
-        internal static AccentColorHelper CurrentInternal
-        {
-            get
-            {
-                if (_currentInternal == null)
-                {
-                    _currentInternal = new AccentColorHelper();
-                }
-
-                return _currentInternal;
-            }
-        }
-
-        public static AccentColorHelper Current
-        {
-            get
-            {
-                if (_current == null)
-                {
-                    _current = new AccentColorHelper();
-                }
-
-                return _current;
-            }
-        }
-
-        public bool IsActive
-        {
-            get { return (bool)GetValue(); }
-            set { SetValue(value); }
-        }
+        private static readonly Dictionary<int, AccentColorHelper> accentColorHelpers = new Dictionary<int, AccentColorHelper>();
+        
+        private WeakReference<CoreWindow> CoreWindowReference { get; set; }
+        
         public Color AccentColor
         {
-            get
-            {
-                ValidateActivation();
-                return (Color)GetValue();
-            }
-            private set
-            {
-                ValidateActivation();
-                SetValue(value);
-            }
+            get { return (Color)GetValue(); }
+            private set { SetValue(value); }
         }
         public ElementTheme AccentContrastingTheme
         {
-            get
-            {
-                ValidateActivation();
-                return (ElementTheme)GetValue();
-            }
-            private set
-            {
-                ValidateActivation();
-                SetValue(value);
-            }
+            get { return (ElementTheme)GetValue(); }
+            private set { SetValue(value); }
         }
+
+        public event TypedEventHandler<AccentColorHelper, Color> AccentColorChanged;
 
         // Prevent from creating new instances
         private AccentColorHelper()
         {
-            RegisterProperty(nameof(IsActive), typeof(bool), false, (oldValue, newValue) =>
-            {
-                GetAccentColor();
-
-                if ((bool)newValue)
-                {
-                    Window.Current.Activated += Window_Activated;
-                }
-                else
-                {
-                    Window.Current.Activated -= Window_Activated;
-                }
-            });
             RegisterProperty(nameof(AccentColor), typeof(Color), new Color(), (oldValue, newValue) =>
             {
-                float luma = ((Color)newValue).GetLuma();
+                Color newColor = (Color)newValue;
+                float luma = newColor.GetLuma();
+                // Don't know why these values, but with these it works as Windows itself does...
                 AccentContrastingTheme = luma < 0.4869937f || luma == 0.541142f ? ElementTheme.Dark : ElementTheme.Light;
+
+                AccentColorChanged?.Invoke(this, newColor);
             });
             RegisterProperty(nameof(AccentContrastingTheme), typeof(ElementTheme), ElementTheme.Default);
-        }
 
-        private void Window_Activated(object sender, WindowActivatedEventArgs e)
-        {
-            if (e.WindowActivationState != CoreWindowActivationState.Deactivated)
+            UpdateAccentColor();
+
+            if (CoreWindowReference.TryGetTarget(out CoreWindow currentCoreWindow))
             {
-                GetAccentColor();
+                currentCoreWindow.Activated += (sender, args) =>
+                {
+                    if (args.WindowActivationState != CoreWindowActivationState.Deactivated)
+                    {
+                        UpdateAccentColor();
+                    }
+                };
+            }
+            else
+            {
+                throw new Exception($"Unable to initialize {nameof(AccentColorHelper)} for current view.");
             }
         }
-
-        private void GetAccentColor()
+        
+        private void UpdateAccentColor()
         {
             AccentColor = (Color)Application.Current.Resources["SystemAccentColor"];
         }
-
-        private void ValidateActivation()
+        
+        public static AccentColorHelper GetForCurrentView()
         {
-            if (!IsActive)
-            {
-                throw new InvalidOperationException($"Cannot use this class when it's not activated. You must set the {nameof(AccentColorHelper)}.{nameof(IsActive)} property value to true.");
-            }
-        }
+            int currentViewId = ViewHelper.GetCurrentViewId();
 
-        // TODO:
-        // public static AccentColorHelper GetForCurrentView()
-        // {
-        //     
-        // }
+            if (!accentColorHelpers.ContainsKey(currentViewId))
+            {
+                accentColorHelpers.Add(currentViewId, new AccentColorHelper
+                {
+                    CoreWindowReference = new WeakReference<CoreWindow>(ViewHelper.GetCurrentCoreWindow())
+                });
+            }
+
+            return accentColorHelpers[currentViewId];
+        }
     }
 }

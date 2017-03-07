@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+using System.Threading.Tasks;
+using UWPHelper.Utilities;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -12,32 +13,23 @@ namespace UWPHelper.UI
 {
     public sealed partial class BarsHelper
     {
-        private static readonly bool isApplicationViewTypePresent = ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView");
-        private static readonly bool isStatusBarTypePresent       = ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
+        private static readonly bool isStatusBarTypePresent = ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
 
         public static BarsHelper Current { get; private set; }
 
-        private readonly List<BarsReferenceHolder> barsReferenceHolders = new List<BarsReferenceHolder>();
-
-        private Func<ElementTheme> requestedThemeGetter;
-        private INotifyPropertyChanged themePropertyParent;
-        private string themePropertyName;
-
+        private readonly List<int> viewIds = new List<int>();
+        
+        private bool colorModeSet = false;
+        private IBarsHelperColorsSetter colorsSetter;
         private bool _useDarkerStatusBarOnLandscapeOrientation;
-        private BarsHelperColorMode? _colorMode;
+        private BarsHelperColorMode _colorMode;
+        private ElementTheme _requestedTheme;
 
         public bool IsInitialized
         {
             get
             {
-                return barsReferenceHolders.Count > 0;
-            }
-        }
-        public bool IsAutomaticallyUpdated
-        {
-            get
-            {
-                return themePropertyParent != null || ColorMode == BarsHelperColorMode.Accent;
+                return viewIds.Count > 0;
             }
         }
         public bool UseDarkerStatusBarOnLandscapeOrientation
@@ -51,69 +43,57 @@ namespace UWPHelper.UI
 
                     if (isStatusBarTypePresent)
                     {
-                        //TODO: Use WeakEventListener
-                        if (_useDarkerStatusBarOnLandscapeOrientation)
-                        {
-                            DisplayInformation.GetForCurrentView().OrientationChanged += DisplayInformation_OrientationChanged;
-                        }
-                        else
-                        {
-                            DisplayInformation.GetForCurrentView().OrientationChanged -= DisplayInformation_OrientationChanged;
-                        }
-                    }
+                        bool cachedValue = _useDarkerStatusBarOnLandscapeOrientation;
+                        ViewHelper.RunOnEachViewDispatcher(() => InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(cachedValue));
 
-                    if (IsInitialized)
-                    {
-                        SetStatusBarColors();
+                        TrySetStatusBarColorsAsync();
                     }
                 }
             }
         }
         public BarsHelperColorMode ColorMode
         {
-            get { return _colorMode.Value; }
+            get { return _colorMode; }
             set
             {
-                if (_colorMode != value || _colorMode == null)
+                if (_colorMode != value || !colorModeSet)
                 {
-                    if (!IsUsingCustomColorsSetter && _colorMode == BarsHelperColorMode.Accent)
-                    {
-                        AccentColorHelper.CurrentInternal.IsActive = false;
-                        AccentColorHelper.CurrentInternal.PropertyChanged -= AccentColorHelper_PropertyChanged;
-                    }
+                    colorModeSet = true;
+
+                    BarsHelperColorMode cachedValue = _colorMode;
+                    ViewHelper.RunOnEachViewDispatcher(() => InitializeColorModeForCurrentView(false, cachedValue));
 
                     _colorMode = value;
 
-                    if (!IsUsingCustomColorsSetter || ColorsSetter == null)
+                    switch (_colorMode)
                     {
-                        if (_colorMode == BarsHelperColorMode.Themed)
-                        {
-                            ColorsSetter = BarsHelperColorsSetterDefault.Current;
-                        }
-                        else
-                        {
-                            AccentColorHelper.CurrentInternal.IsActive = true;
-                            ColorsSetter = BarsHelperColorsSetterAccent.Current;
-
-                            AccentColorHelper.CurrentInternal.PropertyChanged += AccentColorHelper_PropertyChanged;
-                        }
+                        case BarsHelperColorMode.Themed:
+                            colorsSetter = new BarsHelperColorsSetterDefault();
+                            break;
+                        
+                        case BarsHelperColorMode.Accent:
+                            colorsSetter = new BarsHelperColorsSetterAccent();
+                            break;
                     }
 
-                    if (IsAutomaticallyUpdated)
-                    {
-                        SetBarsColors();
-                    }
+                    cachedValue = _colorMode;
+                    ViewHelper.RunOnEachViewDispatcher(() => InitializeColorModeForCurrentView(true, cachedValue));
+                    TrySetBarsColorsAsync();
                 }
             }
         }
-        public bool IsUsingCustomColorsSetter
+        public ElementTheme RequestedTheme
         {
-            get
+            get { return _requestedTheme; }
+            set
             {
-                return !(ColorsSetter is BarsHelperColorsSetterDefault || ColorsSetter is BarsHelperColorsSetterAccent);
+                if (_requestedTheme != value)
+                {
+                    _requestedTheme = value;
+                    TrySetBarsColorsAsync();
+                }
             }
         }
-        public IBarsHelperColorsSetter ColorsSetter { get; private set; }
 
         static BarsHelper()
         {
@@ -123,222 +103,151 @@ namespace UWPHelper.UI
         // Prevent from creating new instances
         private BarsHelper()
         {
-
+            UseDarkerStatusBarOnLandscapeOrientation = false;
+            ColorMode       = default(BarsHelperColorMode);
+            RequestedTheme  = ElementTheme.Default;
         }
         
-        public void InitializeForCurrentView(BarsHelperColorMode colorMode, Func<ElementTheme> requestedThemeGetter)
+        public async Task InitializeForCurrentViewAsync()
         {
-            ValidateRequestedThemeGetter(requestedThemeGetter);
-            InitializeForCurrentView(false, colorMode, null, requestedThemeGetter, null, null);
-        }
+            int currentViewId = ViewHelper.GetCurrentViewId();
 
-        public void InitializeForCurrentView(BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter)
-        {
-            ValidateColorsSetter(colorsSetter);
-            ValidateRequestedThemeGetter(requestedThemeGetter);
-
-            InitializeForCurrentView(false, colorMode, colorsSetter, requestedThemeGetter, null, null);
-        }
-
-        public void InitializeForCurrentView(BarsHelperColorMode colorMode, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
-        {
-            ValidateRequestedThemeGetter(requestedThemeGetter);
-            ValidateThemePropertyParent(themePropertyParent);
-            ValidateThemePropertyName(themePropertyName);
-
-            InitializeForCurrentView(false, colorMode, null, requestedThemeGetter, themePropertyParent, themePropertyName);
-        }
-
-        public void InitializeForCurrentView(BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
-        {
-            ValidateColorsSetter(colorsSetter);
-            ValidateRequestedThemeGetter(requestedThemeGetter);
-            ValidateThemePropertyParent(themePropertyParent);
-            ValidateThemePropertyName(themePropertyName);
-
-            InitializeForCurrentView(false, colorMode, colorsSetter, requestedThemeGetter, themePropertyParent, themePropertyName);
-        }
-
-        public void InitializeForCurrentAdditionalView()
-        {
-            InitializeForCurrentView(false);
-        }
-
-        public void ReinitializeForCurrentView(BarsHelperColorMode colorMode, Func<ElementTheme> requestedThemeGetter)
-        {
-            ValidateRequestedThemeGetter(requestedThemeGetter);
-            InitializeForCurrentView(true, colorMode, null, requestedThemeGetter, null, null);
-        }
-
-        public void ReinitializeForCurrentView(BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter)
-        {
-            ValidateColorsSetter(colorsSetter);
-            ValidateRequestedThemeGetter(requestedThemeGetter);
-
-            InitializeForCurrentView(true, colorMode, colorsSetter, requestedThemeGetter, null, null);
-        }
-
-        public void ReinitializeForCurrentView(BarsHelperColorMode colorMode, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
-        {
-            ValidateRequestedThemeGetter(requestedThemeGetter);
-            ValidateThemePropertyParent(themePropertyParent);
-            ValidateThemePropertyName(themePropertyName);
-
-            InitializeForCurrentView(true, colorMode, null, requestedThemeGetter, themePropertyParent, themePropertyName);
-        }
-
-        public void ReinitializeForCurrentView(BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
-        {
-            ValidateColorsSetter(colorsSetter);
-            ValidateRequestedThemeGetter(requestedThemeGetter);
-            ValidateThemePropertyParent(themePropertyParent);
-            ValidateThemePropertyName(themePropertyName);
-
-            InitializeForCurrentView(true, colorMode, colorsSetter, requestedThemeGetter, themePropertyParent, themePropertyName);
-        }
-
-        public void ReinitializeForCurrentAdditionalView()
-        {
-            InitializeForCurrentView(true);
-        }
-
-        private void InitializeForCurrentView(bool reinitialization, BarsHelperColorMode colorMode, IBarsHelperColorsSetter colorsSetter, Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged themePropertyParent, string themePropertyName)
-        {
-            if (reinitialization && !IsInitialized)
-            {
-                throw new InvalidOperationException($"Cannot reinitialize - {nameof(BarsHelper)} must be initialized before.");
-            }
-
-            InitializeForCurrentView(reinitialization);
-            
-            ColorsSetter                = ColorsSetter;
-            this.requestedThemeGetter   = requestedThemeGetter;
-            
-            if (this.themePropertyParent != null)
-            {
-                themePropertyParent.PropertyChanged -= ThemePropertyParent_PropertyChanged;
-
-                if (isStatusBarTypePresent)
-                {
-                    Window.Current.VisibilityChanged -= Window_VisibilityChanged;
-                }
-            }
-
-            this.themePropertyParent = themePropertyParent;
-
-            if (this.themePropertyParent != null)
-            {
-                this.themePropertyParent.PropertyChanged += ThemePropertyParent_PropertyChanged;
-
-                if (isStatusBarTypePresent)
-                {
-                    Window.Current.VisibilityChanged += Window_VisibilityChanged;
-                }
-            }
-
-            this.themePropertyName = themePropertyName;
-            ColorMode = colorMode;
-
-            if (IsAutomaticallyUpdated)
-            {
-                SetBarsColors();
-            }
-        }
-
-        private void InitializeForCurrentView(bool reinitialization)
-        {
-            BarsReferenceHolder barsReferenceHolder     = null;
-            ApplicationViewTitleBar currentViewTitleBar = null;
-            StatusBar currentViewStatusBar              = null;
-
-            if (isApplicationViewTypePresent && ApplicationView.GetForCurrentView().TitleBar is ApplicationViewTitleBar currentTitleBar)
-            {
-                currentViewTitleBar = currentTitleBar;
-
-                barsReferenceHolder = barsReferenceHolders.FirstOrDefault(b =>
-                {
-                    b.TitleBar.TryGetTarget(out ApplicationViewTitleBar titleBar);
-                    return titleBar == currentTitleBar;
-                });
-            }
-
-            if (isStatusBarTypePresent && StatusBar.GetForCurrentView() is StatusBar currentStatusBar)
-            {
-                currentViewStatusBar = currentStatusBar;
-
-                if (barsReferenceHolder == null)
-                {
-                    barsReferenceHolder = barsReferenceHolders.FirstOrDefault(b =>
-                    {
-                        b.StatusBar.TryGetTarget(out StatusBar statusBar);
-                        return statusBar == currentStatusBar;
-                    });
-                }
-            }
-
-            if (barsReferenceHolder == null)
-            {
-                barsReferenceHolders.Add(new BarsReferenceHolder(currentViewTitleBar, currentViewStatusBar));
-            }
-            else if (!reinitialization && barsReferenceHolder != null)
+            if (viewIds.Contains(currentViewId))
             {
                 throw new InvalidOperationException($"{nameof(BarsHelper)} is already initialized for this view.");
             }
+
+            viewIds.Add(currentViewId);
+            TrySetBarsColorsAsync();
+
+            if (isStatusBarTypePresent && UseDarkerStatusBarOnLandscapeOrientation)
+            {
+                await ViewHelper.RunOnCurrentViewDispatcherAsync(() => InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(true));
+            }
+
+            await ViewHelper.RunOnCurrentViewDispatcherAsync(() => InitializeColorModeForCurrentView(true, ColorMode));
         }
 
-        private void ThemePropertyParent_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(bool initialize)
         {
-            if (e.PropertyName == themePropertyName)
+            if (initialize)
             {
-                SetBarsColors();
+                DisplayInformation.GetForCurrentView().OrientationChanged += DisplayInformation_OrientationChanged;
+            }
+            else
+            {
+                DisplayInformation.GetForCurrentView().OrientationChanged -= DisplayInformation_OrientationChanged;
             }
         }
 
-        private void Window_VisibilityChanged(object sender, VisibilityChangedEventArgs e)
+        private void InitializeColorModeForCurrentView(bool initialize, BarsHelperColorMode colorMode)
         {
-            if (requestedThemeGetter() == ElementTheme.Default && e.Visible)
+            switch (colorMode)
             {
-                SetStatusBarColors();
+                case BarsHelperColorMode.Themed:
+                    if (isStatusBarTypePresent)
+                    {
+                        if (initialize)
+                        {
+                            Window.Current.Activated += Window_Activated;
+                        }
+                        else
+                        {
+                            Window.Current.Activated -= Window_Activated;
+                        }
+                    }
+
+                    break;
+                
+                case BarsHelperColorMode.Accent:
+                    if (initialize)
+                    {
+                        AccentColorHelper.GetForCurrentView().AccentColorChanged += AccentColorHelper_AccentColorChanged;
+                    }
+                    else
+                    {
+                        AccentColorHelper.GetForCurrentView().AccentColorChanged -= AccentColorHelper_AccentColorChanged;
+                    }
+
+                    break;
+            }
+
+        }
+
+        private void Window_Activated(object sender, WindowActivatedEventArgs e)
+        {
+            TrySetStatusBarColorsAsync();
+        }
+
+        private void DisplayInformation_OrientationChanged(DisplayInformation sender, object args)
+        {
+            TrySetStatusBarColorsAsync();
+        }
+
+        private void AccentColorHelper_AccentColorChanged(AccentColorHelper sender, Color args)
+        {
+            TrySetBarsColorsAsync();
+        }
+
+        private async void TrySetStatusBarColorsAsync()
+        {
+            if (IsInitialized)
+            {
+                await SetStatusBarColorsAsync();
             }
         }
 
-        private void AccentColorHelper_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private async void TrySetBarsColorsAsync()
         {
-            if (e.PropertyName == nameof(AccentColorHelper.AccentColor) || e.PropertyName == nameof(AccentColorHelper.AccentContrastingTheme))
+            if (IsInitialized)
             {
-                SetBarsColors();
+                await SetBarsColorsAsync();
             }
         }
 
-        private void ValidateColorsSetter(IBarsHelperColorsSetter colorsSetter)
+        public async Task SetBarsColorsAsync()
         {
-            if (colorsSetter == null)
-            {
-                throw new ArgumentNullException(nameof(colorsSetter));
-            }
-        }
-        
-        private void ValidateRequestedThemeGetter(Func<ElementTheme> requestedThemeGetter)
-        {
-            if (requestedThemeGetter == null)
-            {
-                throw new ArgumentNullException(nameof(requestedThemeGetter));
-            }
+            await SetTitleBarColorsAsync();
+            await SetStatusBarColorsAsync();
         }
 
-        private void ValidateThemePropertyParent(INotifyPropertyChanged themePropertyParent)
+        public Task SetTitleBarColorsAsync()
         {
-            if (themePropertyParent == null)
+            ValidateInitialization();
+
+            // Cache the value to prevent unnecessary calls and prevent from changing the value while setting the colors
+            ElementTheme requestedTheme = RequestedTheme;
+
+            return ViewHelper.RunOnEachViewDispatcherAsync(() =>
             {
-                throw new ArgumentNullException(nameof(themePropertyParent));
-            }
+                if (ApplicationView.GetForCurrentView().TitleBar is ApplicationViewTitleBar titleBar)
+                {
+                    colorsSetter.SetTitleBarColors(titleBar, requestedTheme);
+                }
+            });
         }
 
-        private void ValidateThemePropertyName(string themePropertyName)
+        public Task SetStatusBarColorsAsync()
         {
-            if (string.IsNullOrWhiteSpace(themePropertyName))
+            ValidateInitialization();
+
+            if (isStatusBarTypePresent)
             {
-                throw new ArgumentException("Value cannot be empty or null", nameof(themePropertyName));
+                // Cache the values to prevent unnecessary calls and prevent from changing the values while setting the colors
+                bool useDarkerStatusBarOnLandscapeOrientation = UseDarkerStatusBarOnLandscapeOrientation;
+                ElementTheme requestedTheme = RequestedTheme;
+
+                return ViewHelper.RunOnEachViewDispatcherAsync(() =>
+                {
+                    if (StatusBar.GetForCurrentView() is StatusBar statusBar)
+                    {
+                        colorsSetter.SetStatusBarColors(statusBar, requestedTheme, useDarkerStatusBarOnLandscapeOrientation, DisplayInformation.GetForCurrentView().CurrentOrientation);
+                    }
+                });
+            }
+            else
+            {
+                return Task.CompletedTask;
             }
         }
 
@@ -346,67 +255,7 @@ namespace UWPHelper.UI
         {
             if (!IsInitialized)
             {
-                throw new InvalidOperationException($"{nameof(BarsHelper)} is not initialized. Call the {nameof(InitializeForCurrentView)} method first.");
-            }
-        }
-
-        private void DisplayInformation_OrientationChanged(DisplayInformation sender, object args)
-        {
-            SetStatusBarColors(sender.CurrentOrientation);
-        }
-
-        public void SetBarsColors()
-        {
-            SetTitleBarColors();
-            SetStatusBarColors();
-        }
-
-        public void SetTitleBarColors()
-        {
-            ValidateInitialization();
-
-            if (isApplicationViewTypePresent)
-            {
-                foreach (BarsReferenceHolder barsReferenceHolder in barsReferenceHolders)
-                {
-                    if (barsReferenceHolder.TitleBar.TryGetTarget(out ApplicationViewTitleBar titleBar))
-                    {
-                        ColorsSetter.SetTitleBarColors(titleBar, requestedThemeGetter());
-                    }
-                }
-            }
-        }
-
-        public void SetStatusBarColors()
-        {
-            SetStatusBarColors(DisplayInformation.GetForCurrentView().CurrentOrientation);
-        }
-        
-        private void SetStatusBarColors(DisplayOrientations currentOrientation)
-        {
-            ValidateInitialization();
-
-            if (isStatusBarTypePresent)
-            {
-                foreach (BarsReferenceHolder barsReferenceHolder in barsReferenceHolders)
-                {
-                    if (barsReferenceHolder.StatusBar.TryGetTarget(out StatusBar statusBar))
-                    {
-                        ColorsSetter.SetStatusBarColors(statusBar, requestedThemeGetter(), UseDarkerStatusBarOnLandscapeOrientation, currentOrientation);
-                    }
-                }
-            }
-        }
-
-        private sealed class BarsReferenceHolder
-        {
-            internal WeakReference<ApplicationViewTitleBar> TitleBar { get; }
-            internal WeakReference<StatusBar> StatusBar { get; }
-
-            internal BarsReferenceHolder(ApplicationViewTitleBar titleBar, StatusBar statusBar)
-            {
-                TitleBar            = new WeakReference<ApplicationViewTitleBar>(titleBar);
-                StatusBar           = new WeakReference<StatusBar>(statusBar);
+                throw new InvalidOperationException($"{nameof(BarsHelper)} is not initialized for any view. Call the {nameof(InitializeForCurrentViewAsync)} method first.");
             }
         }
     }

@@ -52,7 +52,10 @@ namespace UWPHelper.SampleApp
             if (loadAppData)
             {
                 await loadAppDataTask;
-                BarsHelper.Current.InitializeForCurrentView(BarsHelperColorMode.Themed, () => AppData.Current.Theme, AppData.Current, nameof(AppData.Theme));
+
+                //BarsHelper.Current.InitializeForAutoUpdate(() => AppData.Current.Theme, AppData.Current, nameof(AppData.Theme));
+                await BarsHelper.Current.InitializeForCurrentViewAsync();
+
                 AppData.Current.SetTheme();
             }
 
