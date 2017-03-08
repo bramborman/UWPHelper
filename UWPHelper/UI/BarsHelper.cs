@@ -17,7 +17,7 @@ namespace UWPHelper.UI
 
         public static BarsHelper Current { get; private set; }
 
-        private readonly List<int> viewIds = new List<int>();
+        private readonly Dictionary<int, int> viewInfo = new Dictionary<int, int>();
 
         private bool isTitleBarColorModeSet;
         private bool isStatusBarColorModeSet;
@@ -32,7 +32,7 @@ namespace UWPHelper.UI
         {
             get
             {
-                return viewIds.Count > 0;
+                return viewInfo.Count > 0;
             }
         }
         public bool UseDarkerStatusBarOnLandscapeOrientation
@@ -140,12 +140,12 @@ namespace UWPHelper.UI
 
             int currentViewId = ViewHelper.GetCurrentViewId();
 
-            if (viewIds.Contains(currentViewId))
+            if (viewInfo.ContainsKey(currentViewId))
             {
                 throw new InvalidOperationException($"{nameof(BarsHelper)} is already initialized for this view.");
             }
 
-            viewIds.Add(currentViewId);
+            viewInfo.Add(currentViewId, 0);
             TrySetBarsColorsAsync();
 
             if (isStatusBarTypePresent && UseDarkerStatusBarOnLandscapeOrientation)
@@ -189,14 +189,32 @@ namespace UWPHelper.UI
                     break;
                 
                 case BarsHelperColorMode.Accent:
+                    const string EXCEPTION_TEXT = "Internal error in BarsHelper initialization - {0}";
+                    int currentViewId = ViewHelper.GetCurrentViewId();
+
                     if (initialize)
                     {
-                        //TODO: avoid multiple handlers for one view
-                        AccentColorHelper.GetForCurrentView().AccentColorChanged += AccentColorHelper_AccentColorChanged;
+                        if (viewInfo[currentViewId] == 0)
+                        {
+                            AccentColorHelper.GetForCurrentView().AccentColorChanged += AccentColorHelper_AccentColorChanged;
+                        }
+
+                        if (++viewInfo[currentViewId] > 2)
+                        {
+                            throw new Exception(string.Format(EXCEPTION_TEXT, viewInfo[currentViewId]));
+                        }
                     }
                     else
                     {
-                        AccentColorHelper.GetForCurrentView().AccentColorChanged -= AccentColorHelper_AccentColorChanged;
+                        if (--viewInfo[currentViewId] < 0)
+                        {
+                            throw new Exception(string.Format(EXCEPTION_TEXT, viewInfo[currentViewId]));
+                        }
+
+                        if (viewInfo[currentViewId] == 0)
+                        {
+                            AccentColorHelper.GetForCurrentView().AccentColorChanged -= AccentColorHelper_AccentColorChanged;
+                        }
                     }
 
                     break;
