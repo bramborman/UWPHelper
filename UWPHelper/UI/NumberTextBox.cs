@@ -27,6 +27,7 @@ namespace UWPHelper.UI
 
         private void TextValidation(TextBox sender, TextBoxTextChangingEventArgs args)
         {
+            //TODO: replace with regex
             int cursorPosition = SelectionStart;
             int index = 0;
 

@@ -7,24 +7,19 @@ using Windows.UI.ViewManagement;
 
 namespace UWPHelper.Utilities
 {
-    internal static class ViewHelper
+    public static class ViewHelper
     {
-        internal static CoreWindow GetCurrentCoreWindow()
+        public static CoreWindow GetCurrentCoreWindow()
         {
             return CoreWindow.GetForCurrentThread() ?? throw new Exception($"Unable to get current {nameof(CoreWindow)}. Please make sure you are calling this method on an UI thread.");
         }
 
-        internal static int GetCurrentViewId()
+        public static int GetCurrentViewId()
         {
             return ApplicationView.GetApplicationViewIdForWindow(GetCurrentCoreWindow());
         }
 
-        internal static void RunOnCurrentViewDispatcher(Action action)
-        {
-            Task.Run(async () => await RunOnCurrentViewDispatcherAsync(action));
-        }
-
-        internal static IAsyncAction RunOnCurrentViewDispatcherAsync(Action action)
+        public static IAsyncAction RunOnCurrentViewDispatcherAsync(Action action)
         {
             return GetCurrentCoreWindow().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -37,7 +32,7 @@ namespace UWPHelper.Utilities
             Task.Run(async () => await RunOnEachViewDispatcherAsync(action));
         }
 
-        internal static async Task RunOnEachViewDispatcherAsync(Action action)
+        public static async Task RunOnEachViewDispatcherAsync(Action action)
         {
             foreach (CoreApplicationView view in CoreApplication.Views)
             {

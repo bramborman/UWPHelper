@@ -67,6 +67,10 @@ namespace UWPHelper.UI
 
                     switch (_colorMode)
                     {
+                        case BarsHelperColorMode.ThemedDefault:
+                            colorsSetter = new BarsHelperColorsSetterThemedDefault();
+                            break;
+
                         case BarsHelperColorMode.ThemedGray:
                             colorsSetter = new BarsHelperColorsSetterThemedGray();
                             break;
@@ -103,13 +107,16 @@ namespace UWPHelper.UI
         // Prevent from creating new instances
         private BarsHelper()
         {
-            UseDarkerStatusBarOnLandscapeOrientation = false;
-            ColorMode       = default(BarsHelperColorMode);
-            RequestedTheme  = ElementTheme.Default;
+
         }
         
         public async Task InitializeForCurrentViewAsync()
         {
+            if (!colorModeSet)
+            {
+                ColorMode = default(BarsHelperColorMode);
+            }
+
             int currentViewId = ViewHelper.GetCurrentViewId();
 
             if (viewIds.Contains(currentViewId))
