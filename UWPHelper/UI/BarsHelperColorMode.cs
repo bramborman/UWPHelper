@@ -2,7 +2,7 @@
 {
     public enum BarsHelperColorMode
     {
-        ThemedDefault,
+        Themed,
         ThemedGray,
         Accent
     }

@@ -145,13 +145,25 @@
     </Compile>
     <Compile Include="UI\AdvancedSlider.cs" />
     <Compile Include="UI\AdvancedTextBox.cs" />
-    <Compile Include="UI\BarsHelperColorsSetterThemedDefault.cs">
+    <Compile Include="UI\BarsHelperColorMode.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\BarsHelperColorsSetterThemedGray.cs">
+    <Compile Include="UI\BarsHelperStatusBarColorsSetterAccent.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\BarsHelperColorsSetterTitleBarBlackWhite.cs">
+    <Compile Include="UI\BarsHelperStatusBarColorsSetterThemed.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BarsHelperStatusBarColorsSetterThemedGray.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BarsHelperTitleBarColorsSetterAccent.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BarsHelperTitleBarColorsSetterThemed.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BarsHelperTitleBarColorsSetterThemedGray.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\HamburgerMenu.xaml.cs">
@@ -159,6 +171,12 @@
     </Compile>
     <Compile Include="UI\HamburgerMenuItems.cs">
       <DependentUpon>HamburgerMenuItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\IBarsHelperStatusBarColorsSetter.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\IBarsHelperTitleBarColorsSetter.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\IconHyperlinkButtons.cs">
       <DependentUpon>IconHyperlinkButtons.xaml</DependentUpon>
@@ -177,21 +195,12 @@
     </Compile>
     <Compile Include="UI\AccentColorHelper.cs" />
     <Compile Include="UI\BarsHelper.cs" />
-    <Compile Include="UI\BarsHelperColorMode.cs">
-      <DependentUpon>BarsHelper.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\BarsHelperColorsSetterAccent.cs">
-      <DependentUpon>BarsHelper.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utilities\ColorHelper.cs" />
     <Compile Include="Utilities\TraceHelper.cs" />
     <Compile Include="Utilities\Delayer.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />
     <Compile Include="Utilities\DeviceInfo.cs" />
     <Compile Include="Utilities\DisplayRequestHelper.cs" />
-    <Compile Include="UI\IBarsHelperColorsSetter.cs">
-      <DependentUpon>BarsHelper.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utilities\KeyboardHelper.cs" />
     <Compile Include="Utilities\NotifyPropertyChangedBase.cs" />
     <Compile Include="Utilities\Range.cs" />
