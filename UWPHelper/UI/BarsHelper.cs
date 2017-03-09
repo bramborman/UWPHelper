@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using UWPHelper.Utilities;
 using Windows.Foundation.Metadata;
@@ -26,7 +27,9 @@ namespace UWPHelper.UI
         private bool _useDarkerStatusBarOnLandscapeOrientation;
         private BarsHelperColorMode _titleBarColorMode;
         private BarsHelperColorMode _statusBarColorMode;
-        private ElementTheme _requestedTheme;
+        private Func<ElementTheme> _requestedThemeGetter;
+        private INotifyPropertyChanged _requestedThemePropertyParent;
+        private string _requestedThemePropertyName;
 
         public bool IsInitialized
         {
@@ -102,16 +105,58 @@ namespace UWPHelper.UI
                 });
             }
         }
-        public ElementTheme RequestedTheme
+        public Func<ElementTheme> RequestedThemeGetter
         {
-            get { return _requestedTheme; }
+            get { return _requestedThemeGetter; }
             set
             {
-                if (_requestedTheme != value)
+                if (value == null)
                 {
-                    _requestedTheme = value;
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                if (!ReferenceEquals(_requestedThemeGetter, value))
+                {
+                    _requestedThemeGetter = value;
                     TrySetBarsColorsAsync();
                 }
+            }
+        }
+        public INotifyPropertyChanged RequestedThemePropertyParent
+        {
+            get { return _requestedThemePropertyParent; }
+            private set
+            {
+                // Validated in InitializeAutoUpdating method
+                if (!ReferenceEquals(_requestedThemePropertyParent, value))
+                {
+                    if (_requestedThemePropertyParent != null)
+                    {
+                        _requestedThemePropertyParent.PropertyChanged -= RequestedThemePropertyParent_PropertyChanged;
+                    }
+
+                    _requestedThemePropertyParent = value;
+
+                    // Will be null after calling the UnitializeAutoUpdating method
+                    if (_requestedThemePropertyParent != null)
+                    {
+                        _requestedThemePropertyParent.PropertyChanged += RequestedThemePropertyParent_PropertyChanged;
+                        //TODO: auto updating for ColorMode.ThemedGray when system theme is changed
+                    }
+
+                    // Not calling the TrySetBarsColorsAsync method since this hasn't got any impact on bars colors
+                }
+            }
+        }
+
+        public string RequestedThemePropertyName
+        {
+            get { return _requestedThemePropertyName; }
+            private set
+            {
+                // Validated in InitializeAutoUpdating method
+                // No need for equality checking since we're not invoking anything from here
+                _requestedThemePropertyName = value;
             }
         }
 
@@ -128,6 +173,11 @@ namespace UWPHelper.UI
         
         public async Task InitializeForCurrentViewAsync()
         {
+            if (RequestedThemeGetter == null)
+            {
+                RequestedThemeGetter = () => ElementTheme.Default;
+            }
+
             if (!isTitleBarColorModeSet)
             {
                 TitleBarColorMode = default(BarsHelperColorMode);
@@ -155,6 +205,33 @@ namespace UWPHelper.UI
 
             await ViewHelper.RunOnCurrentViewDispatcherAsync(() => InitializeColorModeForCurrentView(true, true, TitleBarColorMode));
             await ViewHelper.RunOnCurrentViewDispatcherAsync(() => InitializeColorModeForCurrentView(false, true, StatusBarColorMode));
+        }
+
+        public void InitializeAutoUpdating(Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged requestedThemePropertyParent, string requestedThemePropertyName)
+        {
+            if (string.IsNullOrWhiteSpace(requestedThemePropertyName))
+            {
+                throw new ArgumentException("Value cannot be empty or null.", nameof(requestedThemePropertyName));
+            }
+
+            RequestedThemeGetter            = requestedThemeGetter;
+            // Assign this before attaching an event handler to parent
+            RequestedThemePropertyName      = requestedThemePropertyName;
+            RequestedThemePropertyParent    = requestedThemePropertyParent ?? throw new ArgumentNullException(nameof(requestedThemePropertyParent));
+        }
+
+        public void UnitializeAutoUpdating()
+        {
+            RequestedThemePropertyName      = null;
+            RequestedThemePropertyParent    = null;
+        }
+
+        private void RequestedThemePropertyParent_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == RequestedThemePropertyName)
+            {
+                TrySetBarsColorsAsync();
+            }
         }
 
         private void InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(bool initialize)
@@ -235,7 +312,15 @@ namespace UWPHelper.UI
 
                 cachedValue = colorMode;
                 ViewHelper.RunOnEachViewDispatcher(() => InitializeColorModeForCurrentView(isTitleBarColorMode, true, cachedValue));
-                TrySetBarsColorsAsync();
+
+                if (isTitleBarColorMode)
+                {
+                    TrySetTitleBarColorsAsync();
+                }
+                else
+                {
+                    TrySetStatusBarColorsAsync();
+                }
             }
         }
 
@@ -257,19 +342,27 @@ namespace UWPHelper.UI
             TrySetBarsColorsAsync();
         }
 
-        private async void TrySetStatusBarColorsAsync()
-        {
-            if (IsInitialized)
-            {
-                await SetStatusBarColorsAsync();
-            }
-        }
-
         private async void TrySetBarsColorsAsync()
         {
             if (IsInitialized)
             {
                 await SetBarsColorsAsync();
+            }
+        }
+
+        private async void TrySetTitleBarColorsAsync()
+        {
+            if (IsInitialized)
+            {
+                await SetTitleBarColorsAsync();
+            }
+        }
+
+        private async void TrySetStatusBarColorsAsync()
+        {
+            if (IsInitialized)
+            {
+                await SetStatusBarColorsAsync();
             }
         }
 
@@ -284,7 +377,7 @@ namespace UWPHelper.UI
             ValidateInitialization();
 
             // Cache the value to prevent unnecessary calls and prevent from changing the value while setting the colors
-            ElementTheme requestedTheme = RequestedTheme;
+            ElementTheme requestedTheme = RequestedThemeGetter();
 
             return ViewHelper.RunOnEachViewDispatcherAsync(() =>
             {
@@ -303,7 +396,7 @@ namespace UWPHelper.UI
             {
                 // Cache the values to prevent unnecessary calls and prevent from changing the values while setting the colors
                 bool useDarkerStatusBarOnLandscapeOrientation = UseDarkerStatusBarOnLandscapeOrientation;
-                ElementTheme requestedTheme = RequestedTheme;
+                ElementTheme requestedTheme = RequestedThemeGetter();
 
                 return ViewHelper.RunOnEachViewDispatcherAsync(() =>
                 {

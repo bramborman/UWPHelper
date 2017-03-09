@@ -58,7 +58,6 @@ namespace UWPHelper.SampleApp
         public void SetTheme()
         {
             ((Frame)Window.Current.Content).RequestedTheme = Theme;
-            BarsHelper.Current.RequestedTheme = Theme;
         }
 
         public Task SaveAsync()

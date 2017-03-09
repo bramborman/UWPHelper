@@ -53,7 +53,7 @@ namespace UWPHelper.SampleApp
             {
                 await loadAppDataTask;
 
-                //BarsHelper.Current.InitializeForAutoUpdate(() => AppData.Current.Theme, AppData.Current, nameof(AppData.Theme));
+                BarsHelper.Current.InitializeAutoUpdating(() => AppData.Current.Theme, AppData.Current, nameof(AppData.Theme));
                 BarsHelper.Current.StatusBarColorMode = BarsHelperColorMode.ThemedGray;
                 await BarsHelper.Current.InitializeForCurrentViewAsync();
 
