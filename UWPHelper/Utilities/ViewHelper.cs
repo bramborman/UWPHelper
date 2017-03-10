@@ -26,12 +26,7 @@ namespace UWPHelper.Utilities
                 action();
             });
         }
-
-        internal static void RunOnEachViewDispatcher(Action action)
-        {
-            Task.Run(async () => await RunOnEachViewDispatcherAsync(action));
-        }
-
+        
         public static async Task RunOnEachViewDispatcherAsync(Action action)
         {
             foreach (CoreApplicationView view in CoreApplication.Views)
