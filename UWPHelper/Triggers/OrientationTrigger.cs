@@ -1,4 +1,5 @@
-﻿using Windows.Graphics.Display;
+﻿using System;
+using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 
 namespace UWPHelper.Triggers
@@ -30,6 +31,11 @@ namespace UWPHelper.Triggers
 
         private static void OnOrientationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            if (!Enum.IsDefined(typeof(Orientation), e.NewValue))
+            {
+                throw new ArgumentOutOfRangeException(nameof(Orientation));
+            }
+
             ((OrientationTrigger)d).UpdateTrigger(DisplayInformation.GetForCurrentView().CurrentOrientation);
         }
 
