@@ -31,7 +31,7 @@ namespace UWPHelper.Utilities
                 success = false;
             }
 
-            TraceHelper.OperationInfo(fileName, "saving", success);
+            DebugHelper.OperationInfo(fileName, "saving", success);
             return success;
         }
 
@@ -66,7 +66,7 @@ namespace UWPHelper.Utilities
                 success = false;
             }
 
-            TraceHelper.OperationInfo(file.Name, "loading", success);
+            DebugHelper.OperationInfo(file.Name, "loading", success);
             return new LoadObjectAsyncResult<T>(obj, success);
         }
 
