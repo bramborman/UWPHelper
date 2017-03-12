@@ -27,6 +27,7 @@ namespace UWPHelper.Utilities
                 throw new ArgumentNullException(nameof(type));
             }
 
+            // Using try-catch since it's faster than if conditions when there's no problem
             try
             {
                 backingStore.Add(name, new PropertyData(type.Name == "Nullable`1" ? defaultValue : Convert.ChangeType(defaultValue, type), type, propertyChangedAction));
@@ -44,6 +45,7 @@ namespace UWPHelper.Utilities
 
         protected object GetValue([CallerMemberName]string propertyName = null)
         {
+            // Using try-catch since it's faster than if conditions when there's no problem
             try
             {
                 return backingStore[propertyName].Value;
@@ -69,6 +71,7 @@ namespace UWPHelper.Utilities
 
         private void SetValue<T>(T newValue, string propertyName, bool forceSetValue)
         {
+            // Using try-catch since it's faster than if conditions when there's no problem
             try
             {
                 PropertyData propertyData = backingStore[propertyName];

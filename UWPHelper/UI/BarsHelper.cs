@@ -40,7 +40,11 @@ namespace UWPHelper.UI
             {
                 if (_windowActivatedEventHandlerHelper == null)
                 {
+#if DEBUG
+                    _windowActivatedEventHandlerHelper = new OneEventHandlerHelper("Window");
+#else
                     _windowActivatedEventHandlerHelper = new OneEventHandlerHelper();
+#endif
                 }
 
                 return _windowActivatedEventHandlerHelper;
@@ -52,7 +56,11 @@ namespace UWPHelper.UI
             {
                 if (_accentColorHelperColorChangedEventHandlerHelper == null)
                 {
+#if DEBUG
+                    _accentColorHelperColorChangedEventHandlerHelper = new OneEventHandlerHelper("Accent");
+#else
                     _accentColorHelperColorChangedEventHandlerHelper = new OneEventHandlerHelper();
+#endif
                 }
 
                 return _accentColorHelperColorChangedEventHandlerHelper;
@@ -85,7 +93,7 @@ namespace UWPHelper.UI
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException(nameof(RequestedThemeGetter));
                 }
 
                 if (!ReferenceEquals(_requestedThemeGetter, value))
@@ -116,11 +124,10 @@ namespace UWPHelper.UI
                         _requestedThemePropertyParent.PropertyChanged += RequestedThemePropertyParent_PropertyChanged;
                     }
 
-                    // Not calling the TrySetBarsColorsAsync method since this hasn't got any impact on bars colors
+                    // Not calling the TrySetBarsColorsAsync method since this hasn't got any direct impact on bars colors
                 }
             }
         }
-
         public string RequestedThemePropertyName
         {
             get { return _requestedThemePropertyName; }
@@ -151,6 +158,7 @@ namespace UWPHelper.UI
 
                 if (isStatusBarTypePresent)
                 {
+                    // Cache current value to prevent from changing the value while setting the colors
                     bool cachedValue = _useDarkerStatusBarOnLandscapeOrientation;
                     await RunOnEachInitializedViewDispatcherAsync(() => InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(cachedValue));
 
@@ -161,7 +169,7 @@ namespace UWPHelper.UI
 
         public Task SetTitleBarColorModeAsync(BarsHelperColorMode value)
         {
-            return SetColorModeAsync(true, () => _titleBarColorMode, cm => _titleBarColorMode = cm, value, () => isTitleBarColorModeSet, cms => isTitleBarColorModeSet = cms, nameof(TitleBarColorMode), () =>
+            return SetColorModeAsync(true, () => _titleBarColorMode, cm => _titleBarColorMode = cm, value, () => isTitleBarColorModeSet, cms => isTitleBarColorModeSet = cms, nameof(value), () =>
             {
                 switch (_titleBarColorMode)
                 {
@@ -182,7 +190,7 @@ namespace UWPHelper.UI
 
         public Task SetStatusBarColorModeAsync(BarsHelperColorMode value)
         {
-            return SetColorModeAsync(false, () => _statusBarColorMode, cm => _statusBarColorMode = cm, value, () => isStatusBarColorModeSet, cms => isStatusBarColorModeSet = cms, nameof(StatusBarColorMode), () =>
+            return SetColorModeAsync(false, () => _statusBarColorMode, cm => _statusBarColorMode = cm, value, () => isStatusBarColorModeSet, cms => isStatusBarColorModeSet = cms, nameof(value), () =>
             {
                 switch (_statusBarColorMode)
                 {
@@ -201,31 +209,44 @@ namespace UWPHelper.UI
             });
         }
         
-        private async Task SetColorModeAsync(bool isTitleBarColorMode, Func<BarsHelperColorMode> colorModeGetter, Action<BarsHelperColorMode> colorModeSetter, BarsHelperColorMode value, Func<bool> colorModeSetGetter, Action<bool> colorModeSetSetter, string propertyName, Action switchColorsSetter)
+        private async Task SetColorModeAsync(bool isTitleBarColorMode, Func<BarsHelperColorMode> colorModeGetter, Action<BarsHelperColorMode> colorModeSetter, BarsHelperColorMode value, Func<bool> colorModeSetGetter, Action<bool> colorModeSetSetter, string parameterName, Action switchColorsSetter)
         {
             if (!Enum.IsDefined(typeof(BarsHelperColorMode), value))
             {
-                throw new ArgumentOutOfRangeException(propertyName);
+                throw new ArgumentOutOfRangeException(parameterName);
             }
 
             BarsHelperColorMode cachedValue = colorModeGetter();
 
             if (cachedValue != value || !colorModeSetGetter())
             {
+                bool doStuff = isTitleBarColorMode || isStatusBarTypePresent;
                 colorModeSetSetter(true);
-                await RunOnEachInitializedViewDispatcherAsync(() => InitializeColorModeForCurrentView(isTitleBarColorMode, false, cachedValue));
+
+                if (doStuff)
+                {
+                    await RunOnEachInitializedViewDispatcherAsync(() => InitializeColorModeForCurrentView(isTitleBarColorMode, false, cachedValue));
+                }
 
                 colorModeSetter(value);
-                switchColorsSetter();
+
+                if (doStuff)
+                {
+                    switchColorsSetter();
+                }
 
                 cachedValue = value;
-                await RunOnEachInitializedViewDispatcherAsync(() => InitializeColorModeForCurrentView(isTitleBarColorMode, true, cachedValue));
+
+                if (doStuff)
+                {
+                    await RunOnEachInitializedViewDispatcherAsync(() => InitializeColorModeForCurrentView(isTitleBarColorMode, true, cachedValue));
+                }
 
                 if (isTitleBarColorMode)
                 {
                     TrySetTitleBarColorsAsync();
                 }
-                else
+                else if (isStatusBarTypePresent)
                 {
                     TrySetStatusBarColorsAsync();
                 }
@@ -258,14 +279,18 @@ namespace UWPHelper.UI
 
             viewInfo.Add(currentViewId);
             TrySetBarsColorsAsync();
-
+            
             if (isStatusBarTypePresent && UseDarkerStatusBarOnLandscapeOrientation)
             {
-                await ViewHelper.RunOnCurrentViewDispatcherAsync(() => InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(true));
+                InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(true);
             }
 
-            await ViewHelper.RunOnCurrentViewDispatcherAsync(() => InitializeColorModeForCurrentView(true, true, TitleBarColorMode));
-            await ViewHelper.RunOnCurrentViewDispatcherAsync(() => InitializeColorModeForCurrentView(false, true, StatusBarColorMode));
+            InitializeColorModeForCurrentView(true, true, TitleBarColorMode);
+
+            if (isStatusBarTypePresent)
+            {
+                InitializeColorModeForCurrentView(false, true, StatusBarColorMode);
+            }
         }
 
         public void InitializeAutoUpdating(Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged requestedThemePropertyParent, string requestedThemePropertyName)
