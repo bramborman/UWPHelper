@@ -4,6 +4,7 @@
     {
         Themed,
         ThemedGray,
-        Accent
+        Accent,
+        Custom
     }
 }
