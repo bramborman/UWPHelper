@@ -23,14 +23,8 @@ namespace UWPHelper.UI
 
         private bool isTitleBarColorModeSet;
         private bool isStatusBarColorModeSet;
-        private IBarsHelperTitleBarColorsSetter titleBarColorsSetter;
-        private IBarsHelperStatusBarColorsSetter statusBarColorsSetter;
-        private bool _useDarkerStatusBarOnLandscapeOrientation;
-        private BarsHelperColorMode _titleBarColorMode;
-        private BarsHelperColorMode _statusBarColorMode;
         private Func<ElementTheme> _requestedThemeGetter;
         private INotifyPropertyChanged _requestedThemePropertyParent;
-        private string _requestedThemePropertyName;
         private OneEventHandlerHelper _windowActivatedEventHandlerHelper;
         private OneEventHandlerHelper _accentColorHelperColorChangedEventHandlerHelper;
 
@@ -74,18 +68,9 @@ namespace UWPHelper.UI
                 return viewInfo.Count > 0;
             }
         }
-        public bool UseDarkerStatusBarOnLandscapeOrientation
-        {
-            get { return _useDarkerStatusBarOnLandscapeOrientation; }
-        }
-        public BarsHelperColorMode TitleBarColorMode
-        {
-            get { return _titleBarColorMode; }
-        }
-        public BarsHelperColorMode StatusBarColorMode
-        {
-            get { return _statusBarColorMode; }
-        }
+        public bool UseDarkerStatusBarOnLandscapeOrientation { get; private set; }
+        public BarsHelperColorMode TitleBarColorMode { get; private set; }
+        public BarsHelperColorMode StatusBarColorMode { get; private set; }
         public Func<ElementTheme> RequestedThemeGetter
         {
             get { return _requestedThemeGetter; }
@@ -128,16 +113,9 @@ namespace UWPHelper.UI
                 }
             }
         }
-        public string RequestedThemePropertyName
-        {
-            get { return _requestedThemePropertyName; }
-            private set
-            {
-                // Validated in InitializeAutoUpdating method
-                // No need for equality checking since we're not invoking anything from here
-                _requestedThemePropertyName = value;
-            }
-        }
+        public string RequestedThemePropertyName { get; private set; }
+        public IBarsHelperTitleBarColorsSetter TitleBarColorsSetter { get; private set; }
+        public IBarsHelperStatusBarColorsSetter StatusBarColorsSetter { get; private set; }
 
         static BarsHelper()
         {
@@ -152,14 +130,14 @@ namespace UWPHelper.UI
 
         public async Task SetUseDarkerStatusBarOnLandscapeOrientationAsync(bool value)
         {
-            if (_useDarkerStatusBarOnLandscapeOrientation != value)
+            if (UseDarkerStatusBarOnLandscapeOrientation != value)
             {
-                _useDarkerStatusBarOnLandscapeOrientation = value;
+                UseDarkerStatusBarOnLandscapeOrientation = value;
 
                 if (isStatusBarTypePresent)
                 {
                     // Cache current value to prevent from changing the value while setting the colors
-                    bool cachedValue = _useDarkerStatusBarOnLandscapeOrientation;
+                    bool cachedValue = UseDarkerStatusBarOnLandscapeOrientation;
                     await RunOnEachInitializedViewDispatcherAsync(() => InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(cachedValue));
 
                     TrySetStatusBarColorsAsync();
@@ -169,20 +147,20 @@ namespace UWPHelper.UI
 
         public Task SetTitleBarColorModeAsync(BarsHelperColorMode value)
         {
-            return SetColorModeAsync(true, () => _titleBarColorMode, cm => _titleBarColorMode = cm, value, () => isTitleBarColorModeSet, cms => isTitleBarColorModeSet = cms, nameof(value), () =>
+            return SetColorModeAsync(true, () => TitleBarColorMode, cm => TitleBarColorMode = cm, value, () => isTitleBarColorModeSet, cms => isTitleBarColorModeSet = cms, nameof(value), () =>
             {
-                switch (_titleBarColorMode)
+                switch (TitleBarColorMode)
                 {
                     case BarsHelperColorMode.Themed:
-                        titleBarColorsSetter = new BarsHelperTitleBarColorsSetterThemed();
+                        TitleBarColorsSetter = new BarsHelperTitleBarColorsSetterThemed();
                         break;
 
                     case BarsHelperColorMode.ThemedGray:
-                        titleBarColorsSetter = new BarsHelperTitleBarColorsSetterThemedGray();
+                        TitleBarColorsSetter = new BarsHelperTitleBarColorsSetterThemedGray();
                         break;
 
                     case BarsHelperColorMode.Accent:
-                        titleBarColorsSetter = new BarsHelperTitleBarColorsSetterAccent();
+                        TitleBarColorsSetter = new BarsHelperTitleBarColorsSetterAccent();
                         break;
                 }
             });
@@ -190,20 +168,20 @@ namespace UWPHelper.UI
 
         public Task SetStatusBarColorModeAsync(BarsHelperColorMode value)
         {
-            return SetColorModeAsync(false, () => _statusBarColorMode, cm => _statusBarColorMode = cm, value, () => isStatusBarColorModeSet, cms => isStatusBarColorModeSet = cms, nameof(value), () =>
+            return SetColorModeAsync(false, () => StatusBarColorMode, cm => StatusBarColorMode = cm, value, () => isStatusBarColorModeSet, cms => isStatusBarColorModeSet = cms, nameof(value), () =>
             {
-                switch (_statusBarColorMode)
+                switch (StatusBarColorMode)
                 {
                     case BarsHelperColorMode.Themed:
-                        statusBarColorsSetter = new BarsHelperStatusBarColorsSetterThemed();
+                        StatusBarColorsSetter = new BarsHelperStatusBarColorsSetterThemed();
                         break;
 
                     case BarsHelperColorMode.ThemedGray:
-                        statusBarColorsSetter = new BarsHelperStatusBarColorsSetterThemedGray();
+                        StatusBarColorsSetter = new BarsHelperStatusBarColorsSetterThemedGray();
                         break;
 
                     case BarsHelperColorMode.Accent:
-                        statusBarColorsSetter = new BarsHelperStatusBarColorsSetterAccent();
+                        StatusBarColorsSetter = new BarsHelperStatusBarColorsSetterAccent();
                         break;
                 }
             });
@@ -433,7 +411,7 @@ namespace UWPHelper.UI
             {
                 if (ApplicationView.GetForCurrentView().TitleBar is ApplicationViewTitleBar titleBar)
                 {
-                    titleBarColorsSetter.SetTitleBarColors(titleBar, requestedTheme);
+                    TitleBarColorsSetter.SetTitleBarColors(titleBar, requestedTheme);
                 }
             });
         }
@@ -452,7 +430,7 @@ namespace UWPHelper.UI
                 {
                     if (StatusBar.GetForCurrentView() is StatusBar statusBar)
                     {
-                        statusBarColorsSetter.SetStatusBarColors(statusBar, requestedTheme, useDarkerStatusBarOnLandscapeOrientation, DisplayInformation.GetForCurrentView().CurrentOrientation);
+                        StatusBarColorsSetter.SetStatusBarColors(statusBar, requestedTheme, useDarkerStatusBarOnLandscapeOrientation, DisplayInformation.GetForCurrentView().CurrentOrientation);
                     }
                 });
             }
