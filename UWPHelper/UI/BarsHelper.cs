@@ -19,10 +19,10 @@ namespace UWPHelper.UI
 
         public static BarsHelper Current { get; private set; }
 
-        private readonly List<int> viewInfo = new List<int>();
+        private readonly List<int> viewInfo                     = new List<int>();
+        private readonly ColorModeInfo titleBarColorModeInfo    = new ColorModeInfo();
+        private readonly ColorModeInfo statusBarColorModeInfo   = new ColorModeInfo();
 
-        private bool isTitleBarColorModeSet;
-        private bool isStatusBarColorModeSet;
         private Func<ElementTheme> _requestedThemeGetter;
         private INotifyPropertyChanged _requestedThemePropertyParent;
         private OneEventHandlerHelper _windowActivatedEventHandlerHelper;
@@ -69,8 +69,14 @@ namespace UWPHelper.UI
             }
         }
         public bool UseDarkerStatusBarOnLandscapeOrientation { get; private set; }
-        public BarsHelperColorMode TitleBarColorMode { get; private set; }
-        public BarsHelperColorMode StatusBarColorMode { get; private set; }
+        public BarsHelperColorMode TitleBarColorMode
+        {
+            get { return titleBarColorModeInfo.ColorMode; }
+        }
+        public BarsHelperColorMode StatusBarColorMode
+        {
+            get { return statusBarColorModeInfo.ColorMode; }
+        }
         public Func<ElementTheme> RequestedThemeGetter
         {
             get { return _requestedThemeGetter; }
@@ -145,11 +151,11 @@ namespace UWPHelper.UI
             }
         }
 
-        public Task SetTitleBarColorModeAsync(BarsHelperColorMode value)
+        public Task SetTitleBarColorModeAsync(BarsHelperColorMode newValue)
         {
-            return SetColorModeAsync(true, () => TitleBarColorMode, cm => TitleBarColorMode = cm, value, () => isTitleBarColorModeSet, cms => isTitleBarColorModeSet = cms, nameof(value), () =>
+            return SetColorModeAsync(titleBarColorModeInfo, newValue, nameof(newValue), () =>
             {
-                switch (TitleBarColorMode)
+                switch (newValue)
                 {
                     case BarsHelperColorMode.Themed:
                         TitleBarColorsSetter = new BarsHelperTitleBarColorsSetterThemed();
@@ -166,11 +172,11 @@ namespace UWPHelper.UI
             });
         }
 
-        public Task SetStatusBarColorModeAsync(BarsHelperColorMode value)
+        public Task SetStatusBarColorModeAsync(BarsHelperColorMode newValue)
         {
-            return SetColorModeAsync(false, () => StatusBarColorMode, cm => StatusBarColorMode = cm, value, () => isStatusBarColorModeSet, cms => isStatusBarColorModeSet = cms, nameof(value), () =>
+            return SetColorModeAsync(statusBarColorModeInfo, newValue, nameof(newValue), () =>
             {
-                switch (StatusBarColorMode)
+                switch (newValue)
                 {
                     case BarsHelperColorMode.Themed:
                         StatusBarColorsSetter = new BarsHelperStatusBarColorsSetterThemed();
@@ -187,36 +193,33 @@ namespace UWPHelper.UI
             });
         }
         
-        private async Task SetColorModeAsync(bool isTitleBarColorMode, Func<BarsHelperColorMode> colorModeGetter, Action<BarsHelperColorMode> colorModeSetter, BarsHelperColorMode value, Func<bool> colorModeSetGetter, Action<bool> colorModeSetSetter, string parameterName, Action switchColorsSetter)
+        private async Task SetColorModeAsync(ColorModeInfo colorModeInfo, BarsHelperColorMode newValue, string parameterName, Action switchColorsSetter)
         {
-            if (!Enum.IsDefined(typeof(BarsHelperColorMode), value))
+            if (!Enum.IsDefined(typeof(BarsHelperColorMode), newValue))
             {
                 throw new ArgumentOutOfRangeException(parameterName);
             }
-
-            BarsHelperColorMode cachedValue = colorModeGetter();
-
-            if (cachedValue != value || !colorModeSetGetter())
+            
+            if (colorModeInfo.ColorMode != newValue || !colorModeInfo.IsSet)
             {
-                bool doStuff = isTitleBarColorMode || isStatusBarTypePresent;
-                colorModeSetSetter(true);
+                colorModeInfo.IsSet = true;
+
+                bool isTitleBarColorMode = ReferenceEquals(colorModeInfo, titleBarColorModeInfo);
+                bool doStuff             = isTitleBarColorMode || isStatusBarTypePresent;
 
                 if (doStuff)
                 {
+                    BarsHelperColorMode cachedValue = colorModeInfo.ColorMode;
                     await RunOnEachInitializedViewDispatcherAsync(() => InitializeColorModeForCurrentView(isTitleBarColorMode, false, cachedValue));
                 }
 
-                colorModeSetter(value);
-
+                colorModeInfo.ColorMode = newValue;
+                
                 if (doStuff)
                 {
                     switchColorsSetter();
-                }
 
-                cachedValue = value;
-
-                if (doStuff)
-                {
+                    BarsHelperColorMode cachedValue = colorModeInfo.ColorMode;
                     await RunOnEachInitializedViewDispatcherAsync(() => InitializeColorModeForCurrentView(isTitleBarColorMode, true, cachedValue));
                 }
 
@@ -238,12 +241,12 @@ namespace UWPHelper.UI
                 RequestedThemeGetter = () => ElementTheme.Default;
             }
 
-            if (!isTitleBarColorModeSet)
+            if (!titleBarColorModeInfo.IsSet)
             {
                 await SetTitleBarColorModeAsync(default(BarsHelperColorMode));
             }
 
-            if (!isStatusBarColorModeSet)
+            if (!statusBarColorModeInfo.IsSet)
             {
                 await SetStatusBarColorModeAsync(default(BarsHelperColorMode));
             }
@@ -459,6 +462,12 @@ namespace UWPHelper.UI
                     action();
                 }
             });
+        }
+
+        private sealed class ColorModeInfo
+        {
+            internal BarsHelperColorMode ColorMode { get; set; }
+            internal bool IsSet { get; set; }
         }
     }
 }
