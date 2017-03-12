@@ -131,6 +131,7 @@
     <Compile Include="Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="Triggers\IsApiContractPresentTrigger.cs" />
     <Compile Include="Triggers\IsTypePresentTrigger.cs" />
+    <Compile Include="Triggers\NetworkConnectionTrigger.cs" />
     <Compile Include="Triggers\OrientationTrigger.cs" />
     <Compile Include="UI\AboutApp.xaml.cs">
       <DependentUpon>AboutApp.xaml</DependentUpon>
