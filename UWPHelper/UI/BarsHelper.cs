@@ -172,7 +172,15 @@ namespace UWPHelper.UI
                         break;
 
                     case BarsHelperColorMode.Accent:
-                        titleBarInfo.ColorsSetter = new BarsHelperTitleBarColorsSetterAccent();
+                        if (StatusBarColorsSetter is BarsHelperColorsSetterAccent barsHelperColorsSetterAccent)
+                        {
+                            titleBarInfo.ColorsSetter = barsHelperColorsSetterAccent;
+                        }
+                        else
+                        {
+                            titleBarInfo.ColorsSetter = new BarsHelperColorsSetterAccent();
+                        }
+
                         break;
                 }
             });
@@ -193,7 +201,15 @@ namespace UWPHelper.UI
                         break;
 
                     case BarsHelperColorMode.Accent:
-                        statusBarInfo.ColorsSetter = new BarsHelperStatusBarColorsSetterAccent();
+                        if (TitleBarColorsSetter is BarsHelperColorsSetterAccent barsHelperColorsSetterAccent)
+                        {
+                            statusBarInfo.ColorsSetter = barsHelperColorsSetterAccent;
+                        }
+                        else
+                        {
+                            statusBarInfo.ColorsSetter = new BarsHelperColorsSetterAccent();
+                        }
+
                         break;
                 }
             });
@@ -253,7 +269,7 @@ namespace UWPHelper.UI
             {
                 typeof(BarsHelperTitleBarColorsSetterThemed),
                 typeof(BarsHelperTitleBarColorsSetterThemedGray),
-                typeof(BarsHelperTitleBarColorsSetterAccent)
+                typeof(BarsHelperColorsSetterAccent)
             });
         }
 
@@ -263,7 +279,7 @@ namespace UWPHelper.UI
             {
                 typeof(BarsHelperStatusBarColorsSetterThemed),
                 typeof(BarsHelperStatusBarColorsSetterThemedGray),
-                typeof(BarsHelperStatusBarColorsSetterAccent)
+                typeof(BarsHelperColorsSetterAccent)
             });
         }
 

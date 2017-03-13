@@ -1,10 +1,11 @@
-﻿using Windows.UI;
+﻿using Windows.Graphics.Display;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
 namespace UWPHelper.UI
 {
-    public sealed class BarsHelperTitleBarColorsSetterAccent : IBarsHelperTitleBarColorsSetter
+    public sealed class BarsHelperColorsSetterAccent : IBarsHelperTitleBarColorsSetter, IBarsHelperStatusBarColorsSetter
     {
         private bool UseLightOverlay
         {
@@ -58,6 +59,14 @@ namespace UWPHelper.UI
 
             titleBar.ButtonInactiveBackgroundColor = titleBar.InactiveBackgroundColor;
             titleBar.ButtonInactiveForegroundColor = titleBar.InactiveForegroundColor;
+        }
+
+        public void SetStatusBarColors(StatusBar statusBar, ElementTheme requestedTheme, bool useDarkerStatusBarOnLandscapeOrientation, DisplayOrientations currentOrientation)
+        {
+            statusBar.BackgroundOpacity = 1.0;
+
+            statusBar.BackgroundColor = AccentColorHelper.GetForCurrentView().AccentColor;
+            statusBar.ForegroundColor = UseLightOverlay ? Colors.White : Colors.Black;
         }
     }
 }

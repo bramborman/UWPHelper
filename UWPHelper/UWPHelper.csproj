@@ -149,19 +149,16 @@
     <Compile Include="UI\BarsHelperColorMode.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\BarsHelperColorsSetterHelper.cs">
+    <Compile Include="UI\BarsHelperColorsSetterAccent.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\BarsHelperStatusBarColorsSetterAccent.cs">
+    <Compile Include="UI\BarsHelperColorsSetterHelper.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\BarsHelperStatusBarColorsSetterThemed.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\BarsHelperStatusBarColorsSetterThemedGray.cs">
-      <DependentUpon>BarsHelper.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\BarsHelperTitleBarColorsSetterAccent.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\BarsHelperTitleBarColorsSetterThemed.cs">
