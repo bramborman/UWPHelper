@@ -36,18 +36,24 @@ namespace UWPHelper.UI
             {
                 case ElementTheme.Default:
                     titleBar.InactiveBackgroundColor = null;
-                    titleBar.InactiveForegroundColor = null;
                     break;
                 
                 case ElementTheme.Light:
                     titleBar.InactiveBackgroundColor = Colors.White;
-                    titleBar.InactiveForegroundColor = Color.FromArgb(0xFF, 0x99, 0x99, 0x99);
                     break;
                 
                 case ElementTheme.Dark:
                     titleBar.InactiveBackgroundColor = Colors.Black;
-                    titleBar.InactiveForegroundColor = Color.FromArgb(0xFF, 0x66, 0x66, 0x66);
                     break;
+            }
+
+            if (requestedTheme == ElementTheme.Default)
+            {
+                titleBar.InactiveForegroundColor = null;
+            }
+            else
+            {
+                titleBar.InactiveForegroundColor = BarsHelperColorsSetterHelper.GetTitleBarInactiveForegroundColor(titleBar.ForegroundColor.Value, requestedTheme);
             }
 
             titleBar.ButtonInactiveBackgroundColor = titleBar.InactiveBackgroundColor;

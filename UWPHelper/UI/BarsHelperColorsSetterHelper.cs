@@ -7,27 +7,37 @@ namespace UWPHelper.UI
 {
     public static class BarsHelperColorsSetterHelper
     {
-        public static Color GetTitleBarButtonHoverBackgroundColor(Color buttonBackgroundColor, ElementTheme overlayTheme)
+        public static Color GetTitleBarInactiveForegroundColor(Color foregroundColor, ElementTheme titleBarTheme)
         {
-            return GetTitleBarButtonBackgroundColor(0x19, buttonBackgroundColor, overlayTheme, nameof(overlayTheme));
+            return GetTitleBarColor(0x99, false, foregroundColor, titleBarTheme, nameof(titleBarTheme));
         }
 
-        public static Color GetTitleBarButtonPressedBackgroundColor(Color buttonBackgroundColor, ElementTheme overlayTheme)
+        public static Color GetTitleBarButtonHoverBackgroundColor(Color buttonBackgroundColor, ElementTheme titleBarTheme)
         {
-            return GetTitleBarButtonBackgroundColor(0x33, buttonBackgroundColor, overlayTheme, nameof(overlayTheme));
+            return GetTitleBarColor(0x19, true, buttonBackgroundColor, titleBarTheme, nameof(titleBarTheme));
         }
 
-        private static Color GetTitleBarButtonBackgroundColor(byte alpha, Color buttonBackgroundColor, ElementTheme overlayTheme, string elementThemeParameterName)
+        public static Color GetTitleBarButtonPressedBackgroundColor(Color buttonBackgroundColor, ElementTheme titleBarTheme)
         {
-            ValidateElementTheme(overlayTheme, elementThemeParameterName);
+            return GetTitleBarColor(0x33, true, buttonBackgroundColor, titleBarTheme, nameof(titleBarTheme));
+        }
 
-            if (overlayTheme == ElementTheme.Default)
+        private static Color GetTitleBarColor(byte overlayAlpha, bool isBackgroundColor, Color baseColor, ElementTheme titleBarTheme, string titleBarThemeParameterName)
+        {
+            ValidateElementTheme(titleBarTheme, titleBarThemeParameterName);
+
+            if (titleBarTheme == ElementTheme.Default)
             {
-                overlayTheme = buttonBackgroundColor.GetContrastingTheme();
+                titleBarTheme = baseColor.GetContrastingTheme();
             }
 
-            byte colorByte = (byte)(overlayTheme == ElementTheme.Dark ? 0xFF : 0x00);
-            return buttonBackgroundColor.Mix(Color.FromArgb(alpha, colorByte, colorByte, colorByte));
+            if (!isBackgroundColor)
+            {
+                titleBarTheme = titleBarTheme == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
+            }
+
+            byte colorByte = (byte)(titleBarTheme == ElementTheme.Dark ? 0xFF : 0x00);
+            return baseColor.Mix(Color.FromArgb(overlayAlpha, colorByte, colorByte, colorByte));
         }
 
         private static void ValidateElementTheme(ElementTheme elementTheme, string parameterName)
