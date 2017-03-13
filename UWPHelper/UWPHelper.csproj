@@ -149,6 +149,9 @@
     <Compile Include="UI\BarsHelperColorMode.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\BarsHelperColorsSetterHelper.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\BarsHelperStatusBarColorsSetterAccent.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>

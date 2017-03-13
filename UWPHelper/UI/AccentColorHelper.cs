@@ -30,10 +30,8 @@ namespace UWPHelper.UI
             RegisterProperty(nameof(AccentColor), typeof(Color), new Color(), (oldValue, newValue) =>
             {
                 Color newColor = (Color)newValue;
-                float luma = newColor.GetLuma();
-                // Don't know why these values, but with these it works as Windows itself does...
-                AccentContrastingTheme = luma < 0.4869937f || luma == 0.541142f ? ElementTheme.Dark : ElementTheme.Light;
 
+                AccentContrastingTheme = newColor.GetContrastingTheme();
                 AccentColorChanged?.Invoke(this, newColor);
             });
             RegisterProperty(nameof(AccentContrastingTheme), typeof(ElementTheme), ElementTheme.Default);

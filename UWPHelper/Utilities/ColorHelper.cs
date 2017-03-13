@@ -1,4 +1,5 @@
 ﻿using Windows.UI;
+using Windows.UI.Xaml;
 
 namespace UWPHelper.Utilities
 {
@@ -29,6 +30,13 @@ namespace UWPHelper.Utilities
         public static float GetLuma(this Color color)
         {
             return (0.2126f * (color.R / 255.0f)) + (0.7152f * (color.G / 255.0f)) + (0.0722f * (color.B / 255.0f));
+        }
+        
+        public static ElementTheme GetContrastingTheme(this Color color)
+        {
+            float luma = color.GetLuma();
+            // Don't know why these values, but with these it works as Windows itself does...
+            return luma < 0.4869937f || luma == 0.541142f ? ElementTheme.Dark : ElementTheme.Light;
         }
     }
 }

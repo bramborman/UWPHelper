@@ -14,20 +14,14 @@ namespace UWPHelper.UI
                     titleBar.BackgroundColor                = null;
                     titleBar.ForegroundColor                = null;
                     titleBar.InactiveForegroundColor        = null;
-
-                    titleBar.ButtonHoverBackgroundColor     = null;
-                    titleBar.ButtonPressedBackgroundColor   = null;
-
+                    
                     break;
                         
                 case ElementTheme.Light:
                     titleBar.BackgroundColor                = Colors.White;
                     titleBar.ForegroundColor                = Colors.Black;
                     titleBar.InactiveForegroundColor        = Color.FromArgb(0xFF, 0x99, 0x99, 0x99);
-
-                    titleBar.ButtonHoverBackgroundColor     = Color.FromArgb(0xFF, 0xE6, 0xE6, 0xE6);
-                    titleBar.ButtonPressedBackgroundColor   = Color.FromArgb(0xFF, 0xCC, 0xCC, 0xCC);
-
+                    
                     break;
 
                 case ElementTheme.Dark:
@@ -35,10 +29,18 @@ namespace UWPHelper.UI
                     titleBar.ForegroundColor                = Colors.White;
                     titleBar.InactiveForegroundColor        = Color.FromArgb(0xFF, 0x66, 0x66, 0x66);
 
-                    titleBar.ButtonHoverBackgroundColor     = Color.FromArgb(0xFF, 0x19, 0x19, 0x19);
-                    titleBar.ButtonPressedBackgroundColor   = Color.FromArgb(0xFF, 0x33, 0x33, 0x33);
-
                     break;
+            }
+
+            if (requestedTheme == ElementTheme.Default)
+            {
+                titleBar.ButtonHoverBackgroundColor     = null;
+                titleBar.ButtonPressedBackgroundColor   = null;
+            }
+            else
+            {
+                titleBar.ButtonHoverBackgroundColor     = BarsHelperColorsSetterHelper.GetTitleBarButtonHoverBackgroundColor(titleBar.BackgroundColor.Value, requestedTheme);
+                titleBar.ButtonPressedBackgroundColor   = BarsHelperColorsSetterHelper.GetTitleBarButtonPressedBackgroundColor(titleBar.BackgroundColor.Value, requestedTheme);
             }
             
             titleBar.InactiveBackgroundColor        = titleBar.BackgroundColor;

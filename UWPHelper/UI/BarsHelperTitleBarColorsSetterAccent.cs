@@ -1,5 +1,4 @@
-﻿using UWPHelper.Utilities;
-using Windows.UI;
+﻿using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
@@ -11,6 +10,9 @@ namespace UWPHelper.UI
         {
             get
             {
+                // Seems weird, right? :D
+                // When AccentContrastingTheme is ElementTheme.Dark, then the accent color is dark so contrasting foreground is white
+                // I've finally understood why I've done it this way xD
                 return AccentColorHelper.GetForCurrentView().AccentContrastingTheme == ElementTheme.Dark;
             }
         }
@@ -20,22 +22,12 @@ namespace UWPHelper.UI
             titleBar.BackgroundColor       = AccentColorHelper.GetForCurrentView().AccentColor;
             titleBar.ButtonBackgroundColor = titleBar.BackgroundColor;
 
-            if (UseLightOverlay)
-            {
-                titleBar.ForegroundColor = Colors.White;
+            ElementTheme overlayTheme               = AccentColorHelper.GetForCurrentView().AccentContrastingTheme;
+            titleBar.ButtonHoverBackgroundColor     = BarsHelperColorsSetterHelper.GetTitleBarButtonHoverBackgroundColor(titleBar.BackgroundColor.Value, overlayTheme);
+            titleBar.ButtonPressedBackgroundColor   = BarsHelperColorsSetterHelper.GetTitleBarButtonPressedBackgroundColor(titleBar.BackgroundColor.Value, overlayTheme);
 
-                titleBar.ButtonHoverBackgroundColor   = titleBar.ButtonBackgroundColor.Value.Mix(Color.FromArgb(0x19, 0xFF, 0xFF, 0xFF));
-                titleBar.ButtonPressedBackgroundColor = titleBar.ButtonBackgroundColor.Value.Mix(Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF));
-            }
-            else
-            {
-                titleBar.ForegroundColor = Colors.Black;
-
-                titleBar.ButtonHoverBackgroundColor   = titleBar.ButtonBackgroundColor.Value.Mix(Color.FromArgb(0x19, 0x00, 0x00, 0x00));
-                titleBar.ButtonPressedBackgroundColor = titleBar.ButtonBackgroundColor.Value.Mix(Color.FromArgb(0x33, 0x00, 0x00, 0x00));
-            }
-
-            // Don't change foreground colors when buttons are in different states
+            titleBar.ForegroundColor                = UseLightOverlay ? Colors.White : Colors.Black;
+            // Do not change foreground colors when buttons are in different states
             titleBar.ButtonForegroundColor          = titleBar.ForegroundColor;
             titleBar.ButtonHoverForegroundColor     = titleBar.ForegroundColor;
             titleBar.ButtonPressedForegroundColor   = titleBar.ForegroundColor;
