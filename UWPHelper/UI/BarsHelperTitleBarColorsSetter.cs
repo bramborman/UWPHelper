@@ -7,10 +7,12 @@ namespace UWPHelper.UI
 {
     public sealed class BarsHelperTitleBarColorsSetter : IBarsHelperTitleBarColorsSetter
     {
+        public bool CalculateThemeForElementThemeDefault { get; }
         public ReadOnlyDictionary<ElementTheme, BarsHelperColorsSetterColorInfo> Colors { get; }
         
-        public BarsHelperTitleBarColorsSetter(BarsHelperColorsSetterColorInfo defaultThemeColorInfo, BarsHelperColorsSetterColorInfo lightThemeColorInfo, BarsHelperColorsSetterColorInfo darkThemeColorInfo)
+        public BarsHelperTitleBarColorsSetter(bool calculateThemeForElementThemeDefault, BarsHelperColorsSetterColorInfo defaultThemeColorInfo, BarsHelperColorsSetterColorInfo lightThemeColorInfo, BarsHelperColorsSetterColorInfo darkThemeColorInfo)
         {
+            CalculateThemeForElementThemeDefault = calculateThemeForElementThemeDefault;
             Colors = new ReadOnlyDictionary<ElementTheme, BarsHelperColorsSetterColorInfo>(new Dictionary<ElementTheme, BarsHelperColorsSetterColorInfo>
             {
                 { ElementTheme.Default, defaultThemeColorInfo },
@@ -21,6 +23,11 @@ namespace UWPHelper.UI
         
         public void SetTitleBarColors(ApplicationViewTitleBar titleBar, ElementTheme requestedTheme)
         {
+            if (CalculateThemeForElementThemeDefault && requestedTheme == ElementTheme.Default)
+            {
+                requestedTheme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
+            }
+
             BarsHelperColorsSetterColorInfo colorInfo = Colors[requestedTheme];
 
             titleBar.BackgroundColor = colorInfo.BackgroundColor;
@@ -29,7 +36,7 @@ namespace UWPHelper.UI
             titleBar.InactiveBackgroundColor = colorInfo.InactiveBackgroundColor;
             titleBar.InactiveForegroundColor = colorInfo.InactiveForegroundColor;
 
-            if (requestedTheme == ElementTheme.Default)
+            if (titleBar.BackgroundColor == null)
             {
                 titleBar.ButtonHoverBackgroundColor     = null;
                 titleBar.ButtonPressedBackgroundColor   = null;

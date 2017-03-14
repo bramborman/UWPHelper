@@ -13,16 +13,17 @@ using Windows.UI.Xaml;
 
 namespace UWPHelper.UI
 {
-    public sealed partial class BarsHelper
+    public sealed class BarsHelper
     {
         private static readonly bool isStatusBarTypePresent = ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar");
 
         public static BarsHelper Current { get; private set; }
 
-        private readonly List<int> viewInfo                                         = new List<int>();
+        // ApplicationTheme is used only when the selected color mode is ThemedGray
+        private readonly Dictionary<int, ApplicationTheme?> viewInfo                = new Dictionary<int, ApplicationTheme?>();
         private readonly BarInfo<IBarsHelperTitleBarColorsSetter> titleBarInfo      = new BarInfo<IBarsHelperTitleBarColorsSetter>();
         private readonly BarInfo<IBarsHelperStatusBarColorsSetter> statusBarInfo    = new BarInfo<IBarsHelperStatusBarColorsSetter>();
-
+        
         private Func<ElementTheme> _requestedThemeGetter;
         private INotifyPropertyChanged _requestedThemePropertyParent;
         private OneEventHandlerHelper _windowActivatedEventHandlerHelper;
@@ -195,7 +196,8 @@ namespace UWPHelper.UI
                         darkThemeForegroundColor  = Colors.White;
                     }
 
-                    titleBarInfo.ColorsSetter = new BarsHelperTitleBarColorsSetter(new BarsHelperColorsSetterColorInfo(null, null, null, null),
+                    titleBarInfo.ColorsSetter = new BarsHelperTitleBarColorsSetter(newValue == BarsHelperColorMode.ThemedGray,
+                                                                                   new BarsHelperColorsSetterColorInfo(null, null, null, null),
                                                                                    new BarsHelperColorsSetterColorInfo(lightThemeBackgroundColor, lightThemeForegroundColor, lightThemeBackgroundColor, BarsHelperColorsSetterHelper.GetTitleBarInactiveForegroundColor(lightThemeForegroundColor, ElementTheme.Light)),
                                                                                    new BarsHelperColorsSetterColorInfo(darkThemeBackgroundColor, darkThemeForegroundColor, darkThemeBackgroundColor, BarsHelperColorsSetterHelper.GetTitleBarInactiveForegroundColor(darkThemeForegroundColor, ElementTheme.Dark)));
                 }
@@ -335,12 +337,12 @@ namespace UWPHelper.UI
 
             int currentViewId = ViewHelper.GetCurrentViewId();
 
-            if (viewInfo.Contains(currentViewId))
+            if (viewInfo.ContainsKey(currentViewId))
             {
                 throw new InvalidOperationException($"{nameof(BarsHelper)} is already initialized for this view.");
             }
 
-            viewInfo.Add(currentViewId);
+            viewInfo.Add(currentViewId, null);
             TrySetBarsColorsAsync();
             
             if (isStatusBarTypePresent && UseDarkerStatusBarOnLandscapeOrientation)
@@ -439,7 +441,7 @@ namespace UWPHelper.UI
 
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
-            if (e.WindowActivationState != CoreWindowActivationState.Deactivated)
+            if (e.WindowActivationState != CoreWindowActivationState.Deactivated && viewInfo[ViewHelper.GetCurrentViewId()] != Application.Current.RequestedTheme)
             {
                 TrySetBarsColorsAsync();
             }
@@ -488,6 +490,7 @@ namespace UWPHelper.UI
         public Task SetTitleBarColorsAsync()
         {
             ValidateInitialization();
+            AssignApplicationThemeForCurrentView();
 
             // Cache the value to prevent unnecessary calls and prevent from changing the value while setting the colors
             ElementTheme requestedTheme = RequestedThemeGetter();
@@ -507,6 +510,8 @@ namespace UWPHelper.UI
 
             if (isStatusBarTypePresent)
             {
+                AssignApplicationThemeForCurrentView();
+
                 // Cache the values to prevent unnecessary calls and prevent from changing the values while setting the colors
                 bool useDarkerStatusBarOnLandscapeOrientation = UseDarkerStatusBarOnLandscapeOrientation;
                 ElementTheme requestedTheme = RequestedThemeGetter();
@@ -533,13 +538,16 @@ namespace UWPHelper.UI
             }
         }
 
+        private void AssignApplicationThemeForCurrentView()
+        {
+            viewInfo[ViewHelper.GetCurrentViewId()] = Application.Current.RequestedTheme;
+        }
+
         private Task RunOnEachInitializedViewDispatcherAsync(Action action)
         {
             return ViewHelper.RunOnEachViewDispatcherAsync(() =>
             {
-                int currentViewId = ViewHelper.GetCurrentViewId();
-
-                if (viewInfo.Any(id => id == currentViewId))
+                if (viewInfo.ContainsKey(ViewHelper.GetCurrentViewId()))
                 {
                     action();
                 }
