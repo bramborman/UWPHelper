@@ -20,16 +20,8 @@ namespace UWPHelper.UI
             {
                 statusBar.BackgroundOpacity = 1.0;
 
-                if (requestedTheme == ElementTheme.Light)
-                {
-                    statusBar.ForegroundColor = Color.FromArgb(0xFF, 0x66, 0x66, 0x66);
-                    statusBar.BackgroundColor = Colors.White;
-                }
-                else
-                {
-                    statusBar.ForegroundColor = Color.FromArgb(0xFF, 0xBF, 0xBF, 0xBF);
-                    statusBar.BackgroundColor = Colors.Black;
-                }
+                statusBar.BackgroundColor   = requestedTheme == ElementTheme.Light ? Colors.White : Colors.Black;
+                statusBar.ForegroundColor   = BarsHelperColorsSetterHelper.GetStatusBarForegroundColor(statusBar.BackgroundColor.Value, requestedTheme);
             }
         }
     }

@@ -8,6 +8,11 @@ namespace UWPHelper.UI
         public Color? ForegroundColor { get; }
         public Color? InactiveBackgroundColor { get; }
         public Color? InactiveForegroundColor { get; }
+
+        public BarsHelperColorsSetterColorInfo(Color? backgroundColor, Color? foregroundColor) : this(backgroundColor, foregroundColor, null, null)
+        {
+
+        }
         
         public BarsHelperColorsSetterColorInfo(Color? backgroundColor, Color? foregroundColor, Color? inactiveBackgroundColor, Color? inactiveForegroundColor)
         {

@@ -40,6 +40,18 @@ namespace UWPHelper.UI
             return baseColor.Mix(Color.FromArgb(overlayAlpha, colorByte, colorByte, colorByte));
         }
 
+        public static Color GetStatusBarForegroundColor(Color backgroundColor, ElementTheme statusBarTheme)
+        {
+            ValidateElementTheme(statusBarTheme, nameof(statusBarTheme));
+
+            if (statusBarTheme == ElementTheme.Default)
+            {
+                statusBarTheme = backgroundColor.GetContrastingTheme();
+            }
+
+            return statusBarTheme == ElementTheme.Light ? Color.FromArgb(0xFF, 0x66, 0x66, 0x66) : Color.FromArgb(0xFF, 0xBF, 0xBF, 0xBF);
+        }
+
         private static void ValidateElementTheme(ElementTheme elementTheme, string parameterName)
         {
             if (!Enum.IsDefined(typeof(ElementTheme), elementTheme))
