@@ -161,27 +161,43 @@ namespace UWPHelper.UI
         {
             return SetColorModeAsync(titleBarInfo, newValue, nameof(newValue), false, () =>
             {
-                switch (newValue)
+                if (newValue == BarsHelperColorMode.Accent)
                 {
-                    case BarsHelperColorMode.Themed:
-                        titleBarInfo.ColorsSetter = new BarsHelperTitleBarColorsSetterThemed();
-                        break;
+                    if (StatusBarColorsSetter is BarsHelperColorsSetterAccent barsHelperColorsSetterAccent)
+                    {
+                        titleBarInfo.ColorsSetter = barsHelperColorsSetterAccent;
+                    }
+                    else
+                    {
+                        titleBarInfo.ColorsSetter = new BarsHelperColorsSetterAccent();
+                    }
+                }
+                else
+                {
+                    Color lightThemeBackgroundColor;
+                    Color lightThemeForegroundColor;
+                    Color darkThemeBackgroundColor;
+                    Color darkThemeForegroundColor;
 
-                    case BarsHelperColorMode.ThemedGray:
-                        titleBarInfo.ColorsSetter = new BarsHelperTitleBarColorsSetterThemedGray();
-                        break;
+                    if (newValue == BarsHelperColorMode.Themed)
+                    {
+                        lightThemeBackgroundColor = Colors.White;
+                        lightThemeForegroundColor = Colors.Black;
+                        darkThemeBackgroundColor  = Colors.Black;
+                        darkThemeForegroundColor  = Colors.White;
+                    }
+                    else
+                    {
+                        // Background by SystemChromeMediumColor
+                        lightThemeBackgroundColor = Color.FromArgb(0xFF, 0xE6, 0xE6, 0xE6);
+                        lightThemeForegroundColor = Colors.Black;
+                        darkThemeBackgroundColor  = Color.FromArgb(0xFF, 0x1F, 0x1F, 0x1F);
+                        darkThemeForegroundColor  = Colors.White;
+                    }
 
-                    case BarsHelperColorMode.Accent:
-                        if (StatusBarColorsSetter is BarsHelperColorsSetterAccent barsHelperColorsSetterAccent)
-                        {
-                            titleBarInfo.ColorsSetter = barsHelperColorsSetterAccent;
-                        }
-                        else
-                        {
-                            titleBarInfo.ColorsSetter = new BarsHelperColorsSetterAccent();
-                        }
-
-                        break;
+                    titleBarInfo.ColorsSetter = new BarsHelperTitleBarColorsSetter(new BarsHelperColorsSetterColorInfo(null, null, null, null),
+                                                                                   new BarsHelperColorsSetterColorInfo(lightThemeBackgroundColor, lightThemeForegroundColor, lightThemeBackgroundColor, BarsHelperColorsSetterHelper.GetTitleBarInactiveForegroundColor(lightThemeForegroundColor, ElementTheme.Light)),
+                                                                                   new BarsHelperColorsSetterColorInfo(darkThemeBackgroundColor, darkThemeForegroundColor, darkThemeBackgroundColor, BarsHelperColorsSetterHelper.GetTitleBarInactiveForegroundColor(darkThemeForegroundColor, ElementTheme.Dark)));
                 }
             });
         }
@@ -267,8 +283,6 @@ namespace UWPHelper.UI
         {
             return SetCustomColorsSetterAsync(titleBarInfo, customColorsSetter, nameof(customColorsSetter), new Type[]
             {
-                typeof(BarsHelperTitleBarColorsSetterThemed),
-                typeof(BarsHelperTitleBarColorsSetterThemedGray),
                 typeof(BarsHelperColorsSetterAccent)
             });
         }

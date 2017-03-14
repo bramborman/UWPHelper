@@ -152,6 +152,9 @@
     <Compile Include="UI\BarsHelperColorsSetterAccent.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\BarsHelperColorsSetterColorInfo.cs">
+      <DependentUpon>BarsHelper.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\BarsHelperColorsSetterHelper.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
@@ -161,10 +164,7 @@
     <Compile Include="UI\BarsHelperStatusBarColorsSetterThemedGray.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\BarsHelperTitleBarColorsSetterThemed.cs">
-      <DependentUpon>BarsHelper.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\BarsHelperTitleBarColorsSetterThemedGray.cs">
+    <Compile Include="UI\BarsHelperTitleBarColorsSetter.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\HamburgerMenu.xaml.cs">
