@@ -7,7 +7,7 @@ namespace UWPHelper.UI
 {
     public sealed class BarsHelperStatusBarColorsSetterThemed : IBarsHelperStatusBarColorsSetter
     {
-        public void SetStatusBarColors(StatusBar statusBar, ElementTheme requestedTheme, bool useDarkerStatusBarOnLandscapeOrientation, DisplayOrientations currentOrientation)
+        public void SetStatusBarColors(StatusBar statusBar, ElementTheme requestedTheme, bool useDifferentStatusBarColorsOnLandscapeOrientation, DisplayOrientations currentOrientation)
         {
             if (requestedTheme == ElementTheme.Default)
             {

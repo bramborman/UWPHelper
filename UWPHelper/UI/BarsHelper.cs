@@ -69,7 +69,7 @@ namespace UWPHelper.UI
                 return viewInfo.Count > 0;
             }
         }
-        public bool UseDarkerStatusBarOnLandscapeOrientation { get; private set; }
+        public bool UseDifferentStatusBarColorsOnLandscapeOrientation { get; private set; }
         public BarsHelperColorMode TitleBarColorMode
         {
             get { return titleBarInfo.ColorMode; }
@@ -141,17 +141,17 @@ namespace UWPHelper.UI
 
         }
 
-        public async Task SetUseDarkerStatusBarOnLandscapeOrientationAsync(bool value)
+        public async Task SetUseDifferentStatusBarColorsOnLandscapeOrientationAsync(bool value)
         {
-            if (UseDarkerStatusBarOnLandscapeOrientation != value)
+            if (UseDifferentStatusBarColorsOnLandscapeOrientation != value)
             {
-                UseDarkerStatusBarOnLandscapeOrientation = value;
+                UseDifferentStatusBarColorsOnLandscapeOrientation = value;
 
                 if (isStatusBarTypePresent)
                 {
                     // Cache current value to prevent from changing the value while setting the colors
-                    bool cachedValue = UseDarkerStatusBarOnLandscapeOrientation;
-                    await RunOnEachInitializedViewDispatcherAsync(() => InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(cachedValue));
+                    bool cachedValue = UseDifferentStatusBarColorsOnLandscapeOrientation;
+                    await RunOnEachInitializedViewDispatcherAsync(() => InitializeUseDifferentStatusBarColorsOnLandscapeOrientationForCurrentView(cachedValue));
 
                     TrySetStatusBarColorsAsync();
                 }
@@ -345,9 +345,9 @@ namespace UWPHelper.UI
             viewInfo.Add(currentViewId, null);
             TrySetBarsColorsAsync();
             
-            if (isStatusBarTypePresent && UseDarkerStatusBarOnLandscapeOrientation)
+            if (isStatusBarTypePresent && UseDifferentStatusBarColorsOnLandscapeOrientation)
             {
-                InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(true);
+                InitializeUseDifferentStatusBarColorsOnLandscapeOrientationForCurrentView(true);
             }
 
             InitializeColorModeForCurrentView(true, true, TitleBarColorMode);
@@ -385,7 +385,7 @@ namespace UWPHelper.UI
             }
         }
 
-        private void InitializeUseDarkerStatusBarOnLandscapeOrientationForCurrentView(bool initialize)
+        private void InitializeUseDifferentStatusBarColorsOnLandscapeOrientationForCurrentView(bool initialize)
         {
             if (initialize)
             {
@@ -513,14 +513,14 @@ namespace UWPHelper.UI
                 AssignApplicationThemeForCurrentView();
 
                 // Cache the values to prevent unnecessary calls and prevent from changing the values while setting the colors
-                bool useDarkerStatusBarOnLandscapeOrientation = UseDarkerStatusBarOnLandscapeOrientation;
+                bool useDifferentStatusBarColorsOnLandscapeOrientation = UseDifferentStatusBarColorsOnLandscapeOrientation;
                 ElementTheme requestedTheme = RequestedThemeGetter();
 
                 return RunOnEachInitializedViewDispatcherAsync(() =>
                 {
                     if (StatusBar.GetForCurrentView() is StatusBar statusBar)
                     {
-                        StatusBarColorsSetter.SetStatusBarColors(statusBar, requestedTheme, useDarkerStatusBarOnLandscapeOrientation, DisplayInformation.GetForCurrentView().CurrentOrientation);
+                        StatusBarColorsSetter.SetStatusBarColors(statusBar, requestedTheme, useDifferentStatusBarColorsOnLandscapeOrientation, DisplayInformation.GetForCurrentView().CurrentOrientation);
                     }
                 });
             }

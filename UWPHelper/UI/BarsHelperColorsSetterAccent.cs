@@ -61,7 +61,7 @@ namespace UWPHelper.UI
             titleBar.ButtonInactiveForegroundColor = titleBar.InactiveForegroundColor;
         }
 
-        public void SetStatusBarColors(StatusBar statusBar, ElementTheme requestedTheme, bool useDarkerStatusBarOnLandscapeOrientation, DisplayOrientations currentOrientation)
+        public void SetStatusBarColors(StatusBar statusBar, ElementTheme requestedTheme, bool useDifferentStatusBarColorsOnLandscapeOrientation, DisplayOrientations currentOrientation)
         {
             statusBar.BackgroundOpacity = 1.0;
 
