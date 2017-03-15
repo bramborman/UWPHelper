@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace MoreViewsTest
+namespace UWPHelper.MultipleViewsTestApp
 {
     public sealed partial class MainPage : Page
     {

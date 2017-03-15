@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="MoreViewsTest" Publisher="CN=Marian Dolinský" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="6e6b6ab7-b2a6-458a-8341-5d8a7f13c9cf" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="UWPHelper.MultipleViewsTestApp" Publisher="CN=Marian Dolinský" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="dbeb52d1-ae2a-49f3-9286-079116d47441" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>More Views Test</DisplayName>
+    <DisplayName>UWPHelper Multiple Views Test App</DisplayName>
     <PublisherDisplayName>Marian Dolinský</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="More_Views_Test.App">
-      <uap:VisualElements DisplayName="More Views Test" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="More Views Test" BackgroundColor="transparent">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="UWPHelper.MultipleViewsTestApp.App">
+      <uap:VisualElements DisplayName="UWPHelper Multiple Views Test App" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="UWPHelper Multiple Views Test App" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

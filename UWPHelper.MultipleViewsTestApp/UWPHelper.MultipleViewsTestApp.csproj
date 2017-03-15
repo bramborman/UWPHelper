@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{0A0CE1A4-B2D8-4296-B7A8-E1778B7E4555}</ProjectGuid>
+    <ProjectGuid>{CB45A099-1D4E-4AE2-9CD7-BB433E4E8038}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MoreViewsTest</RootNamespace>
-    <AssemblyName>More Views Test</AssemblyName>
+    <RootNamespace>UWPHelper.MultipleViewsTestApp</RootNamespace>
+    <AssemblyName>UWPHelper.MultipleViewsTestApp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -17,8 +17,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>More Views Test_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>BB20E73D003591616AF99C46A0EDB4FF6158A7D7</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>UWPHelper.MultipleViewsTestApp_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>71D49F227021D810166F9CB8B455DFDA5E2C5011</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -107,7 +107,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="More Views Test_TemporaryKey.pfx" />
+    <None Include="UWPHelper.MultipleViewsTestApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />

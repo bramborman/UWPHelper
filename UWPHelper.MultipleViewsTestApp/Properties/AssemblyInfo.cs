@@ -1,15 +1,16 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("More Views Test")]
+[assembly: AssemblyTitle("UWPHelper.MultipleViewsTestApp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("More Views Test")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyProduct("UWPHelper.MultipleViewsTestApp")]
+[assembly: AssemblyCopyright("© 2017 Marian Dolinský")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

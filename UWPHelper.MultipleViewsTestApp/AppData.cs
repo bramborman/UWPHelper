@@ -1,11 +1,8 @@
-﻿using System;
-using UWPHelper.Utilities;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
+﻿using UWPHelper.Utilities;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace MoreViewsTest
+namespace UWPHelper.MultipleViewsTestApp
 {
     public sealed class AppData : NotifyPropertyChangedBase
     {
@@ -26,13 +23,7 @@ namespace MoreViewsTest
         {
             RegisterProperty(nameof(Theme), typeof(ElementTheme), ElementTheme.Default, async (oldValue, newValue) =>
             {
-                foreach (CoreApplicationView view in CoreApplication.Views)
-                {
-                    await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        ((Frame)Window.Current.Content).RequestedTheme = (ElementTheme)newValue;
-                    });
-                }
+                await ViewHelper.RunOnEachViewDispatcherAsync(() => ((Frame)Window.Current.Content).RequestedTheme = (ElementTheme)newValue);
             });
         }
     }
