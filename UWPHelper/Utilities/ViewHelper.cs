@@ -22,7 +22,7 @@ namespace UWPHelper.Utilities
         {
             foreach (CoreApplicationView view in CoreApplication.Views)
             {
-                await view.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     action();
                 });
