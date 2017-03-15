@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using UWPHelper.Utilities;
 using Windows.Foundation.Metadata;
@@ -59,6 +58,29 @@ namespace UWPHelper.UI
                 }
 
                 return _accentColorHelperColorChangedEventHandlerHelper;
+            }
+        }
+        private Color ColorModeThemedLightThemeBackgroundColor
+        {
+            get { return Colors.White; }
+        }
+        private Color ColorModeThemedDarkThemeBackgroundColor
+        {
+            get { return Colors.Black; }
+        }
+        // SystemChromeMediumColor
+        private Color ColorModeThemedGrayLightThemeBackgroundColor
+        {
+            get
+            {
+                return Color.FromArgb(0xFF, 0xE6, 0xE6, 0xE6);
+            }
+        }
+        private Color ColorModeThemedGrayDarkThemeBackgroundColor
+        {
+            get
+            {
+                return Color.FromArgb(0xFF, 0x1F, 0x1F, 0x1F);
             }
         }
 
@@ -182,22 +204,22 @@ namespace UWPHelper.UI
 
                     if (newValue == BarsHelperColorMode.Themed)
                     {
-                        lightThemeBackgroundColor = Colors.White;
+                        lightThemeBackgroundColor = ColorModeThemedLightThemeBackgroundColor;
                         lightThemeForegroundColor = Colors.Black;
-                        darkThemeBackgroundColor  = Colors.Black;
+                        darkThemeBackgroundColor  = ColorModeThemedDarkThemeBackgroundColor;
                         darkThemeForegroundColor  = Colors.White;
                     }
                     else
                     {
-                        // Background by SystemChromeMediumColor
-                        lightThemeBackgroundColor = Color.FromArgb(0xFF, 0xE6, 0xE6, 0xE6);
+                        lightThemeBackgroundColor = ColorModeThemedGrayLightThemeBackgroundColor;
                         lightThemeForegroundColor = Colors.Black;
-                        darkThemeBackgroundColor  = Color.FromArgb(0xFF, 0x1F, 0x1F, 0x1F);
+                        darkThemeBackgroundColor  = ColorModeThemedGrayDarkThemeBackgroundColor;
                         darkThemeForegroundColor  = Colors.White;
                     }
 
-                    titleBarInfo.ColorsSetter = new BarsHelperTitleBarColorsSetter(newValue == BarsHelperColorMode.ThemedGray,
-                                                                                   new BarsHelperColorsSetterColorInfo(null, null, null, null),
+                    bool isThemedGrayColorMode = newValue == BarsHelperColorMode.ThemedGray;
+                    titleBarInfo.ColorsSetter = new BarsHelperTitleBarColorsSetter(isThemedGrayColorMode,
+                                                                                   isThemedGrayColorMode ? null : new BarsHelperColorsSetterColorInfo(null, null),
                                                                                    new BarsHelperColorsSetterColorInfo(lightThemeBackgroundColor, lightThemeForegroundColor, lightThemeBackgroundColor, BarsHelperColorsSetterHelper.GetTitleBarInactiveForegroundColor(lightThemeForegroundColor, ElementTheme.Light)),
                                                                                    new BarsHelperColorsSetterColorInfo(darkThemeBackgroundColor, darkThemeForegroundColor, darkThemeBackgroundColor, BarsHelperColorsSetterHelper.GetTitleBarInactiveForegroundColor(darkThemeForegroundColor, ElementTheme.Dark)));
                 }
@@ -208,27 +230,48 @@ namespace UWPHelper.UI
         {
             return SetColorModeAsync(statusBarInfo, newValue, nameof(newValue), false, () =>
             {
-                switch (newValue)
+                if (newValue == BarsHelperColorMode.Accent)
                 {
-                    case BarsHelperColorMode.Themed:
-                        statusBarInfo.ColorsSetter = new BarsHelperStatusBarColorsSetterThemed();
-                        break;
+                    if (TitleBarColorsSetter is BarsHelperColorsSetterAccent barsHelperColorsSetterAccent)
+                    {
+                        statusBarInfo.ColorsSetter = barsHelperColorsSetterAccent;
+                    }
+                    else
+                    {
+                        statusBarInfo.ColorsSetter = new BarsHelperColorsSetterAccent();
+                    }
+                }
+                else
+                {
+                    Color lightThemeBackgroundColor;
+                    Color darkThemeBackgroundColor;
 
-                    case BarsHelperColorMode.ThemedGray:
-                        statusBarInfo.ColorsSetter = new BarsHelperStatusBarColorsSetterThemedGray();
-                        break;
+                    if (newValue == BarsHelperColorMode.Themed)
+                    {
+                        lightThemeBackgroundColor = ColorModeThemedLightThemeBackgroundColor;
+                        darkThemeBackgroundColor  = ColorModeThemedDarkThemeBackgroundColor;
+                    }
+                    else
+                    {
+                        lightThemeBackgroundColor = ColorModeThemedGrayLightThemeBackgroundColor;
+                        darkThemeBackgroundColor  = ColorModeThemedGrayDarkThemeBackgroundColor;
+                    }
 
-                    case BarsHelperColorMode.Accent:
-                        if (TitleBarColorsSetter is BarsHelperColorsSetterAccent barsHelperColorsSetterAccent)
-                        {
-                            statusBarInfo.ColorsSetter = barsHelperColorsSetterAccent;
-                        }
-                        else
-                        {
-                            statusBarInfo.ColorsSetter = new BarsHelperColorsSetterAccent();
-                        }
+                    Color lightThemeForegroundColor = BarsHelperColorsSetterHelper.GetStatusBarForegroundColor(lightThemeBackgroundColor, ElementTheme.Light);
+                    Color darkThemeForegroundColor  = BarsHelperColorsSetterHelper.GetStatusBarForegroundColor(darkThemeBackgroundColor, ElementTheme.Dark);
 
-                        break;
+                    // SystemChromeLowColor
+                    Color lightThemeLandscapeBackgroundColor = Color.FromArgb(0xFF, 0xF2, 0xF2, 0xF2);
+                    Color darkThemeLandscapeBackgroundColor  = Color.FromArgb(0xFF, 0x17, 0x17, 0x17);
+
+                    // We need to calculate the theme to support different colors on landscape
+                    statusBarInfo.ColorsSetter = new BarsHelperStatusBarColorsSetter(1.0, true,
+                                                                                     null,
+                                                                                     new BarsHelperColorsSetterColorInfo(lightThemeBackgroundColor, lightThemeForegroundColor),
+                                                                                     new BarsHelperColorsSetterColorInfo(darkThemeBackgroundColor, darkThemeForegroundColor),
+                                                                                     null,
+                                                                                     new BarsHelperColorsSetterColorInfo(lightThemeLandscapeBackgroundColor, lightThemeForegroundColor),
+                                                                                     new BarsHelperColorsSetterColorInfo(darkThemeLandscapeBackgroundColor, darkThemeForegroundColor));
                 }
             });
         }
@@ -283,28 +326,18 @@ namespace UWPHelper.UI
 
         public Task SetCustomTitleBarColorsSetterAsync(IBarsHelperTitleBarColorsSetter customColorsSetter)
         {
-            return SetCustomColorsSetterAsync(titleBarInfo, customColorsSetter, nameof(customColorsSetter), new Type[]
-            {
-                typeof(BarsHelperColorsSetterAccent)
-            });
+            return SetCustomColorsSetterAsync(titleBarInfo, customColorsSetter, nameof(customColorsSetter));
         }
 
         public Task SetCustomStatusBarColorsSetterAsync(IBarsHelperStatusBarColorsSetter customColorsSetter)
         {
-            return SetCustomColorsSetterAsync(statusBarInfo, customColorsSetter, nameof(customColorsSetter), new Type[]
-            {
-                typeof(BarsHelperStatusBarColorsSetterThemed),
-                typeof(BarsHelperStatusBarColorsSetterThemedGray),
-                typeof(BarsHelperColorsSetterAccent)
-            });
+            return SetCustomColorsSetterAsync(statusBarInfo, customColorsSetter, nameof(customColorsSetter));
         }
 
-        private Task SetCustomColorsSetterAsync<T>(BarInfo<T> barInfo, T customColorsSetter, string parameterName, Type[] forbiddenCustomColorsSetterTypes)
+        private Task SetCustomColorsSetterAsync<T>(BarInfo<T> barInfo, T customColorsSetter, string parameterName)
         {
             // Do not use typeof(T) since it will return type of IBarsHelperTitleBarColorsSetter or IBarsHelperStatusBarColorsSetter
-            Type customColorsSetterType = customColorsSetter.GetType();
-
-            if (forbiddenCustomColorsSetterTypes.Any(t => customColorsSetterType == t))
+            if (customColorsSetter.GetType() == typeof(BarsHelperColorsSetterAccent))
             {
                 throw new ArgumentException($"Use this method only to specify custom {(GetIsTitleBarInfo(barInfo) ? nameof(TitleBarColorsSetter) : nameof(StatusBarColorsSetter))}.", parameterName);
             }
@@ -401,6 +434,8 @@ namespace UWPHelper.UI
         {
             switch (colorMode)
             {
+                // We need to change the colors when system theme changes because we are calculating ElementTheme from ApplicationTheme
+                case BarsHelperColorMode.Themed:
                 case BarsHelperColorMode.ThemedGray:
                     if (initialize)
                     {

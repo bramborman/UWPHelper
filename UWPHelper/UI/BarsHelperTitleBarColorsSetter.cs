@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -13,21 +14,19 @@ namespace UWPHelper.UI
         public BarsHelperTitleBarColorsSetter(bool calculateThemeForElementThemeDefault, BarsHelperColorsSetterColorInfo defaultThemeColorInfo, BarsHelperColorsSetterColorInfo lightThemeColorInfo, BarsHelperColorsSetterColorInfo darkThemeColorInfo)
         {
             CalculateThemeForElementThemeDefault = calculateThemeForElementThemeDefault;
+            BarsHelperColorsSetterHelper.ValidateDefaultThemeColorInfo(calculateThemeForElementThemeDefault, defaultThemeColorInfo, nameof(defaultThemeColorInfo));
+
             Colors = new ReadOnlyDictionary<ElementTheme, BarsHelperColorsSetterColorInfo>(new Dictionary<ElementTheme, BarsHelperColorsSetterColorInfo>
             {
                 { ElementTheme.Default, defaultThemeColorInfo },
-                { ElementTheme.Light, lightThemeColorInfo },
-                { ElementTheme.Dark, darkThemeColorInfo }
+                { ElementTheme.Light, lightThemeColorInfo ?? throw new ArgumentNullException(nameof(lightThemeColorInfo)) },
+                { ElementTheme.Dark, darkThemeColorInfo ?? throw new ArgumentNullException(nameof(darkThemeColorInfo)) }
             });
         }
         
         public void SetTitleBarColors(ApplicationViewTitleBar titleBar, ElementTheme requestedTheme)
         {
-            if (CalculateThemeForElementThemeDefault && requestedTheme == ElementTheme.Default)
-            {
-                requestedTheme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
-            }
-
+            BarsHelperColorsSetterHelper.TryCalculateThemeForElementThemeDefault(CalculateThemeForElementThemeDefault, ref requestedTheme);
             BarsHelperColorsSetterColorInfo colorInfo = Colors[requestedTheme];
 
             titleBar.BackgroundColor = colorInfo.BackgroundColor;

@@ -59,5 +59,26 @@ namespace UWPHelper.UI
                 throw new ArgumentOutOfRangeException(parameterName);
             }
         }
+        
+        public static ElementTheme GetElementThemeFromApplicationTheme()
+        {
+            return Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
+        }
+
+        internal static void TryCalculateThemeForElementThemeDefault(bool calculateThemeForElementThemeDefault, ref ElementTheme requestedTheme)
+        {
+            if (calculateThemeForElementThemeDefault && requestedTheme == ElementTheme.Default)
+            {
+                requestedTheme = GetElementThemeFromApplicationTheme();
+            }
+        }
+
+        internal static void ValidateDefaultThemeColorInfo(bool calculateThemeForElementThemeDefault, BarsHelperColorsSetterColorInfo defaultThemeColorInfo, string parameterName)
+        {
+            if (!calculateThemeForElementThemeDefault && defaultThemeColorInfo == null)
+            {
+                throw new ArgumentNullException(parameterName);
+            }
+        }
     }
 }
