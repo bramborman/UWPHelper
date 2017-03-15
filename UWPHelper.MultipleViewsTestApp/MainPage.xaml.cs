@@ -1,4 +1,5 @@
-﻿using Windows.UI.Core;
+﻿using UWPHelper.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,6 +12,13 @@ namespace UWPHelper.MultipleViewsTestApp
         private AppData AppData
         {
             get { return AppData.Current; }
+        }
+        private AccentColorHelper AccentColorHelper
+        {
+            get
+            {
+                return AccentColorHelper.GetForCurrentView();
+            }
         }
         private string CurrentWindowNumber { get; set; }
         private string CurrentViewId

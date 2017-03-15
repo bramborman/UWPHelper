@@ -20,7 +20,11 @@
                 Current view ID: <Run Text="{x:Bind CurrentViewId}"/>
             </TextBlock>
 
-            <Button Content="Change theme"
+            <!-- We are testing the AccentColorHelper for updating on all windows at once -->
+            <Button Content="CHANGE THEME"
+                    FontWeight="SemiBold"
+                    Background="{x:Bind AccentColorHelper.AccentColorBrush, Mode=OneWay}"
+                    RequestedTheme="{x:Bind AccentColorHelper.AccentContrastingTheme, Mode=OneWay}"
                     HorizontalAlignment="Center"
                     Click="ChangeTheme"
                     />

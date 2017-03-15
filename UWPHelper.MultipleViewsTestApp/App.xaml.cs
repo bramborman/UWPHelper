@@ -59,6 +59,7 @@ namespace UWPHelper.MultipleViewsTestApp
             rootFrame.RequestedTheme = AppData.Current.Theme;
             
             BarsHelper.Current.InitializeAutoUpdating(() => AppData.Current.Theme, AppData.Current, nameof(AppData.Theme));
+            await BarsHelper.Current.SetTitleBarColorModeAsync(BarsHelperColorMode.Accent);
             await BarsHelper.Current.InitializeForCurrentViewAsync();
 
             if (!e.PrelaunchActivated)
