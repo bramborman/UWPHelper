@@ -19,47 +19,14 @@ namespace UWPHelper.UI
         public static BarsHelper Current { get; private set; }
 
         // ApplicationTheme is used only when the selected color mode is ThemedGray
-        private readonly Dictionary<int, ApplicationTheme?> viewInfo                = new Dictionary<int, ApplicationTheme?>();
+        private readonly Dictionary<int, ViewOneEventHandlerHelpers> viewInfo       = new Dictionary<int, ViewOneEventHandlerHelpers>();
         private readonly BarInfo<IBarsHelperTitleBarColorsSetter> titleBarInfo      = new BarInfo<IBarsHelperTitleBarColorsSetter>();
         private readonly BarInfo<IBarsHelperStatusBarColorsSetter> statusBarInfo    = new BarInfo<IBarsHelperStatusBarColorsSetter>();
-        
+
+        private ApplicationTheme? lastApplicationTheme;
         private Func<ElementTheme> _requestedThemeGetter;
         private INotifyPropertyChanged _requestedThemePropertyParent;
-        private OneEventHandlerHelper _windowActivatedEventHandlerHelper;
-        private OneEventHandlerHelper _accentColorHelperColorChangedEventHandlerHelper;
 
-        private OneEventHandlerHelper WindowActivatedEventHandlerHelper
-        {
-            get
-            {
-                if (_windowActivatedEventHandlerHelper == null)
-                {
-#if DEBUG
-                    _windowActivatedEventHandlerHelper = new OneEventHandlerHelper("Window");
-#else
-                    _windowActivatedEventHandlerHelper = new OneEventHandlerHelper();
-#endif
-                }
-
-                return _windowActivatedEventHandlerHelper;
-            }
-        }
-        private OneEventHandlerHelper AccentColorHelperColorChangedEventHandlerHelper
-        {
-            get
-            {
-                if (_accentColorHelperColorChangedEventHandlerHelper == null)
-                {
-#if DEBUG
-                    _accentColorHelperColorChangedEventHandlerHelper = new OneEventHandlerHelper("Accent");
-#else
-                    _accentColorHelperColorChangedEventHandlerHelper = new OneEventHandlerHelper();
-#endif
-                }
-
-                return _accentColorHelperColorChangedEventHandlerHelper;
-            }
-        }
         private Color ColorModeThemedLightThemeBackgroundColor
         {
             get { return Colors.White; }
@@ -369,7 +336,7 @@ namespace UWPHelper.UI
                 throw new InvalidOperationException($"{nameof(BarsHelper)} is already initialized for this view.");
             }
 
-            viewInfo.Add(currentViewId, null);
+            viewInfo.Add(currentViewId, new ViewOneEventHandlerHelpers());
             TrySetBarsColorsAsync();
             
             if (isStatusBarTypePresent && UseDifferentStatusBarColorsOnLandscapeOrientation)
@@ -424,6 +391,8 @@ namespace UWPHelper.UI
 
         private void InitializeColorModeForCurrentView(bool isTitleBarColorMode, bool initialize, BarsHelperColorMode colorMode)
         {
+            ViewOneEventHandlerHelpers currentViewOneEventHandlerHelpers = viewInfo[ViewHelper.GetCurrentViewId()];
+
             switch (colorMode)
             {
                 // We need to change the colors when system theme changes because we are calculating ElementTheme from ApplicationTheme
@@ -431,14 +400,14 @@ namespace UWPHelper.UI
                 case BarsHelperColorMode.ThemedGray:
                     if (initialize)
                     {
-                        WindowActivatedEventHandlerHelper.AddHandler(() =>
+                        currentViewOneEventHandlerHelpers.WindowActivatedEventHandlerHelper.AddHandler(() =>
                         {
                             Window.Current.Activated += Window_Activated;
                         });
                     }
                     else
                     {
-                        WindowActivatedEventHandlerHelper.RemoveHandler(() =>
+                        currentViewOneEventHandlerHelpers.WindowActivatedEventHandlerHelper.RemoveHandler(() =>
                         {
                             Window.Current.Activated -= Window_Activated;
                         });
@@ -449,14 +418,14 @@ namespace UWPHelper.UI
                 case BarsHelperColorMode.Accent:
                     if (initialize)
                     {
-                        AccentColorHelperColorChangedEventHandlerHelper.AddHandler(() =>
+                        currentViewOneEventHandlerHelpers.AccentColorHelperColorChangedEventHandlerHelper.AddHandler(() =>
                         {
                             AccentColorHelper.GetForCurrentView().AccentColorChanged += AccentColorHelper_AccentColorChanged;
                         });
                     }
                     else
                     {
-                        AccentColorHelperColorChangedEventHandlerHelper.RemoveHandler(() =>
+                        currentViewOneEventHandlerHelpers.AccentColorHelperColorChangedEventHandlerHelper.RemoveHandler(() =>
                         {
                             AccentColorHelper.GetForCurrentView().AccentColorChanged -= AccentColorHelper_AccentColorChanged;
                         });
@@ -468,7 +437,7 @@ namespace UWPHelper.UI
 
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
-            if (e.WindowActivationState != CoreWindowActivationState.Deactivated && viewInfo[ViewHelper.GetCurrentViewId()] != Application.Current.RequestedTheme)
+            if (e.WindowActivationState != CoreWindowActivationState.Deactivated && lastApplicationTheme != Application.Current.RequestedTheme)
             {
                 TrySetBarsColorsAsync();
             }
@@ -517,7 +486,7 @@ namespace UWPHelper.UI
         public Task SetTitleBarColorsAsync()
         {
             ValidateInitialization();
-            AssignApplicationThemeForCurrentView();
+            AssignLastApplicationTheme();
 
             // Cache the value to prevent unnecessary calls and prevent from changing the value while setting the colors
             ElementTheme requestedTheme = RequestedThemeGetter();
@@ -537,7 +506,7 @@ namespace UWPHelper.UI
 
             if (isStatusBarTypePresent)
             {
-                AssignApplicationThemeForCurrentView();
+                AssignLastApplicationTheme();
 
                 // Cache the values to prevent unnecessary calls and prevent from changing the values while setting the colors
                 bool useDifferentStatusBarColorsOnLandscapeOrientation = UseDifferentStatusBarColorsOnLandscapeOrientation;
@@ -565,9 +534,9 @@ namespace UWPHelper.UI
             }
         }
 
-        private void AssignApplicationThemeForCurrentView()
+        private void AssignLastApplicationTheme()
         {
-            viewInfo[ViewHelper.GetCurrentViewId()] = Application.Current.RequestedTheme;
+            lastApplicationTheme = Application.Current.RequestedTheme;
         }
 
         private Task RunOnEachInitializedViewDispatcherAsync(Action action)
@@ -586,6 +555,50 @@ namespace UWPHelper.UI
             internal BarsHelperColorMode ColorMode { get; set; }
             internal bool IsColorModeSet { get; set; }
             internal T ColorsSetter { get; set; }
+        }
+
+        private sealed class ViewOneEventHandlerHelpers
+        {
+            private OneEventHandlerHelper _windowActivatedEventHandlerHelper;
+            private OneEventHandlerHelper _accentColorHelperColorChangedEventHandlerHelper;
+
+            internal OneEventHandlerHelper WindowActivatedEventHandlerHelper
+            {
+                get
+                {
+                    if (_windowActivatedEventHandlerHelper == null)
+                    {
+#if DEBUG
+                        _windowActivatedEventHandlerHelper = new OneEventHandlerHelper("Window");
+#else
+                    _windowActivatedEventHandlerHelper = new OneEventHandlerHelper();
+#endif
+                    }
+
+                    return _windowActivatedEventHandlerHelper;
+                }
+            }
+            internal OneEventHandlerHelper AccentColorHelperColorChangedEventHandlerHelper
+            {
+                get
+                {
+                    if (_accentColorHelperColorChangedEventHandlerHelper == null)
+                    {
+#if DEBUG
+                        _accentColorHelperColorChangedEventHandlerHelper = new OneEventHandlerHelper("Accent");
+#else
+                    _accentColorHelperColorChangedEventHandlerHelper = new OneEventHandlerHelper();
+#endif
+                    }
+
+                    return _accentColorHelperColorChangedEventHandlerHelper;
+                }
+            }
+
+            internal ViewOneEventHandlerHelpers()
+            {
+
+            }
         }
     }
 }
