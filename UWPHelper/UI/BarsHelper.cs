@@ -113,10 +113,7 @@ namespace UWPHelper.UI
             get { return _requestedThemeGetter; }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(RequestedThemeGetter));
-                }
+                ExceptionHelper.ValidateNotNull(value, nameof(RequestedThemeGetter));
 
                 if (!ReferenceEquals(_requestedThemeGetter, value))
                 {
@@ -279,12 +276,9 @@ namespace UWPHelper.UI
         private async Task SetColorModeAsync<T>(BarInfo<T> barInfo, BarsHelperColorMode newValue, string parameterName, bool enableBarsHelperColorModeCustom, Action switchColorsSetter)
         {
             bool isTitleBarColorMode = GetIsTitleBarInfo(barInfo);
+            ExceptionHelper.ValidateEnumValueDefined(newValue, parameterName);
 
-            if (!Enum.IsDefined(typeof(BarsHelperColorMode), newValue))
-            {
-                throw new ArgumentOutOfRangeException(parameterName);
-            }
-            else if (!enableBarsHelperColorModeCustom && newValue == BarsHelperColorMode.Custom)
+            if (!enableBarsHelperColorModeCustom && newValue == BarsHelperColorMode.Custom)
             {
                 throw new ArgumentException($"Setting {(isTitleBarColorMode ? nameof(TitleBarColorMode) : nameof(StatusBarColorMode))} to {nameof(BarsHelperColorMode)}.{nameof(BarsHelperColorMode.Custom)} is not permitted. " +
                                             $"Use the {(isTitleBarColorMode ? nameof(SetCustomTitleBarColorsSetterAsync) : nameof(SetCustomStatusBarColorsSetterAsync))} method to specify custom {(isTitleBarColorMode ? nameof(TitleBarColorsSetter) : nameof(StatusBarColorsSetter))}.");
@@ -393,15 +387,13 @@ namespace UWPHelper.UI
 
         public void InitializeAutoUpdating(Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged requestedThemePropertyParent, string requestedThemePropertyName)
         {
-            if (string.IsNullOrWhiteSpace(requestedThemePropertyName))
-            {
-                throw new ArgumentException("Value cannot be empty or null.", nameof(requestedThemePropertyName));
-            }
+            ExceptionHelper.ValidateNotNull(requestedThemePropertyParent, nameof(requestedThemePropertyParent));
+            ExceptionHelper.ValidateNotNullOrWhiteSpace(requestedThemePropertyName, nameof(requestedThemePropertyName));
 
             RequestedThemeGetter            = requestedThemeGetter;
             // Assign this before attaching an event handler to parent
             RequestedThemePropertyName      = requestedThemePropertyName;
-            RequestedThemePropertyParent    = requestedThemePropertyParent ?? throw new ArgumentNullException(nameof(requestedThemePropertyParent));
+            RequestedThemePropertyParent    = requestedThemePropertyParent;
         }
 
         public void UnitializeAutoUpdating()

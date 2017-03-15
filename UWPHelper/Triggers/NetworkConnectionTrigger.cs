@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UWPHelper.Utilities;
 using Windows.Networking.Connectivity;
 using Windows.UI.Xaml;
 
@@ -24,11 +24,7 @@ namespace UWPHelper.Triggers
 
         private static void OnNetworkConnectivityLevelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!Enum.IsDefined(typeof(NetworkConnectivityLevel), e.NewValue))
-            {
-                throw new ArgumentOutOfRangeException(nameof(NetworkConnectivityLevel));
-            }
-
+            ExceptionHelper.ValidateEnumValueDefined((NetworkConnectivityLevel)e.NewValue, nameof(NetworkConnectivityLevel));
             ((NetworkConnectionTrigger)d).UpdateTrigger();
         }
 

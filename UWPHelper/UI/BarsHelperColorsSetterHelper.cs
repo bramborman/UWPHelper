@@ -1,5 +1,4 @@
-﻿using System;
-using UWPHelper.Utilities;
+﻿using UWPHelper.Utilities;
 using Windows.UI;
 using Windows.UI.Xaml;
 
@@ -24,7 +23,7 @@ namespace UWPHelper.UI
 
         private static Color GetTitleBarColor(byte overlayAlpha, bool isBackgroundColor, Color baseColor, ElementTheme titleBarTheme, string titleBarThemeParameterName)
         {
-            ValidateElementTheme(titleBarTheme, titleBarThemeParameterName);
+            ExceptionHelper.ValidateEnumValueDefined(titleBarTheme, titleBarThemeParameterName);
 
             if (titleBarTheme == ElementTheme.Default)
             {
@@ -42,7 +41,7 @@ namespace UWPHelper.UI
 
         public static Color GetStatusBarForegroundColor(Color backgroundColor, ElementTheme statusBarTheme)
         {
-            ValidateElementTheme(statusBarTheme, nameof(statusBarTheme));
+            ExceptionHelper.ValidateEnumValueDefined(statusBarTheme, nameof(statusBarTheme));
 
             if (statusBarTheme == ElementTheme.Default)
             {
@@ -50,14 +49,6 @@ namespace UWPHelper.UI
             }
 
             return statusBarTheme == ElementTheme.Light ? Color.FromArgb(0xFF, 0x66, 0x66, 0x66) : Color.FromArgb(0xFF, 0xBF, 0xBF, 0xBF);
-        }
-
-        private static void ValidateElementTheme(ElementTheme elementTheme, string parameterName)
-        {
-            if (!Enum.IsDefined(typeof(ElementTheme), elementTheme))
-            {
-                throw new ArgumentOutOfRangeException(parameterName);
-            }
         }
         
         public static ElementTheme GetElementThemeFromApplicationTheme()
@@ -75,9 +66,9 @@ namespace UWPHelper.UI
 
         internal static void ValidateDefaultThemeColorInfo(bool calculateThemeForElementThemeDefault, BarsHelperColorsSetterColorInfo defaultThemeColorInfo, string parameterName)
         {
-            if (!calculateThemeForElementThemeDefault && defaultThemeColorInfo == null)
+            if (!calculateThemeForElementThemeDefault)
             {
-                throw new ArgumentNullException(parameterName);
+                ExceptionHelper.ValidateNotNull(defaultThemeColorInfo, parameterName);
             }
         }
     }

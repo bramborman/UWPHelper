@@ -19,7 +19,7 @@ namespace UWPHelper.Utilities
             {
                 if (value < TimeSpan.Zero)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException(nameof(Delay), "Value cannot be less than 0.");
                 }
 
                 timer.Interval = value;

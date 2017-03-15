@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using UWPHelper.Utilities;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -125,9 +126,11 @@ namespace UWPHelper.UI
 
         private void Fr_Content_Loaded(object sender, RoutedEventArgs e)
         {
+            ExceptionHelper.ValidateNotNull(InitialPageType, nameof(InitialPageType));
+
             if (Fr_Content.Content == null)
             {
-                Fr_Content.Navigate(InitialPageType ?? throw new ArgumentNullException(nameof(InitialPageType)));
+                Fr_Content.Navigate(InitialPageType);
             }
         }
 

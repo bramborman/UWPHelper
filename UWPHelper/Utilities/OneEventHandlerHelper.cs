@@ -27,7 +27,7 @@ namespace UWPHelper.Utilities
 
         public bool AddHandler(Action attachHandlerToEvent)
         {
-            ValidateAcion(attachHandlerToEvent, nameof(attachHandlerToEvent));
+            ExceptionHelper.ValidateNotNull(attachHandlerToEvent, nameof(attachHandlerToEvent));
 #if DEBUG
             Debug.WriteLine($"{Name}: {nameof(AddHandler)} called");
 #endif
@@ -47,7 +47,7 @@ namespace UWPHelper.Utilities
 
         public bool RemoveHandler(Action unattachHandlerFromEvent)
         {
-            ValidateAcion(unattachHandlerFromEvent, nameof(unattachHandlerFromEvent));
+            ExceptionHelper.ValidateNotNull(unattachHandlerFromEvent, nameof(unattachHandlerFromEvent));
 #if DEBUG
             Debug.WriteLine($"{Name}: {nameof(RemoveHandler)} called");
 #endif
@@ -63,14 +63,6 @@ namespace UWPHelper.Utilities
             }
 
             return false;
-        }
-
-        private void ValidateAcion(Action action, string parameterName)
-        {
-            if (action == null)
-            {
-                throw new ArgumentNullException(parameterName);
-            }
         }
     }
 }

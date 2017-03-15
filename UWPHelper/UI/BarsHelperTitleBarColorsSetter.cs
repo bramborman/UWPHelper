@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UWPHelper.Utilities;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
@@ -13,14 +13,17 @@ namespace UWPHelper.UI
         
         public BarsHelperTitleBarColorsSetter(bool calculateThemeForElementThemeDefault, BarsHelperColorsSetterColorInfo defaultThemeColorInfo, BarsHelperColorsSetterColorInfo lightThemeColorInfo, BarsHelperColorsSetterColorInfo darkThemeColorInfo)
         {
-            CalculateThemeForElementThemeDefault = calculateThemeForElementThemeDefault;
             BarsHelperColorsSetterHelper.ValidateDefaultThemeColorInfo(calculateThemeForElementThemeDefault, defaultThemeColorInfo, nameof(defaultThemeColorInfo));
+            ExceptionHelper.ValidateNotNull(lightThemeColorInfo, nameof(lightThemeColorInfo));
+            ExceptionHelper.ValidateNotNull(darkThemeColorInfo, nameof(darkThemeColorInfo));
+
+            CalculateThemeForElementThemeDefault = calculateThemeForElementThemeDefault;
 
             Colors = new ReadOnlyDictionary<ElementTheme, BarsHelperColorsSetterColorInfo>(new Dictionary<ElementTheme, BarsHelperColorsSetterColorInfo>
             {
                 { ElementTheme.Default, defaultThemeColorInfo },
-                { ElementTheme.Light, lightThemeColorInfo ?? throw new ArgumentNullException(nameof(lightThemeColorInfo)) },
-                { ElementTheme.Dark, darkThemeColorInfo ?? throw new ArgumentNullException(nameof(darkThemeColorInfo)) }
+                { ElementTheme.Light, lightThemeColorInfo },
+                { ElementTheme.Dark, darkThemeColorInfo }
             });
         }
         

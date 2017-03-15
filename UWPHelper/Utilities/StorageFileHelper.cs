@@ -14,8 +14,9 @@ namespace UWPHelper.Utilities
 
         public static async Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder, CreationCollisionOption creationCollisionOption)
         {
-            ValidateFileName(fileName);
-            ValidateFolder(folder);
+            ExceptionHelper.ValidateNotNullOrWhiteSpace(fileName, nameof(fileName));
+            ExceptionHelper.ValidateNotNull(folder, nameof(folder));
+            ExceptionHelper.ValidateEnumValueDefined(creationCollisionOption, nameof(creationCollisionOption));
 
             bool success = true;
 
@@ -37,8 +38,8 @@ namespace UWPHelper.Utilities
 
         public static async Task<LoadObjectAsyncResult<T>> LoadObjectAsync<T>(string fileName, StorageFolder folder) where T : class, new()
         {
-            ValidateFileName(fileName);
-            ValidateFolder(folder);
+            ExceptionHelper.ValidateNotNullOrWhiteSpace(fileName, nameof(fileName));
+            ExceptionHelper.ValidateNotNull(folder, nameof(folder));
 
             StorageFile file = await folder.TryGetItemAsync(fileName) as StorageFile;
             return file != null ? await LoadObjectAsync<T>(file) : new LoadObjectAsyncResult<T>(new T(), true);
@@ -46,10 +47,7 @@ namespace UWPHelper.Utilities
 
         public static async Task<LoadObjectAsyncResult<T>> LoadObjectAsync<T>(StorageFile file) where T : class, new()
         {
-            if (file == null)
-            {
-                throw new ArgumentNullException(nameof(file));
-            }
+            ExceptionHelper.ValidateNotNull(file, nameof(file));
 
             bool success = true;
             T obj = null;
@@ -69,23 +67,7 @@ namespace UWPHelper.Utilities
             DebugHelper.OperationInfo(file.Name, "loading", success);
             return new LoadObjectAsyncResult<T>(obj, success);
         }
-
-        private static void ValidateFileName(string fileName)
-        {
-            if (string.IsNullOrWhiteSpace(fileName))
-            {
-                throw new ArgumentException("Value cannot be empty or null.", nameof(fileName));
-            }
-        }
-
-        private static void ValidateFolder(StorageFolder folder)
-        {
-            if (folder == null)
-            {
-                throw new ArgumentNullException(nameof(folder));
-            }
-        }
-
+        
         public sealed class LoadObjectAsyncResult<T> where T : class, new()
         {
             public T Object { get; }

@@ -23,11 +23,7 @@ namespace UWPHelper.Utilities
 
         public static string GetTimedMessageString(string message, string dateTimeFormatting)
         {
-            if (string.IsNullOrWhiteSpace(dateTimeFormatting))
-            {
-                throw new ArgumentException($"Value cannot be null or empty.", nameof(dateTimeFormatting));
-            }
-
+            ExceptionHelper.ValidateNotNullOrWhiteSpace(dateTimeFormatting, nameof(dateTimeFormatting));
             return DateTime.Now.ToString(dateTimeFormatting) + ": " + message;
         }
     }

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UWPHelper.Utilities;
 
 namespace UWPHelper.UI
 {
@@ -9,7 +9,9 @@ namespace UWPHelper.UI
 
         public ThirdPartySoftwareInfoDialog(List<ThirdPartySoftwareInfo> thirdPartySoftwareInfo)
         {
-            ThirdPartySoftwareInfo = thirdPartySoftwareInfo ?? throw new ArgumentNullException(nameof(thirdPartySoftwareInfo));
+            ExceptionHelper.ValidateNotNull(thirdPartySoftwareInfo, nameof(thirdPartySoftwareInfo));
+
+            ThirdPartySoftwareInfo = thirdPartySoftwareInfo;
             InitializeComponent();
         }
     }

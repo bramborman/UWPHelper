@@ -20,12 +20,8 @@ namespace UWPHelper.Utilities
 
         protected void RegisterProperty(string name, Type type, object defaultValue, PropertyChangedAction propertyChangedAction)
         {
-            ValidateName(name);
-
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            ExceptionHelper.ValidateNotNullOrWhiteSpace(name, nameof(name));
+            ExceptionHelper.ValidateNotNull(type, nameof(type));
 
             // Using try-catch since it's faster than if conditions when there's no problem
             try
@@ -52,7 +48,7 @@ namespace UWPHelper.Utilities
             }
             catch (Exception exception)
             {
-                ValidateName(propertyName);
+                ExceptionHelper.ValidateNotNullOrWhiteSpace(propertyName, nameof(propertyName));
                 ValidatePropertyName(propertyName);
 
                 throw exception;
@@ -92,18 +88,10 @@ namespace UWPHelper.Utilities
             }
             catch (Exception exception)
             {
-                ValidateName(propertyName);
+                ExceptionHelper.ValidateNotNullOrWhiteSpace(propertyName, nameof(propertyName));
                 ValidatePropertyName(propertyName);
 
                 throw exception;
-            }
-        }
-
-        private void ValidateName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("Value cannot be empty or null.", nameof(name));
             }
         }
         
@@ -117,7 +105,7 @@ namespace UWPHelper.Utilities
 
         protected void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
-            ValidateName(propertyName);
+            ExceptionHelper.ValidateNotNullOrWhiteSpace(propertyName, nameof(propertyName));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 

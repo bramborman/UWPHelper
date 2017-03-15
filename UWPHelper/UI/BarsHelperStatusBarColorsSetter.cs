@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UWPHelper.Utilities;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -31,18 +31,20 @@ namespace UWPHelper.UI
                                                BarsHelperColorsSetterColorInfo lightThemeLandscapeColorInfo,
                                                BarsHelperColorsSetterColorInfo darkThemeLandscapeColorInfo)
         {
+            BarsHelperColorsSetterHelper.ValidateDefaultThemeColorInfo(calculateThemeForElementThemeDefault, defaultThemeColorInfo, nameof(defaultThemeColorInfo));
+            ExceptionHelper.ValidateNotNull(lightThemeColorInfo, nameof(lightThemeColorInfo));
+            ExceptionHelper.ValidateNotNull(darkThemeColorInfo, nameof(darkThemeColorInfo));
+            
             BackgroundOpacity                       = backgroundOpacity;
             CalculateThemeForElementThemeDefault    = calculateThemeForElementThemeDefault;
-
-            BarsHelperColorsSetterHelper.ValidateDefaultThemeColorInfo(calculateThemeForElementThemeDefault, defaultThemeColorInfo, nameof(defaultThemeColorInfo));
 
             Colors = new ReadOnlyDictionary<bool, ReadOnlyDictionary<ElementTheme, BarsHelperColorsSetterColorInfo>>(new Dictionary<bool, ReadOnlyDictionary<ElementTheme, BarsHelperColorsSetterColorInfo>>
             {
                 { false, new ReadOnlyDictionary<ElementTheme, BarsHelperColorsSetterColorInfo>(new Dictionary<ElementTheme, BarsHelperColorsSetterColorInfo>
                     {
                         { ElementTheme.Default, defaultThemeColorInfo },
-                        { ElementTheme.Light, lightThemeColorInfo ?? throw new ArgumentNullException(nameof(lightThemeColorInfo)) },
-                        { ElementTheme.Dark, darkThemeColorInfo ?? throw new ArgumentNullException(nameof(darkThemeColorInfo)) }
+                        { ElementTheme.Light, lightThemeColorInfo },
+                        { ElementTheme.Dark, darkThemeColorInfo }
                     })
                 },
                 { true, new ReadOnlyDictionary<ElementTheme, BarsHelperColorsSetterColorInfo>(new Dictionary<ElementTheme, BarsHelperColorsSetterColorInfo>
