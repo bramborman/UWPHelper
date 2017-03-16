@@ -5,7 +5,7 @@
 
 UWPHelper is a set of useful UWP tools such as converters, triggers, custom controls and helpers. For example [Mytronome][1], great UWP metronome app is using UWPHelper.
 
-## DOWNLOAD FROM NUGET [HERE][2]
+## DOWNLOAD FROM NUGET.ORG [HERE][2]
 
 <sub>Visual Studio 2017 or another IDE with support of C# 7.0 is required.</sub>
 
