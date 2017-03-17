@@ -33,18 +33,22 @@ namespace UWPHelper.UI
             titleBar.ButtonHoverForegroundColor     = titleBar.ForegroundColor;
             titleBar.ButtonPressedForegroundColor   = titleBar.ForegroundColor;
 
+            Color inactiveForegroundColorBase;
+
             switch (requestedTheme)
             {
                 case ElementTheme.Default:
-                    titleBar.InactiveBackgroundColor = null;
+                    titleBar.InactiveBackgroundColor    = null;
                     break;
                 
                 case ElementTheme.Light:
-                    titleBar.InactiveBackgroundColor = Colors.White;
+                    titleBar.InactiveBackgroundColor    = Colors.White;
+                    inactiveForegroundColorBase         = Colors.Black;
                     break;
                 
                 case ElementTheme.Dark:
-                    titleBar.InactiveBackgroundColor = Colors.Black;
+                    titleBar.InactiveBackgroundColor    = Colors.Black;
+                    inactiveForegroundColorBase         = Colors.White;
                     break;
             }
 
@@ -54,7 +58,7 @@ namespace UWPHelper.UI
             }
             else
             {
-                titleBar.InactiveForegroundColor = BarsHelperColorsSetterHelper.GetTitleBarInactiveForegroundColor(titleBar.ForegroundColor.Value, requestedTheme);
+                titleBar.InactiveForegroundColor = BarsHelperColorsSetterHelper.GetTitleBarInactiveForegroundColor(inactiveForegroundColorBase, requestedTheme);
             }
 
             titleBar.ButtonInactiveBackgroundColor = titleBar.InactiveBackgroundColor;
