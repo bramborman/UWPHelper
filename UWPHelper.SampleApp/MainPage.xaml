@@ -1,0 +1,170 @@
+﻿<Page x:Class="UWPHelper.SampleApp.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:triggers="using:UWPHelper.Triggers"
+      xmlns:ui="using:UWPHelper.UI"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      >
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DesktopStates">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Desktop"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TB_Desktop.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="MobileStates">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Mobile"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TB_Mobile.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="HolographicStates">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyTrigger DeviceFamily="Windows.Holographic"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TB_Holographic.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <ui:PageHeader x:Name="PH_Header"
+                       x:Uid="PageHeader"
+                       Grid.Row="0"
+                       />
+
+        <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+              Width="{Binding ElementName=PH_Header, Path=ActualHeight}"
+              HorizontalAlignment="Right"
+              Grid.Row="0"
+              >
+            <Grid.Resources>
+                <Style TargetType="FontIcon">
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
+            </Grid.Resources>
+
+            <FontIcon Glyph="&#xE003;"/>
+            <FontIcon Glyph="&#xE001;"
+                      Visibility="{x:Bind CX_Visible.IsChecked, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                      />
+        </Grid>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Grid.Row="1"
+                      >
+            <StackPanel Style="{StaticResource ContentStackPanel}">
+                <Grid Margin="{StaticResource PanelGapMargin}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ui:AdvancedTextBox x:Name="ATX_Uri"
+                                        x:Uid="Launcher"
+                                        Text="{x:Bind AppData.Uri, Mode=TwoWay}"
+                                        Grid.Column="0"
+                                        Grid.Row="0"
+                                        SubmitKeyDown="LaunchUriAsync"
+                                        />
+
+                    <Button x:Name="Bt_Launch"
+                            x:Uid="LaunchButton"
+                            FontWeight="SemiBold"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Bottom"
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Click="LaunchUriAsync"
+                            />
+                </Grid>
+
+                <CheckBox x:Name="CX_Collapsed"
+                          x:Uid="Collapsed"
+                          IsChecked="{x:Bind CX_Visible.IsChecked, Converter={StaticResource BoolToBoolConverter}, ConverterParameter=Invert, Mode=TwoWay}"
+                          />
+                <CheckBox x:Name="CX_Visible"
+                          x:Uid="Visible"
+                          IsChecked="{x:Bind AppData.CheckBoxChecked, Mode=TwoWay}"
+                          Margin="{StaticResource CheckBoxGapMargin}"
+                          />
+
+                <ComboBox SelectedIndex="{x:Bind CX_Visible.IsChecked, Converter={StaticResource BoolToIntConverter}, Mode=TwoWay}"
+                          Margin="{StaticResource CheckBoxGapMargin}"
+                          >
+                    <ComboBoxItem x:Uid="Collapsed"/>
+                    <ComboBoxItem x:Uid="Visible"/>
+                </ComboBox>
+
+                <ComboBox SelectedIndex="{x:Bind AppData.SampleEnum, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
+                          Margin="{StaticResource ComboBoxGapMargin}"
+                          >
+                    <ComboBoxItem x:Uid="SampleEnum/Zero"/>
+                    <ComboBoxItem x:Uid="SampleEnum/One"/>
+                    <ComboBoxItem x:Uid="SampleEnum/Two"/>
+                    <ComboBoxItem x:Uid="SampleEnum/Three"/>
+                </ComboBox>
+
+                <TextBlock>
+                    AppData.Foo: <Run Text="{x:Bind AppData.Foo}"/>
+                </TextBlock>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="{StaticResource PanelGapMargin}"
+                            >
+                    <TextBlock x:Uid="DeviceUsing"
+                               Margin="{StaticResource WordSpaceRightMargin}"
+                               />
+
+                    <TextBlock x:Name="TB_Desktop"
+                               x:Uid="Desktop"
+                               x:DeferLoadStrategy="Lazy"
+                               Visibility="Collapsed"
+                               />
+                    <TextBlock x:Name="TB_Mobile"
+                               x:Uid="Mobile"
+                               x:DeferLoadStrategy="Lazy"
+                               Visibility="Collapsed"
+                               />
+                    <TextBlock x:Name="TB_Holographic"
+                               x:Uid="Holographic"
+                               x:DeferLoadStrategy="Lazy"
+                               Visibility="Collapsed"
+                               />
+
+                    <TextBlock x:Uid="Device"
+                               Margin="{StaticResource WordSpaceLeftMargin}"
+                               />
+                </StackPanel>
+
+                <ui:ThemeSelector Theme="{x:Bind AppData.Theme, Mode=TwoWay}"/>
+
+                <ui:AboutApp AppStoreId="9nblggh3zqdb"
+                             AppUri="md-uwphelper:"
+                             AppDeveloperMail="mariandolinsky@outlook.com"
+                             IsGitHubLinkEnabled="True"
+                             GitHubProjectName="UWPHelper"
+                             GitHubLinkUrl="https://github.com/bramborman/UWPHelper"
+                             />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
