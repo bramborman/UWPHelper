@@ -11,7 +11,6 @@
     <iconUrl>https://raw.githubusercontent.com/bramborman/UWPHelper/master/Assets/UWPHelper%20Icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A set of useful UWP tools such as converters, triggers, custom controls and helpers. </description>
-    <releaseNotes>First release</releaseNotes>
     <copyright>© 2017 Marian Dolinský</copyright>
     <tags>UWP Toolkit Helper Helpers XAML C#</tags>
     <dependencies>
