@@ -2,13 +2,13 @@
 <package>
   <metadata>
     <id>UWPHelper</id>
-    <version>1.6.10-alpha2</version>
+    <version>1.6.11-alpha3</version>
     <title>UWPHelper</title>
     <authors>Marian Dolinský</authors>
     <owners>Marian Dolinský</owners>
     <licenseUrl>https://github.com/bramborman/UWPHelper/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/bramborman/UWPHelper</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/bramborman/UWPHelper/master/Assets/UWPHelper_Logo.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/bramborman/UWPHelper/master/Assets/UWPHelper%20Icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A set of useful UWP tools such as converters, triggers, custom controls and helpers. </description>
     <releaseNotes>First release</releaseNotes>

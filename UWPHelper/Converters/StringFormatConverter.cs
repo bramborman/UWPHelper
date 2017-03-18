@@ -14,11 +14,7 @@ namespace UWPHelper.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-#if !ENABLE_STRING_FORMAT_CONVERTER_CONVERT_BACK
-            throw new NotImplementedException();
-#else
             return System.Convert.ChangeType(value, targetType);
-#endif
         }
     }
 }

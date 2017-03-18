@@ -362,12 +362,13 @@
     <ReservedNames>
       <ReservedName>UWPHelper Sample App</ReservedName>
       <ReservedName>UWPHelper Ukázková Aplikace</ReservedName>
+      <ReservedName>UWPHelper Předváděcí Aplikace</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
+    <MainPackageIdentityName>58714MarianDolinsk.FF-Casovac</MainPackageIdentityName>
     <MainPackageIdentityName>58714MarianDolinsk.InsideTenUWP</MainPackageIdentityName>
     <MainPackageIdentityName>58714MarianDolinsk.Mytronome</MainPackageIdentityName>
-    <MainPackageIdentityName>58714MarianDolinsk.Quizzes</MainPackageIdentityName>
     <MainPackageIdentityName>58714MarianDolinsk.xCalculator</MainPackageIdentityName>
   </AccountPackageIdentityNames>
   <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9NBLGGH3ZQDB" />
