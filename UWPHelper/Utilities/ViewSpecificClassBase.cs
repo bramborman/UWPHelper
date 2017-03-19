@@ -7,7 +7,7 @@ namespace UWPHelper.Utilities
 {
     // When you change something here, change it even it the ViewSpecificBindableClassBase down there
     // If these classes get renamed, modify their names in the UWPHelper.rd.xml file too
-    public abstract class ViewSpecificClassBase<T> where T : class, new()
+    public abstract class ViewSpecificClassBase<T> where T : ViewSpecificClassBase<T>, new()
     {
         private static readonly Dictionary<int, T> instances = new Dictionary<int, T>();
 
@@ -86,16 +86,13 @@ namespace UWPHelper.Utilities
         }
     }
 
-    public abstract class ViewSpecificBindableClassBase<T> : NotifyPropertyChangedBase where T : class, new()
+    public abstract class ViewSpecificBindableClassBase<T> : NotifyPropertyChangedBase where T : ViewSpecificBindableClassBase<T>, new()
     {
         private static readonly Dictionary<int, T> instances = new Dictionary<int, T>();
-
-        private static object locker;
+        private static readonly object locker = new object();
 
         protected ViewSpecificBindableClassBase()
         {
-            locker = new object();
-
             PropertyChanged += async (sender, e) =>
             {
                 bool lockTaken = false;
