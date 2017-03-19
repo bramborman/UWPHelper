@@ -198,6 +198,7 @@
     <Compile Include="UI\BarsHelper.cs" />
     <Compile Include="Utilities\ColorHelper.cs" />
     <Compile Include="Utilities\ExceptionHelper.cs" />
+    <Compile Include="Utilities\ViewSpecificClassBase.cs" />
     <Compile Include="Utilities\OneEventHandlerHelper.cs" />
     <Compile Include="Utilities\DebugHelper.cs" />
     <Compile Include="Utilities\Delayer.cs" />
