@@ -6,6 +6,7 @@ using System.Threading;
 namespace UWPHelper.Utilities
 {
     // When you change something here, change it even it the ViewSpecificBindableClassBase down there
+    // If these classes get renamed, modify their names in the UWPHelper.rd.xml file too
     public abstract class ViewSpecificClassBase<T> where T : class, new()
     {
         private static readonly Dictionary<int, T> instances = new Dictionary<int, T>();

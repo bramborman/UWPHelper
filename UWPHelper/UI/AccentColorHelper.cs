@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Media;
 
 namespace UWPHelper.UI
 {
-    // Cannot inherit from ViewSpecificBindableClassBase<AccentColorHelper> since it requires public constructor
+    // Cannot inherit from ViewSpecificBindableClassBase<AccentColorHelper> since it requires public constructor and since we want to update only one property using this way
     public sealed class AccentColorHelper : NotifyPropertyChangedBase
     {
         private static readonly Dictionary<int, AccentColorHelper> instances = new Dictionary<int, AccentColorHelper>();
