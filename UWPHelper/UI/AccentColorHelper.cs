@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using UWPHelper.Utilities;
 using Windows.Foundation;
 using Windows.UI;
@@ -11,8 +12,9 @@ namespace UWPHelper.UI
     // Cannot inherit from ViewSpecificBindableClassBase<AccentColorHelper> since it requires public constructor
     public sealed class AccentColorHelper : NotifyPropertyChangedBase
     {
-        private static readonly Dictionary<int, AccentColorHelper> accentColorHelpers = new Dictionary<int, AccentColorHelper>();
-        
+        private static readonly Dictionary<int, AccentColorHelper> instances = new Dictionary<int, AccentColorHelper>();
+        private static readonly object locker = new object();
+
         public Color AccentColor
         {
             get { return (Color)GetValue(); }
@@ -34,7 +36,7 @@ namespace UWPHelper.UI
         // Prevent from creating new instances
         private AccentColorHelper()
         {
-            RegisterProperty(nameof(AccentColor), typeof(Color), new Color(), (oldValue, newValue) =>
+            RegisterProperty(nameof(AccentColor), typeof(Color), new Color(), async (oldValue, newValue) =>
             {
                 Color newColor = (Color)newValue;
 
@@ -42,46 +44,65 @@ namespace UWPHelper.UI
                 AccentContrastingTheme  = newColor.GetContrastingTheme();
 
                 AccentColorChanged?.Invoke(this, newColor);
+
+                bool lockTaken = false;
+
+                try
+                {
+                    Monitor.TryEnter(locker, 0, ref lockTaken);
+
+                    if (lockTaken)
+                    {
+                        int callerViewId = ViewHelper.GetCurrentViewId();
+
+                        await ViewHelper.RunOnEachViewDispatcherAsync(() =>
+                        {
+                            int currentViewId = ViewHelper.GetCurrentViewId();
+
+                            if (currentViewId != callerViewId && instances.ContainsKey(currentViewId))
+                            {
+                                instances[currentViewId].AccentColor = newColor;
+                            }
+                        });
+                    }
+                }
+                finally
+                {
+                    if (lockTaken)
+                    {
+                        Monitor.Exit(locker);
+                    }
+                }
             });
             RegisterProperty(nameof(AccentColorBrush), typeof(SolidColorBrush), null);
             RegisterProperty(nameof(AccentContrastingTheme), typeof(ElementTheme), ElementTheme.Default);
 
-            UpdateAccentColorAsync();
+            UpdateAccentColor();
             
             ViewHelper.GetCurrentCoreWindow().Activated += (sender, args) =>
             {
                 if (args.WindowActivationState != CoreWindowActivationState.Deactivated)
                 {
-                    UpdateAccentColorAsync();
+                    UpdateAccentColor();
                 }
             };
         }
         
-        private async void UpdateAccentColorAsync()
+        private void UpdateAccentColor()
         {
-            Color newAccentColor = (Color)Application.Current.Resources["SystemAccentColor"];
-
-            await ViewHelper.RunOnEachViewDispatcherAsync(() =>
-            {
-                int currentViewId = ViewHelper.GetCurrentViewId();
-
-                if (accentColorHelpers.ContainsKey(currentViewId))
-                {
-                    accentColorHelpers[currentViewId].AccentColor = newAccentColor;
-                }
-            });
+            AccentColor = (Color)Application.Current.Resources["SystemAccentColor"];
         }
         
         public static AccentColorHelper GetForCurrentView()
         {
             int currentViewId = ViewHelper.GetCurrentViewId();
 
-            if (!accentColorHelpers.ContainsKey(currentViewId))
+            if (!instances.ContainsKey(currentViewId))
             {
-                accentColorHelpers.Add(currentViewId, new AccentColorHelper());
+                instances.Add(currentViewId, new AccentColorHelper());
             }
 
-            return accentColorHelpers[currentViewId];
+            return instances[currentViewId];
         }
     }
 }
