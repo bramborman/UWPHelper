@@ -7,17 +7,15 @@
       >
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel VerticalAlignment="Center">
-            <!--<TextBlock Text="{x:Bind AppData.Theme, Mode=OneWay}"
-                       HorizontalAlignment="Center"
-                       Margin="{StaticResource TextBlockGapMargin}"
-                       />-->
-
             <TextBlock HorizontalAlignment="Center"
                        Margin="{StaticResource TextBlockGapMargin}"
                        >
                 Current window number: <Run Text="{x:Bind CurrentWindowNumber}"/>
                 <LineBreak/>
                 Current view ID: <Run Text="{x:Bind CurrentViewId}"/>
+                <LineBreak/>
+                <LineBreak/>
+                Current theme: <Run Text="{x:Bind AppData.Theme, Mode=OneWay}"/>
             </TextBlock>
 
             <!-- We are testing the AccentColorHelper for updating on all windows at once -->

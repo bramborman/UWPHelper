@@ -11,7 +11,7 @@ namespace UWPHelper.MultipleViewsTestApp
     {
         private AppData AppData
         {
-            get { return AppData.Current; }
+            get { return AppData.GetForCurrentView(); }
         }
         private AccentColorHelper AccentColorHelper
         {

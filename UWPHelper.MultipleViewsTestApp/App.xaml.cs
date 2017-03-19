@@ -33,7 +33,7 @@ namespace UWPHelper.MultipleViewsTestApp
                     Frame frame = new Frame();
                     Window.Current.Content = frame;
 
-                    frame.RequestedTheme = AppData.Current.Theme;
+                    frame.RequestedTheme = AppData.GetForCurrentView().Theme;
 
                     frame.Navigate(typeof(MainPage), new MainPage.NavigationParameters(null, ++windowCount));
                     Window.Current.Activate();
@@ -56,9 +56,9 @@ namespace UWPHelper.MultipleViewsTestApp
                 Window.Current.Content = rootFrame;
             }
             
-            rootFrame.RequestedTheme = AppData.Current.Theme;
+            rootFrame.RequestedTheme = AppData.GetForCurrentView().Theme;
             
-            BarsHelper.Current.InitializeAutoUpdating(() => AppData.Current.Theme, AppData.Current, nameof(AppData.Theme));
+            BarsHelper.Current.InitializeAutoUpdating(() => AppData.GetForCurrentView().Theme, AppData.GetForCurrentView(), nameof(AppData.Theme));
             await BarsHelper.Current.SetTitleBarColorModeAsync(BarsHelperColorMode.Accent);
             await BarsHelper.Current.InitializeForCurrentViewAsync();
 

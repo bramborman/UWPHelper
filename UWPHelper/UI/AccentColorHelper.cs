@@ -62,9 +62,11 @@ namespace UWPHelper.UI
 
             await ViewHelper.RunOnEachViewDispatcherAsync(() =>
             {
-                if (accentColorHelpers.ContainsKey(ViewHelper.GetCurrentViewId()))
+                int currentViewId = ViewHelper.GetCurrentViewId();
+
+                if (accentColorHelpers.ContainsKey(currentViewId))
                 {
-                    GetForCurrentView().AccentColor = newAccentColor;
+                    accentColorHelpers[currentViewId].AccentColor = newAccentColor;
                 }
             });
         }
