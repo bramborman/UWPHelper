@@ -20,9 +20,9 @@ namespace UWPHelper.MultipleViewsTestApp
             });
         }
 
-        public static new AppData GetForCurrentView()
+        public static AppData GetForCurrentView()
         {
-            return ViewSpecificBindableClassBase<AppData>.GetForCurrentView();
+            return BaseGetForCurrentView();
         }
     }
 }

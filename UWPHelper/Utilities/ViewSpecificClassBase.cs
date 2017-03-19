@@ -59,7 +59,7 @@ namespace UWPHelper.Utilities
             }
         }
 
-        protected static bool GetForCurrentViewIfExists(out T obj)
+        protected static bool BaseGetForCurrentViewIfExists(out T obj)
         {
             int currentViewId = ViewHelper.GetCurrentViewId();
 
@@ -73,7 +73,7 @@ namespace UWPHelper.Utilities
             return false;
         }
 
-        protected static T GetForCurrentView()
+        protected static T BaseGetForCurrentView()
         {
             int currentViewId = ViewHelper.GetCurrentViewId();
 
@@ -132,7 +132,7 @@ namespace UWPHelper.Utilities
             };
         }
 
-        protected static bool GetForCurrentViewIfExists(out T obj)
+        protected static bool BaseGetForCurrentViewIfExists(out T obj)
         {
             int currentViewId = ViewHelper.GetCurrentViewId();
 
@@ -146,7 +146,7 @@ namespace UWPHelper.Utilities
             return false;
         }
 
-        protected static T GetForCurrentView()
+        protected static T BaseGetForCurrentView()
         {
             int currentViewId = ViewHelper.GetCurrentViewId();
 
