@@ -1,8 +1,9 @@
-﻿using System;
+﻿using NotifyPropertyChangedBase;
+using System;
 
 namespace UWPHelper.Utilities
 {
-    public class Range : NotifyPropertyChangedBase, IEquatable<Range>
+    public class Range : NotifyPropertyChanged, IEquatable<Range>
     {
         public int Min
         {

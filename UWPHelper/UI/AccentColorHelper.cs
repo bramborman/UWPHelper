@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NotifyPropertyChangedBase;
+using System.Collections.Generic;
 using System.Threading;
 using UWPHelper.Utilities;
 using Windows.Foundation;
@@ -10,7 +11,7 @@ using Windows.UI.Xaml.Media;
 namespace UWPHelper.UI
 {
     // Cannot inherit from ViewSpecificBindableClassBase<AccentColorHelper> since it requires public constructor and since we want to update only one property using this way
-    public sealed class AccentColorHelper : NotifyPropertyChangedBase
+    public sealed class AccentColorHelper : NotifyPropertyChanged
     {
         private static readonly Dictionary<int, AccentColorHelper> instances = new Dictionary<int, AccentColorHelper>();
         private static readonly object locker = new object();
@@ -36,9 +37,9 @@ namespace UWPHelper.UI
         // Prevent from creating new instances
         private AccentColorHelper()
         {
-            RegisterProperty(nameof(AccentColor), typeof(Color), new Color(), async (oldValue, newValue) =>
+            RegisterProperty(nameof(AccentColor), typeof(Color), new Color(), async (sender, e) =>
             {
-                Color newColor = (Color)newValue;
+                Color newColor = (Color)e.NewValue;
 
                 AccentColorBrush        = new SolidColorBrush(newColor);
                 AccentContrastingTheme  = newColor.GetContrastingTheme();

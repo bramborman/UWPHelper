@@ -14,9 +14,9 @@ namespace UWPHelper.MultipleViewsTestApp
         
         public AppData()
         {
-            RegisterProperty(nameof(Theme), typeof(ElementTheme), ElementTheme.Default, (oldValue, newValue) =>
+            RegisterProperty(nameof(Theme), typeof(ElementTheme), ElementTheme.Default, (sender, e) =>
             {
-                ((Frame)Window.Current.Content).RequestedTheme = (ElementTheme)newValue;
+                ((Frame)Window.Current.Content).RequestedTheme = (ElementTheme)e.NewValue;
             });
         }
 

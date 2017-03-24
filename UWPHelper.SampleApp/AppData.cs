@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using NotifyPropertyChangedBase;
 using System;
 using System.Threading.Tasks;
 using UWPHelper.UI;
@@ -9,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace UWPHelper.SampleApp
 {
-    public sealed class AppData : NotifyPropertyChangedBase
+    public sealed class AppData : NotifyPropertyChanged
     {
         private const string FILE_NAME = "AppData.json";
 
