@@ -1,5 +1,6 @@
 ﻿using NotifyPropertyChangedBase;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Threading;
 
@@ -11,6 +12,8 @@ namespace UWPHelper.Utilities
     {
         private static readonly Dictionary<int, T> instances = new Dictionary<int, T>();
         private static readonly object locker = new object();
+
+        protected static event PropertyChangedEventHandler MainPropertyChanged;
 
         protected ViewSpecificBindableClassBase()
         {
@@ -28,11 +31,8 @@ namespace UWPHelper.Utilities
 
                         await ViewHelper.RunOnEachViewDispatcherAsync(() =>
                         {
-                            int currentViewId = ViewHelper.GetCurrentViewId();
-
-                            if (currentViewId != callerViewId && instances.ContainsKey(currentViewId))
+                            if (ViewHelper.GetCurrentViewId() != callerViewId && BaseGetForCurrentViewIfExists(out T currentViewInstance))
                             {
-                                T currentViewInstance = instances[currentViewId];
                                 PropertyInfo changedProperty = typeof(T).GetRuntimeProperty(e.PropertyName);
 
                                 if (changedProperty.CanRead && changedProperty.CanWrite)
@@ -41,6 +41,8 @@ namespace UWPHelper.Utilities
                                 }
                             }
                         });
+
+                        MainPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(e.PropertyName));
                     }
                 }
                 finally
@@ -51,6 +53,18 @@ namespace UWPHelper.Utilities
                     }
                 }
             };
+        }
+
+        protected static void BaseSetForCurrentView(T obj)
+        {
+            int currentViewId = ViewHelper.GetCurrentViewId();
+
+            if (!instances.ContainsKey(currentViewId))
+            {
+                instances.Add(currentViewId, null);
+            }
+
+            instances[currentViewId] = obj;
         }
 
         protected static bool BaseGetForCurrentViewIfExists(out T obj)
