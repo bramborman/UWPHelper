@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Threading;
@@ -12,6 +13,14 @@ namespace UWPHelper.Utilities
         private static readonly Dictionary<int, T> instances = new Dictionary<int, T>();
 
         private static object locker;
+
+        protected static int InstancesCount
+        {
+            get
+            {
+                return instances.Count;
+            }
+        }
 
         protected static event PropertyChangedEventHandler MainPropertyChanged;
 
@@ -88,11 +97,16 @@ namespace UWPHelper.Utilities
 
         protected static T BaseGetForCurrentView()
         {
+            return BaseGetForCurrentView(() => new T());
+        }
+
+        protected static T BaseGetForCurrentView(Func<T> newInstanceDataGetter)
+        {
             int currentViewId = ViewHelper.GetCurrentViewId();
 
             if (!instances.ContainsKey(currentViewId))
             {
-                instances.Add(currentViewId, new T());
+                instances.Add(currentViewId, newInstanceDataGetter());
             }
 
             return instances[currentViewId];

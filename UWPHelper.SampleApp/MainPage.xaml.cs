@@ -11,7 +11,7 @@ namespace UWPHelper.SampleApp
     {
         private AppData AppData
         {
-            get { return AppData.Current; }
+            get { return AppData.GetForCurrentView(); }
         }
 
         public MainPage()
@@ -31,7 +31,7 @@ namespace UWPHelper.SampleApp
                     }
                     else
                     {
-                        await AppData.Current.SaveAsync();
+                        await AppData.SaveAsync();
                     }
                 }
 
