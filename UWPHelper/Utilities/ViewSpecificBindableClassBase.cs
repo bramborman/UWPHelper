@@ -40,7 +40,7 @@ namespace UWPHelper.Utilities
 
                         await ViewHelper.RunOnEachViewDispatcherAsync(() =>
                         {
-                            if (ViewHelper.GetCurrentViewId() != callerViewId && BaseGetForCurrentViewIfExists(out T currentViewInstance))
+                            if (ViewHelper.GetCurrentViewId() != callerViewId && BaseTryGetForCurrentView(out T currentViewInstance))
                             {
                                 PropertyInfo changedProperty = typeof(T).GetRuntimeProperty(e.PropertyName);
 
@@ -76,7 +76,7 @@ namespace UWPHelper.Utilities
             instances[currentViewId] = obj;
         }
 
-        protected static bool BaseGetForCurrentViewIfExists(out T obj)
+        protected static bool BaseTryGetForCurrentView(out T obj)
         {
             int currentViewId = ViewHelper.GetCurrentViewId();
 

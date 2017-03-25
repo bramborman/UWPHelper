@@ -32,30 +32,34 @@ namespace UWPHelper.SampleApp
 
             if (args.PreviousExecutionState == ApplicationExecutionState.Running)
             {
-                CoreApplicationView newView = CoreApplication.CreateNewView();
-                int newViewId = 0;
-
-                await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                // Will fail on phone when debugger is not attached
+                try
                 {
-                    Frame frame = new Frame();
-                    Window.Current.Content = frame;
+                    CoreApplicationView newView = CoreApplication.CreateNewView();
+                    int newViewId = 0;
 
-                    frame.RequestedTheme = AppData.GetForCurrentView().Theme;
+                    await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        Frame newViewRootFrame = InitializeRootFrameForCurrenView();
+                        AppData.GetForCurrentView().SetTheme();
+                        InitialRootFrameNavigationForCurrentView(newViewRootFrame);
 
-                    frame.Navigate(typeof(MainPage), windowNumber);
-                    Window.Current.Activate();
+                        newViewId = ApplicationView.GetForCurrentView().Id;
+                        await BarsHelper.Current.InitializeForCurrentViewAsync();
+                    });
 
-                    newViewId = ApplicationView.GetForCurrentView().Id;
-                    await BarsHelper.Current.InitializeForCurrentViewAsync();
-                });
-                
-                if (args is IApplicationViewActivatedEventArgs appViewArgs)
-                {
-                    await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId, ViewSizePreference.Default, appViewArgs.CurrentlyShownApplicationViewId, ViewSizePreference.Default);
+                    if (args is IApplicationViewActivatedEventArgs appViewArgs)
+                    {
+                        await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId, ViewSizePreference.Default, appViewArgs.CurrentlyShownApplicationViewId, ViewSizePreference.Default);
+                    }
+                    else
+                    {
+                        await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+                    }
                 }
-                else
+                catch
                 {
-                    await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+
                 }
 
                 return;
@@ -69,21 +73,7 @@ namespace UWPHelper.SampleApp
                 loadAppDataTask = AppData.LoadAsync();
             }
 
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            if (rootFrame == null)
-            {
-                rootFrame = new Frame();
-                rootFrame.NavigationFailed += OnNavigationFailed;
-
-                Window.Current.Content = rootFrame;
-
-                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
-                {
-                    ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(450, 460));
-                }
-            }
-
+            Frame rootFrame = InitializeRootFrameForCurrenView();
             LaunchActivatedEventArgs launchArgs = args as LaunchActivatedEventArgs;
 
             if (loadAppData)
@@ -102,13 +92,38 @@ namespace UWPHelper.SampleApp
 
             if (launchArgs?.PrelaunchActivated != true)
             {
-                if (rootFrame.Content == null)
-                {
-                    rootFrame.Navigate(typeof(MainPage), windowNumber);
-                }
-                
-                Window.Current.Activate();
+                InitialRootFrameNavigationForCurrentView(rootFrame);
             }
+        }
+
+        private Frame InitializeRootFrameForCurrenView()
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame == null)
+            {
+                rootFrame = new Frame();
+                rootFrame.NavigationFailed += OnNavigationFailed;
+
+                Window.Current.Content = rootFrame;
+
+                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+                {
+                    ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(450, 460));
+                }
+            }
+
+            return rootFrame;
+        }
+
+        private void InitialRootFrameNavigationForCurrentView(Frame rootFrame)
+        {
+            if (rootFrame.Content == null)
+            {
+                rootFrame.Navigate(typeof(MainPage), windowNumber);
+            }
+
+            Window.Current.Activate();
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)

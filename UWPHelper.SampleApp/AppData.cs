@@ -54,15 +54,15 @@ namespace UWPHelper.SampleApp
 
         public AppData()
         {
-            // It will throw an exception when the PropertyChanged event is invoked from deserializing thread
-            IsPropertyChangedEventInvokingEnabled = false;
+            IsPropertyChangedCallbackInvokingEnabled    = false;
+            IsPropertyChangedEventInvokingEnabled       = false;
 
             RegisterProperty(nameof(Foo), typeof(int), 0);
             RegisterProperty(nameof(CheckBoxChecked), typeof(bool?), true);
             RegisterProperty(nameof(SampleEnum), typeof(SampleEnum), SampleEnum.Zero);
             RegisterProperty(nameof(Theme), typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark, (sender, e) =>
             {
-                GetForCurrentView()?.SetTheme();
+                SetTheme();
             });
             RegisterProperty(nameof(Uri), typeof(string), "");
         }
@@ -94,8 +94,9 @@ namespace UWPHelper.SampleApp
             {
                 await mainAppData.SaveAsync();
             };
-
-            mainAppData.IsPropertyChangedEventInvokingEnabled = true;
+            
+            mainAppData.IsPropertyChangedCallbackInvokingEnabled    = true;
+            mainAppData.IsPropertyChangedEventInvokingEnabled       = true;
         }
 
         public static AppData GetForCurrentView()
@@ -107,7 +108,8 @@ namespace UWPHelper.SampleApp
                 SampleEnum      = mainAppData.SampleEnum,
                 Theme           = mainAppData.Theme,
                 Uri             = mainAppData.Uri,
-                IsPropertyChangedEventInvokingEnabled = true
+                IsPropertyChangedCallbackInvokingEnabled    = true,
+                IsPropertyChangedEventInvokingEnabled       = true
             });
         }
     }

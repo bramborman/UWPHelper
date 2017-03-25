@@ -17,7 +17,7 @@
       <group targetFramework="uap10.0">
         <dependency id="Microsoft.Services.Store.SDK" version="10.1610.31001" />
         <dependency id="Newtonsoft.Json" version="9.0.1" />
-        <dependency id="NotifyPropertyChangedBase" version="1.1.0-dev75" />
+        <dependency id="NotifyPropertyChangedBase" version="1.1.0-dev76" />
         <dependency id="System.Collections" version="4.0.11" />
         <dependency id="System.Diagnostics.Debug" version="4.0.11" />
         <dependency id="System.Diagnostics.Tools" version="4.0.1" />
