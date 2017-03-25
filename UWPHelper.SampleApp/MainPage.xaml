@@ -122,9 +122,12 @@
                     <ComboBoxItem x:Uid="SampleEnum/Two"/>
                     <ComboBoxItem x:Uid="SampleEnum/Three"/>
                 </ComboBox>
-
+                
                 <TextBlock>
-                    AppData.Foo: <Run Text="{x:Bind AppData.Foo}"/>
+                    Current window number: <Run Text="{x:Bind CurrentWindowNumber}"/>
+                    <LineBreak/>Current view ID: <Run Text="{x:Bind CurrentViewId}"/>
+                    <LineBreak/>
+                    <LineBreak/>AppData.Foo: <Run Text="{x:Bind AppData.Foo}"/>
                 </TextBlock>
 
                 <StackPanel Orientation="Horizontal"

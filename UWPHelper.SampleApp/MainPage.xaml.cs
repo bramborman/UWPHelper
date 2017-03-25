@@ -1,9 +1,11 @@
 ﻿using System;
 using UWPHelper.UI;
+using UWPHelper.Utilities;
 using Windows.ApplicationModel.Resources;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace UWPHelper.SampleApp
 {
@@ -12,6 +14,21 @@ namespace UWPHelper.SampleApp
         private AppData AppData
         {
             get { return AppData.GetForCurrentView(); }
+        }
+        private int CurrentWindowNumber { get; set; }
+        private string CurrentViewId
+        {
+            get
+            {
+                try
+                {
+                    return ViewHelper.GetCurrentViewId().ToString();
+                }
+                catch
+                {
+                    return "N/A";
+                }
+            }
         }
 
         public MainPage()
@@ -56,6 +73,12 @@ namespace UWPHelper.SampleApp
                     }.ShowAsync();
                 }
             }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            CurrentWindowNumber = (int)e.Parameter;
         }
     }
 }

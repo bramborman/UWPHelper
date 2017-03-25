@@ -16,6 +16,8 @@ namespace UWPHelper.SampleApp
 {
     public sealed partial class App : Application
     {
+        private static int windowNumber;
+
         public App()
         {
             InitializeComponent();
@@ -26,6 +28,8 @@ namespace UWPHelper.SampleApp
         protected override async void OnActivated(IActivatedEventArgs args)
 #pragma warning restore IDE1006 // Naming Styles
         {
+            windowNumber++;
+
             if (args.PreviousExecutionState == ApplicationExecutionState.Running)
             {
                 CoreApplicationView newView = CoreApplication.CreateNewView();
@@ -38,7 +42,7 @@ namespace UWPHelper.SampleApp
 
                     frame.RequestedTheme = AppData.GetForCurrentView().Theme;
 
-                    frame.Navigate(typeof(MainPage), null);
+                    frame.Navigate(typeof(MainPage), windowNumber);
                     Window.Current.Activate();
 
                     newViewId = ApplicationView.GetForCurrentView().Id;
@@ -100,7 +104,7 @@ namespace UWPHelper.SampleApp
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(MainPage), launchArgs?.Arguments);
+                    rootFrame.Navigate(typeof(MainPage), windowNumber);
                 }
                 
                 Window.Current.Activate();
