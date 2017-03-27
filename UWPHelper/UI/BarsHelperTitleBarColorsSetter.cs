@@ -53,9 +53,10 @@ namespace UWPHelper.UI
             titleBar.ButtonForegroundColor          = titleBar.ForegroundColor;
 
             titleBar.ButtonHoverForegroundColor     = titleBar.ButtonForegroundColor;
+            titleBar.ButtonPressedForegroundColor   = titleBar.ButtonForegroundColor;
+
             titleBar.ButtonInactiveBackgroundColor  = titleBar.InactiveBackgroundColor;
             titleBar.ButtonInactiveForegroundColor  = titleBar.InactiveForegroundColor;
-            titleBar.ButtonPressedForegroundColor   = titleBar.ButtonForegroundColor;
         }
     }
 }
