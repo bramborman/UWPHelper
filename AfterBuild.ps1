@@ -12,12 +12,12 @@ if ($env:APPVEYOR_REPO_BRANCH -eq "master")
 	Write-Host $message
 }
 
-$libraryProjectFolder = Get-ChildItem -Directory -Filter "UWPHelper"
-$releaseFolder = Join-Path $libraryProjectFolder.FullName "\bin\Release"
+$libraryProjectFolder 	= Get-ChildItem -Directory -Filter "UWPHelper"
+$releaseFolder 			= Join-Path $libraryProjectFolder.FullName "\bin\Release"
 
 if (!(Test-Path $releaseFolder))
 {
-	continue;
+	throw "Something happend :( releaseFolder: $releaseFolder"
 }
 
 $zipFileName = "$libraryProjectFolder.$buildVersion.zip"
@@ -25,4 +25,4 @@ $zipFileName = "$libraryProjectFolder.$buildVersion.zip"
 
 Push-AppveyorArtifact $zipFileName
 
-& ".NuGet\CreatePackage.ps1"
+& "NuGet\CreatePackage.ps1"
