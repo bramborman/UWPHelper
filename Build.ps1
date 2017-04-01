@@ -18,19 +18,29 @@ Start-FileDownload 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe'
 
 # Build
 $platforms 					= "x86", "x64", "ARM"
-$uwpHelperProjectDirectory 	= Get-ChildItem -Directory -Filter "UWPHelper"
+$uwpHelperProjectFolder 	= Get-ChildItem -Directory -Filter "UWPHelper"
 
-if (!(Test-Path $uwpHelperProjectDirectory))
+if (!(Test-Path $uwpHelperProjectFolder))
 {
-	Throw "Unable to find UWPHelper project directory. uwpHelperProjectDirectory: $uwpHelperProjectDirectory"
+	Throw "Unable to find UWPHelper project folder. uwpHelperProjectFolder: $uwpHelperProjectFolder"
 }
 
 foreach ($platform in $platforms)
 {
-	MSBuild "$uwpHelperProjectDirectory\UWPHelper.csproj" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=Release /p:Platform=$platform
+	Write-Host "`n`nStarted $platform build"
+	Write-Host   "`n======================="
+
+	MSBuild "$uwpHelperProjectFolder\UWPHelper.csproj" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=Release /p:Platform=$platform
+
+	$releaseFolder = Join-Path $uwpHelperProjectFolder.FullName "\bin\$platform\Release\"
+
+	if (!(Test-Path $releaseFolder))
+	{
+		throw "Something happend :( releaseFolder: $releaseFolder"
+	}
 
 	$zipFileName = "UWPHelper_$platform.$buildVersion.zip"
-	7z a $zipFileName "$uwpHelperProjectDirectory\bin\$platform\Release\*"
+	7z a $zipFileName "$releaseFolder\*"
 	
 	Push-AppveyorArtifact $zipFileName
 }

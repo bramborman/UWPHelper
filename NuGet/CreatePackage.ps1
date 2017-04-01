@@ -67,5 +67,5 @@ Foreach ($bin in $binDirectories)
 	}
 }
 
-NuGet pack -Version $env:APPVEYOR_BUILD_VERSION
+NuGet pack "UWPHelper.nuspec" -Version $env:APPVEYOR_BUILD_VERSION
 Push-AppveyorArtifact *.nupkg
