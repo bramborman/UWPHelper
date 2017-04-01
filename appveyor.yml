@@ -15,27 +15,14 @@ skip_commits:
     - LICENSE.md
     - README.md
 image: Visual Studio 2017
-configuration: Release
-platform:
-- x86
-- x64
-- ARM
 assembly_info:
   patch: true
   file: SharedAssemblyInfo.cs
   assembly_version: 1.7.0.{build}
   assembly_file_version: 1.7.0.{build}
   assembly_informational_version: 1.7.0.{build}
-before_build:
-- cmd: >-
-    appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-
-    nuget restore
-build:
-  project: UWPHelper/UWPHelper.csproj
-  verbosity: minimal
-after_build:
-- ps: '& ".\AfterBuild.ps1"'
+build_script:
+- ps: '& ".\Build.ps1"'
 deploy:
 - provider: Environment
   name: MyGet
