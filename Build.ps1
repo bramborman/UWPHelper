@@ -116,4 +116,10 @@ foreach ($binFolder in $binFolders)
 }
 
 nuget pack "UWPHelper.nuspec" -Version $env:APPVEYOR_BUILD_VERSION
+
+if($LastExitCode -ne 0)
+{
+	$host.SetShouldExit($LastExitCode)
+}
+
 Push-AppveyorArtifact *.nupkg
