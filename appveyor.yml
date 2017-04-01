@@ -22,7 +22,7 @@ assembly_info:
   assembly_file_version: 1.7.0.{build}
   assembly_informational_version: 1.7.0.{build}
 build_script:
-- ps: '& ".\Build.ps1"'
+- ps: '& .\Build.ps1'
 deploy:
 - provider: Environment
   name: MyGet

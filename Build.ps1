@@ -17,13 +17,14 @@ Start-FileDownload 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe'
 .\nuget restore
 
 # Build
-$platforms 					= "x86", "x64", "ARM"
-$uwpHelperProjectFolder 	= Get-ChildItem -Directory -Filter "UWPHelper"
+$uwpHelperProjectFolder = Get-ChildItem -Directory -Filter "UWPHelper"
 
 if (!(Test-Path $uwpHelperProjectFolder))
 {
 	Throw "Unable to find UWPHelper project folder. uwpHelperProjectFolder: $uwpHelperProjectFolder"
 }
+
+$platforms = "x86", "x64", "ARM"
 
 foreach ($platform in $platforms)
 {
@@ -46,4 +47,4 @@ foreach ($platform in $platforms)
 }
 
 # After build
-& "NuGet\CreatePackage.ps1"
+& NuGet\CreatePackage.ps1
