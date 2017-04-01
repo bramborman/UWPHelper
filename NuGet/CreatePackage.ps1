@@ -67,5 +67,6 @@ Foreach ($bin in $binDirectories)
 	}
 }
 
-NuGet pack "UWPHelper.nuspec" -Version $env:APPVEYOR_BUILD_VERSION
+# This script is called from Build.ps1
+NuGet pack "NuGet\UWPHelper.nuspec" -Version $env:APPVEYOR_BUILD_VERSION
 Push-AppveyorArtifact *.nupkg
