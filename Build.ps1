@@ -24,7 +24,7 @@ $uwpHelperProjectFolder = Get-ChildItem -Directory -Filter "UWPHelper"
 
 if (!(Test-Path $uwpHelperProjectFolder))
 {
-	throw "Unable to find UWPHelper project folder. uwpHelperProjectFolder: $uwpHelperProjectFolder".
+	throw "Unable to find UWPHelper project folder. uwpHelperProjectFolder: $uwpHelperProjectFolder."
 }
 
 $platforms = "x86", "x64", "ARM"
@@ -123,7 +123,7 @@ if ($referenceCreated -eq $false)
 	throw "Reference assemblies were not created."
 }
 
-nuget pack "UWPHelper.nuspec" -Version $env:APPVEYOR_BUILD_VERSION
+nuget pack -Version $buildVersion
 
 # Throw the exception if NuGet creating fails to make the AppVeyor build fail too
 if($LastExitCode -ne 0)
