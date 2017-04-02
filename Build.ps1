@@ -24,14 +24,14 @@ $uwpHelperProjectFolder = Get-ChildItem -Directory -Filter "UWPHelper"
 
 if (!(Test-Path $uwpHelperProjectFolder))
 {
-	Throw "Unable to find UWPHelper project folder. uwpHelperProjectFolder: $uwpHelperProjectFolder"
+	throw "Unable to find UWPHelper project folder. uwpHelperProjectFolder: $uwpHelperProjectFolder".
 }
 
 $platforms = "x86", "x64", "ARM"
 
 foreach ($platform in $platforms)
 {
-	Write-Host "`n`nStarted $platform build"
+	Write-Host "`n`nPlatform $platform"
 	Write-Host     "======================="
 
 	MSBuild "$uwpHelperProjectFolder\UWPHelper.csproj" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=Release /p:Platform=$platform
@@ -40,7 +40,7 @@ foreach ($platform in $platforms)
 
 	if (!(Test-Path $releaseFolder))
 	{
-		throw "Something happend :( releaseFolder: $releaseFolder"
+		throw "Something happend :( releaseFolder: $releaseFolder."
 	}
 
 	$zipFileName = "UWPHelper_$platform.$buildVersion.zip"
@@ -69,13 +69,14 @@ if (!(Test-Path $corFlags))
 
 if (!(Test-Path $corFlags))
 {
-	Throw "Unable to find CorFlags.exe"
+	throw "Unable to find CorFlags.exe."
 }
 
 Write-Host "`nSelected CorFlags file:" $corFlags
 
 $uwpHelperProjectFolder = Get-ChildItem -Directory -Filter "UWPHelper"
 $binFolders 			= $uwpHelperProjectFolder | ForEach-Object{ Get-ChildItem $_.FullName -Directory -Filter "bin" }
+$referenceCreated		= $false
 
 # Create reference assemblies, because NuGet packages cannot be used otherwise.
 # This creates them for all outputs that match the filter, in all output directories of all projects.
@@ -113,10 +114,18 @@ foreach ($binFolder in $binFolders)
 		Write-Host "`n`nConverting to AnyCPU: $dll"
 		& $corFlags /32bitreq- $($dll.FullName)
 	}
+
+	$referenceCreated = $true
+}
+
+if ($referenceCreated -eq $false)
+{
+	throw "Reference assemblies were not created."
 }
 
 nuget pack "UWPHelper.nuspec" -Version $env:APPVEYOR_BUILD_VERSION
 
+# Throw the exception if NuGet creating fails to make the AppVeyor build fail too
 if($LastExitCode -ne 0)
 {
 	$host.SetShouldExit($LastExitCode)
