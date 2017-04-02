@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPHelper", "UWPHelper\UWPHelper.csproj", "{0D829618-309B-4E7F-8DE2-9D5D44344D25}"
 EndProject
@@ -14,9 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		Build.ps1 = Build.ps1
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
+		UWPHelper.nuspec = UWPHelper.nuspec
+		UWPHelper.targets = UWPHelper.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{5BE145D9-41D8-4029-BB13-43FA5DA62822}"
@@ -24,13 +28,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{5BE145
 		Assets\UWPHelper Icon.png = Assets\UWPHelper Icon.png
 		Assets\UWPHelper Icon.xcf = Assets\UWPHelper Icon.xcf
 		Assets\UWPHelper.SampleApp Icon.png = Assets\UWPHelper.SampleApp Icon.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{59997A3D-F79F-45AE-B5B4-66744DA841F5}"
-	ProjectSection(SolutionItems) = preProject
-		NuGet\CreatePackage.ps1 = NuGet\CreatePackage.ps1
-		NuGet\UWPHelper.nuspec = NuGet\UWPHelper.nuspec
-		NuGet\UWPHelper.targets = NuGet\UWPHelper.targets
 	EndProjectSection
 EndProject
 Global
@@ -79,6 +76,5 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5BE145D9-41D8-4029-BB13-43FA5DA62822} = {1ED198B6-A7F3-4B45-9BCF-F3EF89F1CCBA}
-		{59997A3D-F79F-45AE-B5B4-66744DA841F5} = {1ED198B6-A7F3-4B45-9BCF-F3EF89F1CCBA}
 	EndGlobalSection
 EndGlobal
