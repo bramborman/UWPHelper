@@ -33,7 +33,7 @@ $platforms = "x86", "x64", "ARM"
 foreach ($platform in $platforms)
 {
 	Write-Host "`n`nPlatform $platform"
-	Write-Host     "=================="
+	Write-Host     "============"
 
 	MSBuild "$uwpHelperProjectFolder\UWPHelper.csproj" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=Release /p:Platform=$platform
 
