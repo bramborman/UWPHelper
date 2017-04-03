@@ -6,7 +6,7 @@ if (($env:APPVEYOR_REPO_BRANCH -eq "master") -and ($env:APPVEYOR_PULL_REQUEST_TI
 {
 	$newVersion	= $buildVersion.Split("-") | Select-Object -first 1
 	$newVersion = "$newVersion-preview"
-	$message    = "Build version changed from '$buildVersion' to '$newVersion'"
+	$message    = "Build version changed from '$buildVersion' to '$newVersion'."
 
 	$buildVersion = $newVersion
 	Update-AppveyorBuild -Version $buildVersion
@@ -17,7 +17,7 @@ if (($env:APPVEYOR_REPO_BRANCH -eq "master") -and ($env:APPVEYOR_PULL_REQUEST_TI
 	Write-Host $message
 }
 
-Start-FileDownload 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe'
+Start-FileDownload "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 .\nuget restore
 
 # Build
@@ -25,7 +25,7 @@ $uwpHelperProjectFolder = Get-ChildItem -Directory -Filter "UWPHelper"
 
 if (!(Test-Path $uwpHelperProjectFolder))
 {
-	throw "Unable to find UWPHelper project folder. uwpHelperProjectFolder: $uwpHelperProjectFolder."
+	throw "Unable to find UWPHelper project folder. `$uwpHelperProjectFolder: '$uwpHelperProjectFolder'"
 }
 
 $platforms = "x86", "x64", "ARM"
@@ -33,7 +33,7 @@ $platforms = "x86", "x64", "ARM"
 foreach ($platform in $platforms)
 {
 	Write-Host "`n`nPlatform $platform"
-	Write-Host     "======================="
+	Write-Host     "=================="
 
 	MSBuild "$uwpHelperProjectFolder\UWPHelper.csproj" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=Release /p:Platform=$platform
 
@@ -41,7 +41,7 @@ foreach ($platform in $platforms)
 
 	if (!(Test-Path $releaseFolder))
 	{
-		throw "Something happend :( releaseFolder: $releaseFolder."
+		throw "Unable to find $platform release folder. `$releaseFolder: '$releaseFolder'"
 	}
 
 	$zipFileName = "UWPHelper_$platform.$buildVersion.zip"
@@ -70,7 +70,7 @@ if (!(Test-Path $corFlags))
 
 if (!(Test-Path $corFlags))
 {
-	throw "Unable to find CorFlags.exe."
+	throw "Unable to find CorFlags.exe. `$corFlags: '$corFlags'"
 }
 
 Write-Host "`nSelected CorFlags file:" $corFlags
@@ -121,7 +121,7 @@ foreach ($binFolder in $binFolders)
 
 if ($referenceCreated -eq $false)
 {
-	throw "Reference assemblies were not created."
+	throw "Reference assemblies were not created.`n`$binFolders: '$binFolders'"
 }
 
 nuget pack -Version $buildVersion
