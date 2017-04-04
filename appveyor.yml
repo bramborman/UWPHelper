@@ -26,11 +26,15 @@ build_script:
 deploy:
 - provider: Environment
   name: MyGet
+  on:
+    SKIP_DEPLOYMENT: false
 - provider: Environment
   name: NuGet
   on:
     branch: master
+    SKIP_DEPLOYMENT: false
 - provider: Environment
   name: GitHub Releases
   on:
     branch: master
+    SKIP_DEPLOYMENT: false
