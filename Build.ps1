@@ -56,7 +56,7 @@ foreach ($platform in $platforms)
 }
 
 Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildScripts/master/Scripts/NuGet-Pack.ps1"
-.\NuGet-Pack.ps1 -UWPMultiArchitecture -DllName "UWPHelper" -ProjectFolderNameFilter "UWPHelper"
+.\NuGet-Pack.ps1 -UWPMultiArchitecture -DllFilter "UWPHelper.dll" -ProjectFoldersFilter "UWPHelper"
 
 Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildScripts/master/Scripts/Deployment-Skipping.ps1"
 .\Deployment-Skipping.ps1
