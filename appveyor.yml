@@ -5,8 +5,6 @@ branches:
   only:
   - master
   - dev
-  - ci-preparations
-  - nuget-41
 skip_tags: true
 skip_commits:
   files:
