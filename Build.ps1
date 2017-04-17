@@ -21,7 +21,7 @@ if (($env:APPVEYOR_REPO_BRANCH -eq "master") -and ($env:APPVEYOR_PULL_REQUEST_TI
 	Write-Host $message
 }
 
-# Have to use older version because of a bug in 4.0.0
+# Have to use different version because of a bug in 4.0.0
 Start-FileDownload "https://dist.nuget.org/win-x86-commandline/v4.1.0/nuget.exe"
 .\nuget restore
 
