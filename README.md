@@ -2,7 +2,7 @@
 [![NuGet](https://img.shields.io/nuget/v/UWPHelper.svg)](https://www.nuget.org/packages/UWPHelper/)
 [![Build status](https://ci.appveyor.com/api/projects/status/idk6s1k2atafjqly/branch/master?svg=true)](https://ci.appveyor.com/project/bramborman/uwphelper/branch/master)
 [![Issues](https://img.shields.io/github/issues/bramborman/UWPHelper.svg)](https://github.com/bramborman/UWPHelper/issues)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bramborman/UWPHelper/blob/master/LICENSE.md)
 
 UWPHelper is a set of useful UWP tools such as converters, triggers, custom controls and helpers. For example [Mytronome][1], great UWP metronome app is using UWPHelper.
 

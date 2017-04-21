@@ -18,14 +18,11 @@ namespace UWPHelper.Utilities
             return ApplicationView.GetApplicationViewIdForWindow(GetCurrentCoreWindow());
         }
         
-        public static async Task RunOnEachViewDispatcherAsync(Action action)
+        public static async Task RunOnEachViewDispatcherAsync(DispatchedHandler action)
         {
             foreach (CoreApplicationView view in CoreApplication.Views)
             {
-                await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    action();
-                });
+                await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, action);
             }
         }
     }

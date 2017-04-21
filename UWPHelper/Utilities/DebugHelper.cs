@@ -13,7 +13,7 @@ namespace UWPHelper.Utilities
 
         public static string GetOperationInfoString(string objectName, string operationName, bool success)
         {
-            return $"{objectName} {operationName} {(success ? "succeeded" : "failed")} at {DateTime.Now:HH:mm:ss}";
+            return GetTimedMessageString($"{objectName} {operationName} {(success ? "succeeded" : "failed")}");
         }
 
         public static string GetTimedMessageString(string message)
@@ -24,7 +24,7 @@ namespace UWPHelper.Utilities
         public static string GetTimedMessageString(string message, string dateTimeFormatting)
         {
             ExceptionHelper.ValidateNotNullOrWhiteSpace(dateTimeFormatting, nameof(dateTimeFormatting));
-            return DateTime.Now.ToString(dateTimeFormatting) + ": " + message;
+            return DateTime.Now.ToString(dateTimeFormatting) + " - " + message;
         }
     }
 }
