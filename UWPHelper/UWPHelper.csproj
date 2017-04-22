@@ -225,7 +225,7 @@
       <Version>9.0.1</Version>
     </PackageReference>
     <PackageReference Include="NotifyPropertyChangedBase">
-      <Version>1.2.0</Version>
+      <Version>1.2.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
