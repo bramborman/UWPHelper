@@ -8,7 +8,7 @@ namespace UWPHelper.Utilities
         private const string GREATER_FORMAT      = "Value ({0}) is out of range (greater than {1}).";
         private const string OUT_OF_RANGE_FORMAT = "Value ({0}) is out of range ({1} - {2}).";
 
-        [Obsolete("This method is obsolete and will be removed with version 2.0. Use 'ValidateObjectNotNull' method instead.")]
+        [Obsolete("This method is obsolete and will be removed with version 2.0. Use the 'ValidateObjectNotNull' method instead.")]
         public static void ValidateNotNull(object obj, string parameterName)
         {
             ValidateObjectNotNull(obj, parameterName);
@@ -22,7 +22,7 @@ namespace UWPHelper.Utilities
             }
         }
 
-        [Obsolete("This method is obsolete and will be removed with version 2.0. Use 'ValidateStringNotNullOrWhiteSpace' method instead.")]
+        [Obsolete("This method is obsolete and will be removed with version 2.0. Use the 'ValidateStringNotNullOrWhiteSpace' method instead.")]
         public static void ValidateNotNullOrWhiteSpace(string str, string parameterName)
         {
             ValidateStringNotNullOrWhiteSpace(str, parameterName);

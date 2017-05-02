@@ -74,7 +74,7 @@ namespace UWPHelper.SampleApp
 
         public Task SaveAsync()
         {
-            return StorageFileHelper.SaveObjectAsync(this, FILE_NAME, ApplicationData.Current.LocalFolder);
+            return StorageHelper.SaveObjectAsync(this, FILE_NAME, ApplicationData.Current.LocalFolder);
         }
 
         public static async Task LoadAsync()
@@ -86,9 +86,9 @@ namespace UWPHelper.SampleApp
             }
 #endif
 
-            var loadObjectAsyncResult = await StorageFileHelper.LoadObjectAsync<AppData>(FILE_NAME, ApplicationData.Current.LocalFolder);
-            mainAppData                     = BaseGetForCurrentView(() => loadObjectAsyncResult.Object);
-            mainAppData.ShowLoadingError    = !loadObjectAsyncResult.Success;
+            StorageFileHelperLoadResult<AppData> loadResult = await StorageHelper.LoadObjectAsync<AppData>(FILE_NAME, ApplicationData.Current.LocalFolder);
+            mainAppData                                     = BaseGetForCurrentView(() => loadResult.LoadedObject);
+            mainAppData.ShowLoadingError                    = loadResult.Status == StorageFileHelperStatus.Failure;
 
             MainPropertyChanged += async (sender, e) =>
             {
@@ -103,11 +103,11 @@ namespace UWPHelper.SampleApp
         {
             return BaseGetForCurrentView(() => new AppData
             {
-                Foo             = mainAppData.Foo,
-                CheckBoxChecked = mainAppData.CheckBoxChecked,
-                SampleEnum      = mainAppData.SampleEnum,
-                Theme           = mainAppData.Theme,
-                Uri             = mainAppData.Uri,
+                Foo                                         = mainAppData.Foo,
+                CheckBoxChecked                             = mainAppData.CheckBoxChecked,
+                SampleEnum                                  = mainAppData.SampleEnum,
+                Theme                                       = mainAppData.Theme,
+                Uri                                         = mainAppData.Uri,
                 IsPropertyChangedCallbackInvokingEnabled    = true,
                 IsPropertyChangedEventInvokingEnabled       = true
             });

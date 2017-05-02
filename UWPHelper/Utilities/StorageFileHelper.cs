@@ -5,6 +5,7 @@ using Windows.Storage;
 
 namespace UWPHelper.Utilities
 {
+    [Obsolete("This class is obsolete and will be removed with version 2.0. Use the 'StorageHelper' class instead.")]
     public static class StorageFileHelper
     {
         public static Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder)

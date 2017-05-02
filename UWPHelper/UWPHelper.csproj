@@ -208,6 +208,7 @@
     <Compile Include="Utilities\OneEventHandlerHelper.cs" />
     <Compile Include="Utilities\Range.cs" />
     <Compile Include="Utilities\StorageFileHelper.cs" />
+    <Compile Include="Utilities\StorageHelper.cs" />
     <Compile Include="Utilities\ThreadPoolTimer.cs" />
     <Compile Include="Utilities\ViewHelper.cs" />
     <Compile Include="Utilities\ViewSpecificBindableClassBase.cs" />
