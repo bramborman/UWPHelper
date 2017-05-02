@@ -15,6 +15,7 @@ namespace UWPHelper.Utilities
         public bool IsTickInvokedOnMainViewDispatcher { get; }
         public bool IsDisposedOnStop { get; }
         public bool IsEnabled { get; private set; }
+        public CoreDispatcher Dispatcher { get; }
         public TimeSpan Interval
         {
             get { return _interval; }
@@ -36,12 +37,23 @@ namespace UWPHelper.Utilities
         
         public ThreadPoolTimer(TimeSpan interval) : this(interval, true, true)
         {
+            
+        }
+
+        public ThreadPoolTimer(TimeSpan interval, bool invokeTickOnMainViewDispatcher, bool disposeOnStop) : this(interval, CoreApplication.MainView.CoreWindow.Dispatcher, invokeTickOnMainViewDispatcher, disposeOnStop)
+        {
+
+        }
+
+        public ThreadPoolTimer(TimeSpan interval, CoreDispatcher dispatcher) : this(interval, dispatcher, true, true)
+        {
 
         }
         
-        public ThreadPoolTimer(TimeSpan interval, bool invokeTickOnMainViewDispatcher, bool disposeOnStop)
+        public ThreadPoolTimer(TimeSpan interval, CoreDispatcher dispatcher, bool invokeTickOnMainViewDispatcher, bool disposeOnStop)
         {
             Interval                            = interval;
+            Dispatcher                          = dispatcher;
             IsTickInvokedOnMainViewDispatcher   = invokeTickOnMainViewDispatcher;
             IsDisposedOnStop                    = disposeOnStop;
 
@@ -49,7 +61,7 @@ namespace UWPHelper.Utilities
             {
                 timerCallback = async state =>
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         Tick?.Invoke(this, new EventArgs());
                     });
