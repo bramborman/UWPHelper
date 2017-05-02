@@ -65,6 +65,13 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
         {
             get { return $"{resourceLoader.GetString("Version")} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision}"; }
         }
+        private string CurrentYear
+        {
+            get
+            {
+                return DateTime.Today.Year.ToString();
+            }
+        }
         private string AppPublisher
         {
             get { return Package.Current.PublisherDisplayName; }

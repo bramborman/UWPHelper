@@ -68,7 +68,7 @@ namespace UWPHelper.UI
         {
             if (!calculateThemeForElementThemeDefault)
             {
-                ExceptionHelper.ValidateNotNull(defaultThemeColorInfo, parameterName);
+                ExceptionHelper.ValidateObjectNotNull(defaultThemeColorInfo, parameterName);
             }
         }
     }

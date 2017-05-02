@@ -21,7 +21,7 @@ namespace UWPHelper.Utilities
 
         public bool AddHandler(Action attachHandlerToEvent)
         {
-            ExceptionHelper.ValidateNotNull(attachHandlerToEvent, nameof(attachHandlerToEvent));
+            ExceptionHelper.ValidateObjectNotNull(attachHandlerToEvent, nameof(attachHandlerToEvent));
             Debug.WriteLine($"{Name} - {nameof(AddHandler)} called");
 
             if (HandlersCount++ == 0)
@@ -37,7 +37,7 @@ namespace UWPHelper.Utilities
 
         public bool RemoveHandler(Action unattachHandlerFromEvent)
         {
-            ExceptionHelper.ValidateNotNull(unattachHandlerFromEvent, nameof(unattachHandlerFromEvent));
+            ExceptionHelper.ValidateObjectNotNull(unattachHandlerFromEvent, nameof(unattachHandlerFromEvent));
             Debug.WriteLine($"{Name} - {nameof(RemoveHandler)} called");
 
             if (--HandlersCount == 0)

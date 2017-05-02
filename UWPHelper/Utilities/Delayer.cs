@@ -17,12 +17,11 @@ namespace UWPHelper.Utilities
             get { return timer.Interval; }
             set
             {
-                if (value < TimeSpan.Zero)
+                if (timer.Interval != value)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(Delay), "Value cannot be less than 0.");
+                    ExceptionHelper.ValidateTimeSpanGreaterOrEqual(value, TimeSpan.Zero, nameof(Delay));
+                    timer.Interval = value;
                 }
-
-                timer.Interval = value;
             }
         }
 

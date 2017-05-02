@@ -14,8 +14,8 @@ namespace UWPHelper.Utilities
 
         public static async Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder, CreationCollisionOption creationCollisionOption)
         {
-            ExceptionHelper.ValidateNotNullOrWhiteSpace(fileName, nameof(fileName));
-            ExceptionHelper.ValidateNotNull(folder, nameof(folder));
+            ExceptionHelper.ValidateStringNotNullOrWhiteSpace(fileName, nameof(fileName));
+            ExceptionHelper.ValidateObjectNotNull(folder, nameof(folder));
             ExceptionHelper.ValidateEnumValueDefined(creationCollisionOption, nameof(creationCollisionOption));
 
             bool success = true;
@@ -38,8 +38,8 @@ namespace UWPHelper.Utilities
 
         public static async Task<LoadObjectAsyncResult<T>> LoadObjectAsync<T>(string fileName, StorageFolder folder) where T : class, new()
         {
-            ExceptionHelper.ValidateNotNullOrWhiteSpace(fileName, nameof(fileName));
-            ExceptionHelper.ValidateNotNull(folder, nameof(folder));
+            ExceptionHelper.ValidateStringNotNullOrWhiteSpace(fileName, nameof(fileName));
+            ExceptionHelper.ValidateObjectNotNull(folder, nameof(folder));
 
             StorageFile file = await folder.TryGetItemAsync(fileName) as StorageFile;
             return file != null ? await LoadObjectAsync<T>(file) : new LoadObjectAsyncResult<T>(new T(), true);
@@ -47,7 +47,7 @@ namespace UWPHelper.Utilities
 
         public static async Task<LoadObjectAsyncResult<T>> LoadObjectAsync<T>(StorageFile file) where T : class, new()
         {
-            ExceptionHelper.ValidateNotNull(file, nameof(file));
+            ExceptionHelper.ValidateObjectNotNull(file, nameof(file));
 
             bool success    = true;
             T obj           = null;

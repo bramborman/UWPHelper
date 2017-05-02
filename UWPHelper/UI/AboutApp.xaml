@@ -61,7 +61,7 @@
                 <TextBlock Text="{x:Bind AppName}"/>
                 <TextBlock Text="{x:Bind AppVersion}"/>
                 <TextBlock>
-                    &#x00A9; 2017 <Run Text="{x:Bind AppPublisher}"/>
+                    © <Run Text="{x:Bind CurrentYear}"/> <Run Text="{x:Bind AppPublisher}"/>
                 </TextBlock>
             </StackPanel>
         </StackPanel>

@@ -14,8 +14,8 @@ namespace UWPHelper.UI
         public BarsHelperTitleBarColorsSetter(bool calculateThemeForElementThemeDefault, BarsHelperColorsSetterColorInfo defaultThemeColorInfo, BarsHelperColorsSetterColorInfo lightThemeColorInfo, BarsHelperColorsSetterColorInfo darkThemeColorInfo)
         {
             BarsHelperColorsSetterHelper.ValidateDefaultThemeColorInfo(calculateThemeForElementThemeDefault, defaultThemeColorInfo, nameof(defaultThemeColorInfo));
-            ExceptionHelper.ValidateNotNull(lightThemeColorInfo, nameof(lightThemeColorInfo));
-            ExceptionHelper.ValidateNotNull(darkThemeColorInfo, nameof(darkThemeColorInfo));
+            ExceptionHelper.ValidateObjectNotNull(lightThemeColorInfo, nameof(lightThemeColorInfo));
+            ExceptionHelper.ValidateObjectNotNull(darkThemeColorInfo, nameof(darkThemeColorInfo));
 
             CalculateThemeForElementThemeDefault = calculateThemeForElementThemeDefault;
 

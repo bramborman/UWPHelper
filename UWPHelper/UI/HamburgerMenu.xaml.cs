@@ -126,7 +126,7 @@ namespace UWPHelper.UI
 
         private void Fr_Content_Loaded(object sender, RoutedEventArgs e)
         {
-            ExceptionHelper.ValidateNotNull(InitialPageType, nameof(InitialPageType));
+            ExceptionHelper.ValidateObjectNotNull(InitialPageType, nameof(InitialPageType));
 
             if (Fr_Content.Content == null)
             {
@@ -221,20 +221,15 @@ namespace UWPHelper.UI
             int primaryListViewMaxIndex     = primaryListView.Items.Count - 1;
             int secondaryListViewMaxIndex   = primaryListView.Items.Count + secondaryListView.Items.Count - 1;
 
-            if (newValue < 0 || newValue > primaryListViewMaxIndex + secondaryListViewMaxIndex)
+            ExceptionHelper.ValidateNumberInRange(newValue, 0, primaryListViewMaxIndex + secondaryListViewMaxIndex, nameof(SelectedIndex));
+
+            if (newValue <= primaryListViewMaxIndex)
             {
-                throw new ArgumentOutOfRangeException(nameof(SelectedIndex), $"Value does not fall withing the expected range (0 - {primaryListViewMaxIndex + secondaryListViewMaxIndex})");
+                primaryListView.SelectedIndex = newValue;
             }
             else
             {
-                if (newValue <= primaryListViewMaxIndex)
-                {
-                    primaryListView.SelectedIndex = newValue;
-                }
-                else
-                {
-                    secondaryListView.SelectedIndex = newValue - primaryListView.Items.Count;
-                }
+                secondaryListView.SelectedIndex = newValue - primaryListView.Items.Count;
             }
         }
     }

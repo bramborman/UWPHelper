@@ -32,8 +32,8 @@ namespace UWPHelper.UI
                                                BarsHelperColorsSetterColorInfo darkThemeLandscapeColorInfo)
         {
             BarsHelperColorsSetterHelper.ValidateDefaultThemeColorInfo(calculateThemeForElementThemeDefault, defaultThemeColorInfo, nameof(defaultThemeColorInfo));
-            ExceptionHelper.ValidateNotNull(lightThemeColorInfo, nameof(lightThemeColorInfo));
-            ExceptionHelper.ValidateNotNull(darkThemeColorInfo, nameof(darkThemeColorInfo));
+            ExceptionHelper.ValidateObjectNotNull(lightThemeColorInfo, nameof(lightThemeColorInfo));
+            ExceptionHelper.ValidateObjectNotNull(darkThemeColorInfo, nameof(darkThemeColorInfo));
             
             BackgroundOpacity                       = backgroundOpacity;
             CalculateThemeForElementThemeDefault    = calculateThemeForElementThemeDefault;

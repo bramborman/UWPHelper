@@ -23,7 +23,7 @@ namespace UWPHelper.Utilities
 
         public static string GetTimedMessageString(string message, string dateTimeFormatting)
         {
-            ExceptionHelper.ValidateNotNullOrWhiteSpace(dateTimeFormatting, nameof(dateTimeFormatting));
+            ExceptionHelper.ValidateStringNotNullOrWhiteSpace(dateTimeFormatting, nameof(dateTimeFormatting));
             return DateTime.Now.ToString(dateTimeFormatting) + " - " + message;
         }
     }
