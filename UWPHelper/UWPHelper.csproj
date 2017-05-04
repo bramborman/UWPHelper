@@ -217,7 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.3.2</Version>
+      <Version>5.3.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Services.Store.SDK">
       <Version>10.1703.19001</Version>
@@ -226,7 +226,7 @@
       <Version>9.0.1</Version>
     </PackageReference>
     <PackageReference Include="NotifyPropertyChangedBase">
-      <Version>1.2.1</Version>
+      <Version>1.2.2-dev100</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

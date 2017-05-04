@@ -63,7 +63,7 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
         }
         private string AppVersion
         {
-            get { return $"{resourceLoader.GetString("Version")} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision}"; }
+            get { return $"{resourceLoader.GetString("Version")} {Version.Major}.{Version.Minor}.{Version.Build}"; }
         }
         private string CurrentYear
         {
