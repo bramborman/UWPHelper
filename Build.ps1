@@ -23,7 +23,7 @@ if (($env:APPVEYOR_REPO_BRANCH -eq "master") -and ($env:APPVEYOR_PULL_REQUEST_TI
 
 # Have to use different version because of a bug in 4.0.0
 Start-FileDownload "https://dist.nuget.org/win-x86-commandline/v4.1.0/nuget.exe"
-.\nuget restore -FallbackSource https://www.myget.org/F/bramborman
+.\nuget restore -source "https://api.nuget.org/v3/index.json;https://www.myget.org/F/bramborman/api/v3/index.json"
 
 # Build
 $uwpHelperProjectFolder = Get-ChildItem -Directory -Filter "UWPHelper"
