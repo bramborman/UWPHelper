@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using Windows.UI.Xaml;
 
 namespace UWPHelper.Utilities
 {
     // Inspired by Rudy Huyn - http://www.rudyhuyn.com/blog/2016/03/01/delay-an-action-debounce-and-throttle/
+    [DebuggerDisplay("IsRunning = {IsRunning}")]
     public sealed class Delayer
     {
         private DispatcherTimer timer;
@@ -17,16 +19,20 @@ namespace UWPHelper.Utilities
             get { return timer.Interval; }
             set
             {
-                if (value < TimeSpan.Zero)
+                if (timer.Interval != value)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(Delay), "Value cannot be less than 0.");
+                    ExceptionHelper.ValidateTimeSpanGreaterOrEqual(value, TimeSpan.Zero, nameof(Delay));
+                    timer.Interval = value;
                 }
-
-                timer.Interval = value;
             }
         }
 
         public event Action<Delayer> Tick;
+
+        public Delayer() : this(TimeSpan.Zero)
+        {
+
+        }
         
         public Delayer(TimeSpan delay)
         {

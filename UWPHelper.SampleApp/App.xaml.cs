@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using UWPHelper.UI;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -14,6 +16,8 @@ namespace UWPHelper.SampleApp
 {
     public sealed partial class App : Application
     {
+        private static int windowNumber;
+
         public App()
         {
             InitializeComponent();
@@ -24,7 +28,44 @@ namespace UWPHelper.SampleApp
         protected override async void OnActivated(IActivatedEventArgs args)
 #pragma warning restore IDE1006 // Naming Styles
         {
-            bool loadAppData = AppData.Current == null;
+            windowNumber++;
+
+            if (args.PreviousExecutionState == ApplicationExecutionState.Running)
+            {
+                // Will fail on phone when debugger is not attached
+                try
+                {
+                    CoreApplicationView newView = CoreApplication.CreateNewView();
+                    int newViewId = 0;
+
+                    await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        Frame newViewRootFrame = InitializeRootFrameForCurrenView();
+                        AppData.GetForCurrentView().SetTheme();
+                        InitialRootFrameNavigationForCurrentView(newViewRootFrame);
+
+                        newViewId = ApplicationView.GetForCurrentView().Id;
+                        await BarsHelper.Current.InitializeForCurrentViewAsync();
+                    });
+
+                    if (args is IApplicationViewActivatedEventArgs appViewArgs)
+                    {
+                        await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId, ViewSizePreference.Default, appViewArgs.CurrentlyShownApplicationViewId, ViewSizePreference.Default);
+                    }
+                    else
+                    {
+                        await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+                    }
+                }
+                catch
+                {
+
+                }
+
+                return;
+            }
+
+            bool loadAppData = !AppData.Loaded;
             Task loadAppDataTask = null;
 
             if (loadAppData)
@@ -32,6 +73,31 @@ namespace UWPHelper.SampleApp
                 loadAppDataTask = AppData.LoadAsync();
             }
 
+            Frame rootFrame = InitializeRootFrameForCurrenView();
+            LaunchActivatedEventArgs launchArgs = args as LaunchActivatedEventArgs;
+
+            if (loadAppData)
+            {
+                await loadAppDataTask;
+
+                AppData loadedAppData = AppData.GetForCurrentView();
+
+                BarsHelper.Current.InitializeAutoUpdating(() => loadedAppData.Theme, loadedAppData, nameof(AppData.Theme));
+                await BarsHelper.Current.SetStatusBarColorModeAsync(BarsHelperColorMode.ThemedGray);
+                await BarsHelper.Current.InitializeForCurrentViewAsync();
+
+                loadedAppData.SetTheme();
+                loadedAppData.Foo++;
+            }
+
+            if (launchArgs?.PrelaunchActivated != true)
+            {
+                InitialRootFrameNavigationForCurrentView(rootFrame);
+            }
+        }
+
+        private Frame InitializeRootFrameForCurrenView()
+        {
             Frame rootFrame = Window.Current.Content as Frame;
 
             if (rootFrame == null)
@@ -47,28 +113,17 @@ namespace UWPHelper.SampleApp
                 }
             }
 
-            LaunchActivatedEventArgs launchArgs = args as LaunchActivatedEventArgs;
+            return rootFrame;
+        }
 
-            if (loadAppData)
+        private void InitialRootFrameNavigationForCurrentView(Frame rootFrame)
+        {
+            if (rootFrame.Content == null)
             {
-                await loadAppDataTask;
-
-                BarsHelper.Current.InitializeAutoUpdating(() => AppData.Current.Theme, AppData.Current, nameof(AppData.Theme));
-                await BarsHelper.Current.SetStatusBarColorModeAsync(BarsHelperColorMode.ThemedGray);
-                await BarsHelper.Current.InitializeForCurrentViewAsync();
-
-                AppData.Current.SetTheme();
+                rootFrame.Navigate(typeof(MainPage), windowNumber);
             }
 
-            if (launchArgs?.PrelaunchActivated != true)
-            {
-                if (rootFrame.Content == null)
-                {
-                    rootFrame.Navigate(typeof(MainPage), launchArgs?.Arguments);
-                }
-                
-                Window.Current.Activate();
-            }
+            Window.Current.Activate();
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
@@ -87,7 +142,7 @@ namespace UWPHelper.SampleApp
         {
             SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
 
-            await AppData.Current.SaveAsync();
+            await AppData.GetForCurrentView().SaveAsync();
             deferral.Complete();
         }
     }

@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D829618-309B-4E7F-8DE2-9D5D44344D25}</ProjectGuid>
+    <ProjectGuid>{1483FEDE-EEAA-4713-BCCC-76C6B8798DE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UWPHelper</RootNamespace>
     <AssemblyName>UWPHelper</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -110,11 +110,12 @@
     <ErrorReport>prompt</ErrorReport>
     <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
-    <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\cs-CZ\Resources.resw" />
+    <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
@@ -142,6 +143,7 @@
     <Compile Include="UI\AboutAppDialog.xaml.cs">
       <DependentUpon>AboutAppDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\AccentColorHelper.cs" />
     <Compile Include="UI\AdvancedContentDialog.cs" />
     <Compile Include="UI\AdvancedListView.cs" />
     <Compile Include="UI\AdvancedPivot.cs">
@@ -149,6 +151,7 @@
     </Compile>
     <Compile Include="UI\AdvancedSlider.cs" />
     <Compile Include="UI\AdvancedTextBox.cs" />
+    <Compile Include="UI\BarsHelper.cs" />
     <Compile Include="UI\BarsHelperColorMode.cs">
       <DependentUpon>BarsHelper.cs</DependentUpon>
     </Compile>
@@ -194,28 +197,43 @@
     <Compile Include="UI\ThirdPartySoftwareInfoDialog.xaml.cs">
       <DependentUpon>ThirdPartySoftwareInfoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\AccentColorHelper.cs" />
-    <Compile Include="UI\BarsHelper.cs" />
     <Compile Include="Utilities\ColorHelper.cs" />
-    <Compile Include="Utilities\ExceptionHelper.cs" />
-    <Compile Include="Utilities\OneEventHandlerHelper.cs" />
     <Compile Include="Utilities\DebugHelper.cs" />
     <Compile Include="Utilities\Delayer.cs" />
     <Compile Include="Utilities\DelegateCommand.cs" />
     <Compile Include="Utilities\DeviceInfo.cs" />
     <Compile Include="Utilities\DisplayRequestHelper.cs" />
+    <Compile Include="Utilities\ExceptionHelper.cs" />
     <Compile Include="Utilities\KeyboardHelper.cs" />
-    <Compile Include="Utilities\NotifyPropertyChangedBase.cs" />
+    <Compile Include="Utilities\OneEventHandlerHelper.cs" />
     <Compile Include="Utilities\Range.cs" />
     <Compile Include="Utilities\StorageFileHelper.cs" />
+    <Compile Include="Utilities\StorageHelper.cs" />
     <Compile Include="Utilities\ThreadPoolTimer.cs" />
     <Compile Include="Utilities\ViewHelper.cs" />
+    <Compile Include="Utilities\ViewSpecificBindableClassBase.cs" />
+    <Compile Include="Utilities\ViewSpecificClassBase.cs" />
     <EmbeddedResource Include="Properties\UWPHelper.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.3.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Services.Store.SDK">
+      <Version>10.1703.19001</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>9.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="NotifyPropertyChangedBase">
+      <Version>1.2.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
     <Page Include="Resources.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
@@ -268,7 +286,7 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0">
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
-    <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
+    <SDKReference Include="WindowsMobile, Version=10.0.15063.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>

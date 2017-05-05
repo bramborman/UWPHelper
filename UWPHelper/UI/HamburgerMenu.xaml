@@ -30,11 +30,7 @@
                     <Grid.Resources>
                         <Style TargetType="ListView">
                             <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
-                            <Setter Property="ItemContainerTransitions">
-                                <Setter.Value>
-                                    <TransitionCollection/>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="ItemContainerTransitions" Value="{x:Null}"/>
                         </Style>
                     </Grid.Resources>
 

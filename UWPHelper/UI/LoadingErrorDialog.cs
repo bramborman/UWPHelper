@@ -12,7 +12,7 @@ namespace UWPHelper.UI
 
         public LoadingErrorDialog(string title, string continueWith)
         {
-            ExceptionHelper.ValidateNotNullOrWhiteSpace(title, nameof(title));
+            ExceptionHelper.ValidateStringNotNullOrWhiteSpace(title, nameof(title));
             ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("UWPHelper/Resources");
             
             Title   = string.Format(resourceLoader.GetString("LoadingErrorDialog/Title"), title);

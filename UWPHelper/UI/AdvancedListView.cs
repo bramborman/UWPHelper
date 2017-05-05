@@ -16,7 +16,6 @@ namespace UWPHelper.UI
             get { return (bool)GetValue(IsContextMenuEnabledProperty); }
             set { SetValue(IsContextMenuEnabledProperty, value); }
         }
-
         public object FocusedItem { get; private set; }
 
         private void OpenContextMenu(object sender, RightTappedRoutedEventArgs e)

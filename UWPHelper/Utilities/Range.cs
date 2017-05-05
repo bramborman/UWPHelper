@@ -1,8 +1,11 @@
-﻿using System;
+﻿using NotifyPropertyChangedBase;
+using System;
+using System.Diagnostics;
 
 namespace UWPHelper.Utilities
 {
-    public class Range : NotifyPropertyChangedBase, IEquatable<Range>
+    [DebuggerDisplay("Min = {Min}, Max = {Max}")]
+    public class Range : NotifyPropertyChanged, IEquatable<Range>
     {
         public int Min
         {

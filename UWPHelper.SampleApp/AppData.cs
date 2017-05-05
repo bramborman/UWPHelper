@@ -9,12 +9,21 @@ using Windows.UI.Xaml.Controls;
 
 namespace UWPHelper.SampleApp
 {
-    public sealed class AppData : NotifyPropertyChangedBase
+    public sealed class AppData : ViewSpecificBindableClassBase<AppData>
     {
         private const string FILE_NAME = "AppData.json";
 
-        public static AppData Current { get; private set; }
+        private static AppData mainAppData;
 
+        public static bool Loaded
+        {
+            get
+            {
+                return InstancesCount != 0;
+            }
+        }
+
+        // Add every property to the GetForCurrentViewMethod cloning
         [JsonIgnore]
         public bool ShowLoadingError { get; set; }
         public int Foo
@@ -45,12 +54,15 @@ namespace UWPHelper.SampleApp
 
         public AppData()
         {
+            IsPropertyChangedCallbackInvokingEnabled    = false;
+            IsPropertyChangedEventInvokingEnabled       = false;
+
             RegisterProperty(nameof(Foo), typeof(int), 0);
             RegisterProperty(nameof(CheckBoxChecked), typeof(bool?), true);
             RegisterProperty(nameof(SampleEnum), typeof(SampleEnum), SampleEnum.Zero);
-            RegisterProperty(nameof(Theme), typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark, (oldValue, newValue) =>
+            RegisterProperty(nameof(Theme), typeof(ElementTheme), ThemeSelector.IsDefaultThemeAvailable ? ElementTheme.Default : ElementTheme.Dark, (sender, e) =>
             {
-                Current?.SetTheme();
+                SetTheme();
             });
             RegisterProperty(nameof(Uri), typeof(string), "");
         }
@@ -62,28 +74,43 @@ namespace UWPHelper.SampleApp
 
         public Task SaveAsync()
         {
-            return StorageFileHelper.SaveObjectAsync(this, FILE_NAME, ApplicationData.Current.LocalFolder);
+            return StorageHelper.SaveObjectAsync(this, FILE_NAME, ApplicationData.Current.LocalFolder);
         }
 
         public static async Task LoadAsync()
         {
 #if DEBUG
-            if (Current != null)
+            if (Loaded)
             {
                 throw new Exception("You're not doing it right ;)");
             }
 #endif
 
-            var loadObjectAsyncResult = await StorageFileHelper.LoadObjectAsync<AppData>(FILE_NAME, ApplicationData.Current.LocalFolder);
-            Current                   = loadObjectAsyncResult.Object;
-            Current.ShowLoadingError  = !loadObjectAsyncResult.Success;
+            StorageFileHelperLoadResult<AppData> loadResult = await StorageHelper.LoadObjectAsync<AppData>(FILE_NAME, ApplicationData.Current.LocalFolder);
+            mainAppData                                     = BaseGetForCurrentView(() => loadResult.LoadedObject);
+            mainAppData.ShowLoadingError                    = loadResult.Status == StorageFileHelperStatus.Failure;
 
-            Current.PropertyChanged += async (sender, e) =>
+            MainPropertyChanged += async (sender, e) =>
             {
-                await Current.SaveAsync();
+                await mainAppData.SaveAsync();
             };
+            
+            mainAppData.IsPropertyChangedCallbackInvokingEnabled    = true;
+            mainAppData.IsPropertyChangedEventInvokingEnabled       = true;
+        }
 
-            Current.Foo++;
+        public static AppData GetForCurrentView()
+        {
+            return BaseGetForCurrentView(() => new AppData
+            {
+                Foo                                         = mainAppData.Foo,
+                CheckBoxChecked                             = mainAppData.CheckBoxChecked,
+                SampleEnum                                  = mainAppData.SampleEnum,
+                Theme                                       = mainAppData.Theme,
+                Uri                                         = mainAppData.Uri,
+                IsPropertyChangedCallbackInvokingEnabled    = true,
+                IsPropertyChangedEventInvokingEnabled       = true
+            });
         }
     }
 }

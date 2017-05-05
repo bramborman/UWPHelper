@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
 namespace UWPHelper.Utilities
 {
+    [DebuggerDisplay("IsEnabled = {IsEnabled}")]
     public sealed class ThreadPoolTimer : IDisposable
     {
         private readonly TimerCallback timerCallback;
@@ -15,6 +17,7 @@ namespace UWPHelper.Utilities
         public bool IsTickInvokedOnMainViewDispatcher { get; }
         public bool IsDisposedOnStop { get; }
         public bool IsEnabled { get; private set; }
+        public CoreDispatcher Dispatcher { get; }
         public TimeSpan Interval
         {
             get { return _interval; }
@@ -33,15 +36,33 @@ namespace UWPHelper.Utilities
         }
 
         public event EventHandler Tick;
-        
-        public ThreadPoolTimer(TimeSpan interval) : this(interval, true, true)
+
+        public ThreadPoolTimer() : this(TimeSpan.Zero)
         {
 
         }
         
-        public ThreadPoolTimer(TimeSpan interval, bool invokeTickOnMainViewDispatcher, bool disposeOnStop)
+        public ThreadPoolTimer(TimeSpan interval) : this(interval, true, true)
         {
+            
+        }
+
+        public ThreadPoolTimer(TimeSpan interval, bool invokeTickOnMainViewDispatcher, bool disposeOnStop) : this(interval, CoreApplication.MainView.CoreWindow.Dispatcher, invokeTickOnMainViewDispatcher, disposeOnStop)
+        {
+
+        }
+
+        public ThreadPoolTimer(TimeSpan interval, CoreDispatcher dispatcher) : this(interval, dispatcher, true, true)
+        {
+
+        }
+        
+        public ThreadPoolTimer(TimeSpan interval, CoreDispatcher dispatcher, bool invokeTickOnMainViewDispatcher, bool disposeOnStop)
+        {
+            ExceptionHelper.ValidateObjectNotNull(dispatcher, nameof(dispatcher));
+
             Interval                            = interval;
+            Dispatcher                          = dispatcher;
             IsTickInvokedOnMainViewDispatcher   = invokeTickOnMainViewDispatcher;
             IsDisposedOnStop                    = disposeOnStop;
 
@@ -49,7 +70,7 @@ namespace UWPHelper.Utilities
             {
                 timerCallback = async state =>
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         Tick?.Invoke(this, new EventArgs());
                     });

@@ -5,6 +5,7 @@ using Windows.Storage;
 
 namespace UWPHelper.Utilities
 {
+    [Obsolete("This class is obsolete and will be removed with version 2.0. Use the 'StorageHelper' class instead.")]
     public static class StorageFileHelper
     {
         public static Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder)
@@ -14,8 +15,8 @@ namespace UWPHelper.Utilities
 
         public static async Task<bool> SaveObjectAsync(object obj, string fileName, StorageFolder folder, CreationCollisionOption creationCollisionOption)
         {
-            ExceptionHelper.ValidateNotNullOrWhiteSpace(fileName, nameof(fileName));
-            ExceptionHelper.ValidateNotNull(folder, nameof(folder));
+            ExceptionHelper.ValidateStringNotNullOrWhiteSpace(fileName, nameof(fileName));
+            ExceptionHelper.ValidateObjectNotNull(folder, nameof(folder));
             ExceptionHelper.ValidateEnumValueDefined(creationCollisionOption, nameof(creationCollisionOption));
 
             bool success = true;
@@ -23,7 +24,7 @@ namespace UWPHelper.Utilities
             try
             {
                 StorageFile file    = await folder.CreateFileAsync(fileName, creationCollisionOption);
-                string json         = await Task.Factory.StartNew(() => JsonConvert.SerializeObject(obj));
+                string json         = await Task.Run(() => JsonConvert.SerializeObject(obj));
 
                 await FileIO.WriteTextAsync(file, json);
             }
@@ -38,8 +39,8 @@ namespace UWPHelper.Utilities
 
         public static async Task<LoadObjectAsyncResult<T>> LoadObjectAsync<T>(string fileName, StorageFolder folder) where T : class, new()
         {
-            ExceptionHelper.ValidateNotNullOrWhiteSpace(fileName, nameof(fileName));
-            ExceptionHelper.ValidateNotNull(folder, nameof(folder));
+            ExceptionHelper.ValidateStringNotNullOrWhiteSpace(fileName, nameof(fileName));
+            ExceptionHelper.ValidateObjectNotNull(folder, nameof(folder));
 
             StorageFile file = await folder.TryGetItemAsync(fileName) as StorageFile;
             return file != null ? await LoadObjectAsync<T>(file) : new LoadObjectAsyncResult<T>(new T(), true);
@@ -47,25 +48,28 @@ namespace UWPHelper.Utilities
 
         public static async Task<LoadObjectAsyncResult<T>> LoadObjectAsync<T>(StorageFile file) where T : class, new()
         {
-            ExceptionHelper.ValidateNotNull(file, nameof(file));
+            ExceptionHelper.ValidateObjectNotNull(file, nameof(file));
 
-            bool success = true;
-            T obj = null;
-            
+            bool success    = true;
+            T obj           = null;
+
+            // Reading from the file could fail while the file is used by another proccess
             try
             {
-                // Reading from StorageFile could fail while the file is used by another proccess
                 string json = await FileIO.ReadTextAsync(file);
-                obj = !string.IsNullOrWhiteSpace(json) ? await Task.Run(() => JsonConvert.DeserializeObject<T>(json)) : new T();
+
+                if (!string.IsNullOrWhiteSpace(json))
+                {
+                    obj = await Task.Run(() => JsonConvert.DeserializeObject<T>(json));
+                }
             }
             catch
             {
-                obj     = new T();
                 success = false;
             }
 
             DebugHelper.OperationInfo(file.Name, "loading", success);
-            return new LoadObjectAsyncResult<T>(obj, success);
+            return new LoadObjectAsyncResult<T>(obj ?? new T(), success);
         }
         
         public sealed class LoadObjectAsyncResult<T> where T : class, new()

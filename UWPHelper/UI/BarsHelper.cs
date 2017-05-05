@@ -80,7 +80,7 @@ namespace UWPHelper.UI
             get { return _requestedThemeGetter; }
             set
             {
-                ExceptionHelper.ValidateNotNull(value, nameof(RequestedThemeGetter));
+                ExceptionHelper.ValidateObjectNotNull(value, nameof(RequestedThemeGetter));
 
                 if (!ReferenceEquals(_requestedThemeGetter, value))
                 {
@@ -354,8 +354,8 @@ namespace UWPHelper.UI
 
         public void InitializeAutoUpdating(Func<ElementTheme> requestedThemeGetter, INotifyPropertyChanged requestedThemePropertyParent, string requestedThemePropertyName)
         {
-            ExceptionHelper.ValidateNotNull(requestedThemePropertyParent, nameof(requestedThemePropertyParent));
-            ExceptionHelper.ValidateNotNullOrWhiteSpace(requestedThemePropertyName, nameof(requestedThemePropertyName));
+            ExceptionHelper.ValidateObjectNotNull(requestedThemePropertyParent, nameof(requestedThemePropertyParent));
+            ExceptionHelper.ValidateStringNotNullOrWhiteSpace(requestedThemePropertyName, nameof(requestedThemePropertyName));
 
             RequestedThemeGetter            = requestedThemeGetter;
             // Assign this before attaching an event handler to parent
@@ -568,11 +568,7 @@ namespace UWPHelper.UI
                 {
                     if (_windowActivatedEventHandlerHelper == null)
                     {
-#if DEBUG
                         _windowActivatedEventHandlerHelper = new OneEventHandlerHelper("Window");
-#else
-                    _windowActivatedEventHandlerHelper = new OneEventHandlerHelper();
-#endif
                     }
 
                     return _windowActivatedEventHandlerHelper;
@@ -584,20 +580,11 @@ namespace UWPHelper.UI
                 {
                     if (_accentColorHelperColorChangedEventHandlerHelper == null)
                     {
-#if DEBUG
                         _accentColorHelperColorChangedEventHandlerHelper = new OneEventHandlerHelper("Accent");
-#else
-                    _accentColorHelperColorChangedEventHandlerHelper = new OneEventHandlerHelper();
-#endif
                     }
 
                     return _accentColorHelperColorChangedEventHandlerHelper;
                 }
-            }
-
-            internal ViewOneEventHandlerHelpers()
-            {
-
             }
         }
     }

@@ -9,7 +9,7 @@ namespace UWPHelper.UI
 
         public ThirdPartySoftwareInfoDialog(List<ThirdPartySoftwareInfo> thirdPartySoftwareInfo)
         {
-            ExceptionHelper.ValidateNotNull(thirdPartySoftwareInfo, nameof(thirdPartySoftwareInfo));
+            ExceptionHelper.ValidateObjectNotNull(thirdPartySoftwareInfo, nameof(thirdPartySoftwareInfo));
 
             ThirdPartySoftwareInfo = thirdPartySoftwareInfo;
             InitializeComponent();

@@ -17,7 +17,7 @@ namespace UWPHelper.Utilities
 
         public DelegateCommand(EventHandler<object> executed, Predicate<object> canExecute)
         {
-            ExceptionHelper.ValidateNotNull(executed, nameof(executed));
+            ExceptionHelper.ValidateObjectNotNull(executed, nameof(executed));
 
             Executed += executed;
             this.canExecute = canExecute;
