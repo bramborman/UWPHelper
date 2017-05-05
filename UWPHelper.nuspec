@@ -16,10 +16,10 @@
     <tags>UWP Toolkit Helper Helpers XAML C#</tags>
     <dependencies>
       <group targetFramework="uap10.0">
-        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.3.2"/>
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.3.3"/>
         <dependency id="Microsoft.Services.Store.SDK" version="10.1703.19001"/>
         <dependency id="Newtonsoft.Json" version="9.0.1"/>
-        <dependency id="NotifyPropertyChangedBase" version="1.2.0"/>
+        <dependency id="NotifyPropertyChangedBase" version="1.2.1"/>
       </group>
     </dependencies>
   </metadata>
