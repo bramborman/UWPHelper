@@ -94,7 +94,7 @@ namespace UWPHelper.Utilities
 
         internal StorageFileHelperResult()
         {
-
+            Status = StorageFileHelperStatus.Success;
         }
 
         public StorageFileHelperResult(StorageFileHelperStatus status, Exception exception)
