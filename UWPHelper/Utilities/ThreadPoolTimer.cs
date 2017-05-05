@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
 namespace UWPHelper.Utilities
 {
+    [DebuggerDisplay("IsEnabled = {IsEnabled}")]
     public sealed class ThreadPoolTimer : IDisposable
     {
         private readonly TimerCallback timerCallback;
@@ -34,6 +36,11 @@ namespace UWPHelper.Utilities
         }
 
         public event EventHandler Tick;
+
+        public ThreadPoolTimer() : this(TimeSpan.Zero)
+        {
+
+        }
         
         public ThreadPoolTimer(TimeSpan interval) : this(interval, true, true)
         {
@@ -52,6 +59,8 @@ namespace UWPHelper.Utilities
         
         public ThreadPoolTimer(TimeSpan interval, CoreDispatcher dispatcher, bool invokeTickOnMainViewDispatcher, bool disposeOnStop)
         {
+            ExceptionHelper.ValidateObjectNotNull(dispatcher, nameof(dispatcher));
+
             Interval                            = interval;
             Dispatcher                          = dispatcher;
             IsTickInvokedOnMainViewDispatcher   = invokeTickOnMainViewDispatcher;
