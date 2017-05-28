@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace UWPHelper.Utilities
 {
@@ -14,11 +16,27 @@ namespace UWPHelper.Utilities
             ValidateObjectNotNull(obj, parameterName);
         }
 
+        public static void ValidateObjectIsNull(object obj, string parameterName)
+        {
+            if (obj != null)
+            {
+                throw new ArgumentException("Parameter couldn't be null.", parameterName);
+            }
+        }
+
         public static void ValidateObjectNotNull(object obj, string parameterName)
         {
             if (obj == null)
             {
                 throw new ArgumentNullException(parameterName);
+            }
+        }
+
+        public static void ValidateIEnumerableNotEmpty<T>(IEnumerable<T> enumerable, string parameterName)
+        {
+            if (!enumerable.Any())
+            {
+                throw new ArgumentException("Collection cannot be empty.", parameterName);
             }
         }
 

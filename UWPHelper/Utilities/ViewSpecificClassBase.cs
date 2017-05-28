@@ -12,7 +12,7 @@ namespace UWPHelper.Utilities
     {
         private static readonly Dictionary<int, T> instances = new Dictionary<int, T>();
 
-        private static object locker;
+        private static object syncRoot;
 
         protected static int InstancesCount
         {
@@ -28,7 +28,7 @@ namespace UWPHelper.Utilities
         {
             if (this is INotifyPropertyChanged iNotifyPropertyChanged)
             {
-                locker = new object();
+                syncRoot = new object();
 
                 iNotifyPropertyChanged.PropertyChanged += async (sender, e) =>
                 {
@@ -36,7 +36,7 @@ namespace UWPHelper.Utilities
 
                     try
                     {
-                        Monitor.TryEnter(locker, 0, ref lockTaken);
+                        Monitor.TryEnter(syncRoot, 0, ref lockTaken);
 
                         if (lockTaken)
                         {
@@ -62,7 +62,7 @@ namespace UWPHelper.Utilities
                     {
                         if (lockTaken)
                         {
-                            Monitor.Exit(locker);
+                            Monitor.Exit(syncRoot);
                         }
                     }
                 };

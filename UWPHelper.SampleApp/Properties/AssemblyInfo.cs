@@ -2,4 +2,4 @@
 
 [assembly: AssemblyTitle("UWPHelper Sample App")]
 [assembly: AssemblyProduct("UWPHelper Sample App")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("UWPHelper Sample App")]

@@ -214,9 +214,9 @@ namespace UWPHelper.UI
         private static void SelectedIndexPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             int newValue = (int)e.NewValue;
-            HamburgerMenu hamburgerMenu = (HamburgerMenu)d;
-            ListView primaryListView = hamburgerMenu.LV_PrimaryItems;
-            ListView secondaryListView = hamburgerMenu.LV_SecondaryItems;
+            HamburgerMenu hamburgerMenu     = (HamburgerMenu)d;
+            ListView primaryListView        = hamburgerMenu.LV_PrimaryItems;
+            ListView secondaryListView      = hamburgerMenu.LV_SecondaryItems;
 
             int primaryListViewMaxIndex     = primaryListView.Items.Count - 1;
             int secondaryListViewMaxIndex   = primaryListView.Items.Count + secondaryListView.Items.Count - 1;

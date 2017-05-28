@@ -5,7 +5,6 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
-using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -106,11 +105,7 @@ namespace UWPHelper.SampleApp
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 Window.Current.Content = rootFrame;
-
-                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
-                {
-                    ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(450, 460));
-                }
+                ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(450, 460));
             }
 
             return rootFrame;
