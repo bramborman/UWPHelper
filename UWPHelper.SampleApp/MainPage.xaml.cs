@@ -34,28 +34,30 @@ namespace UWPHelper.SampleApp
         public MainPage()
         {
             InitializeComponent();
-
-            Loaded += async (sender, e) =>
-            {
-                if (AppData.ShowLoadingError)
-                {
-                    AppData.ShowLoadingError = false;
-                    ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
-
-                    if (await new LoadingErrorDialog(resourceLoader.GetString("LoadingErrorDialog/Settings"), resourceLoader.GetString("LoadingErrorDialog/ContinueWith")).ShowAsync() == ContentDialogResult.Primary)
-                    {
-                        Application.Current.Exit();
-                    }
-                    else
-                    {
-                        await AppData.SaveAsync();
-                    }
-                }
-
-                ATX_Uri.SelectionStart = ATX_Uri.Text.Length;
-            };
         }
-        
+
+        private async void Page_LoadedAsync(object sender, RoutedEventArgs e)
+        {
+            if (AppData.ShowLoadingError)
+            {
+                AppData.ShowLoadingError = false;
+
+                ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
+                LoadingErrorDialog errorDialog = new LoadingErrorDialog(resourceLoader.GetString("LoadingErrorDialog/Settings"), resourceLoader.GetString("LoadingErrorDialog/ContinueWith"));
+
+                if (await errorDialog.ShowAsync() == ContentDialogResult.Primary)
+                {
+                    Application.Current.Exit();
+                }
+                else
+                {
+                    await AppData.SaveAsync();
+                }
+            }
+
+            ATX_Uri.SelectionStart = ATX_Uri.Text.Length;
+        }
+
         private async void LaunchUriAsync(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(ATX_Uri.Text))

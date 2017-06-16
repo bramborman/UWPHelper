@@ -16,14 +16,6 @@ namespace UWPHelper.Utilities
             ValidateObjectNotNull(obj, parameterName);
         }
 
-        public static void ValidateObjectIsNull(object obj, string parameterName)
-        {
-            if (obj != null)
-            {
-                throw new ArgumentException("Parameter couldn't be null.", parameterName);
-            }
-        }
-
         public static void ValidateObjectNotNull(object obj, string parameterName)
         {
             if (obj == null)
