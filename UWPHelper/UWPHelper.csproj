@@ -220,13 +220,13 @@
       <Version>5.3.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Services.Store.SDK">
-      <Version>10.1703.19001</Version>
+      <Version>10.1705.16001</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>9.0.1</Version>
+      <Version>10.0.3</Version>
     </PackageReference>
     <PackageReference Include="NotifyPropertyChangedBase">
-      <Version>1.2.1</Version>
+      <Version>1.2.2-dev-20170710-210414-133</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

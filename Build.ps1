@@ -1,4 +1,7 @@
-﻿# Before build
+﻿Write-Host "`nBuild script executed"
+Write-Host   "====================="
+
+# Before build
 Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildScripts/master/Scripts/Set-BuildVersion.ps1"
 .\Set-BuildVersion.ps1
 

@@ -9,7 +9,11 @@ namespace UWPHelper.UI
         public NumberTextBox()
         {
             InputScope inputScope = new InputScope();
-            inputScope.Names.Add(new InputScopeName { NameValue = InputScopeNameValue.Number });
+            inputScope.Names.Add(new InputScopeName
+            {
+                NameValue = InputScopeNameValue.Number
+            });
+
             InputScope = inputScope;
         }
 
