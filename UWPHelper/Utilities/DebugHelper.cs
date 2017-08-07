@@ -33,7 +33,7 @@ namespace UWPHelper.Utilities
         {
             obj.PropertyChanged += (sender, e) =>
             {
-                Debug.WriteLine($"{sender.GetType().Name}: {e.PropertyName} changed to {sender.GetType().GetTypeInfo().GetRuntimeProperty(e.PropertyName).GetValue(sender)}.");
+                Debug.WriteLine($"{sender.GetType().Name}: {e.PropertyName} changed to {sender.GetType().GetRuntimeProperty(e.PropertyName).GetValue(sender)}.");
             };
         }
     }
