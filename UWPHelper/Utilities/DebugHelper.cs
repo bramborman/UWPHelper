@@ -26,5 +26,14 @@ namespace UWPHelper.Utilities
             ExceptionHelper.ValidateStringNotNullOrWhiteSpace(dateTimeFormatting, nameof(dateTimeFormatting));
             return DateTime.Now.ToString(dateTimeFormatting) + " - " + message;
         }
+        
+        public static void RegisterDebugPropertyChangedEventHandler(INotifyPropertyChanged obj)
+        {
+            obj.PropertyChanged += (sender, e) =>
+            {
+                Type senderType = sender.GetType();
+                Debug.WriteLine($"{senderType.Name}: {e.PropertyName} changed to {senderType.GetProperty(e.PropertyName).GetValue(sender)}.");
+            };
+        }
     }
 }
