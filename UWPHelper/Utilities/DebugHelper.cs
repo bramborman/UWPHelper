@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace UWPHelper.Utilities
 {
@@ -32,8 +33,7 @@ namespace UWPHelper.Utilities
         {
             obj.PropertyChanged += (sender, e) =>
             {
-                Type senderType = sender.GetType();
-                Debug.WriteLine($"{senderType.Name}: {e.PropertyName} changed to {senderType.GetProperty(e.PropertyName).GetValue(sender)}.");
+                Debug.WriteLine($"{sender.GetType().Name}: {e.PropertyName} changed to {sender.GetTypeInfo().GetRuntimeProperty(e.PropertyName).GetValue(sender)}.");
             };
         }
     }
