@@ -1,4 +1,3 @@
-# WARNING! FURTHER DEVELOPMENT WILL SOON BE DISCONTINUED.
 I recommend using UWP Community Toolkit since lots of features contained in this library are already there and better maintained. I'll try to add UWPHelper specific features to UWP Community Toolkit and will provide simple guidelines on how to switch from UWPHelper to UWP Community Toolkit.
 
 # UWPHelper
