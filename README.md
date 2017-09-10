@@ -1,5 +1,3 @@
-I recommend using UWP Community Toolkit since lots of features contained in this library are already there and better maintained. I'll try to add UWPHelper specific features to UWP Community Toolkit and will provide simple guidelines on how to switch from UWPHelper to UWP Community Toolkit.
-
 # UWPHelper
 [![NuGet](https://img.shields.io/nuget/v/UWPHelper.svg)](https://www.nuget.org/packages/UWPHelper/)
 [![Build status](https://ci.appveyor.com/api/projects/status/idk6s1k2atafjqly/branch/master?svg=true)](https://ci.appveyor.com/project/bramborman/uwphelper/branch/master)
