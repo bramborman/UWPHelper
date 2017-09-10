@@ -1,4 +1,10 @@
-﻿# Before build
+﻿Write-Host "`nAppVeyor-Build script executed"
+Write-Host   "=============================="
+
+# Before build
+Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildScripts/master/Scripts/Set-BuildVersion.ps1"
+.\Set-BuildVersion.ps1
+
 # Use this script after UWPHelper went out of preview
 # Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildScripts/master/Scripts/Set-PureBuildVersion.ps1"
 # .\Set-PureBuildVersion.ps1

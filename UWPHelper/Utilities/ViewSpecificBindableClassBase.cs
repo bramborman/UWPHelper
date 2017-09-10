@@ -12,7 +12,7 @@ namespace UWPHelper.Utilities
     public abstract class ViewSpecificBindableClassBase<T> : NotifyPropertyChanged where T : ViewSpecificBindableClassBase<T>, new()
     {
         private static readonly Dictionary<int, T> instances = new Dictionary<int, T>();
-        private static readonly object locker = new object();
+        private static readonly object syncRoot = new object();
 
         protected static int InstancesCount
         {
@@ -32,7 +32,7 @@ namespace UWPHelper.Utilities
 
                 try
                 {
-                    Monitor.TryEnter(locker, 0, ref lockTaken);
+                    Monitor.TryEnter(syncRoot, 0, ref lockTaken);
 
                     if (lockTaken)
                     {
@@ -58,7 +58,7 @@ namespace UWPHelper.Utilities
                 {
                     if (lockTaken)
                     {
-                        Monitor.Exit(locker);
+                        Monitor.Exit(syncRoot);
                     }
                 }
             };

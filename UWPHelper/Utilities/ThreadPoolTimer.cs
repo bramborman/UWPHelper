@@ -119,11 +119,11 @@ namespace UWPHelper.Utilities
             Stop(true);
         }
 
-        private void Stop(bool dispose)
+        private void Stop(bool forceDispose)
         {
             IsEnabled = false;
 
-            if (IsDisposedOnStop || dispose)
+            if (IsDisposedOnStop || forceDispose)
             {
                 timer?.Dispose();
                 timer = null;

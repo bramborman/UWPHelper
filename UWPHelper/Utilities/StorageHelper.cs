@@ -78,6 +78,11 @@ namespace UWPHelper.Utilities
             DebugHelper.OperationInfo(file.Name, "loading", loadResult.Status != StorageFileHelperStatus.Failure);
             return loadResult;
         }
+
+        public static async Task<bool> FileExistsAsync(this StorageFolder folder, string fileName)
+        {
+            return await folder.TryGetItemAsync(fileName) != null;
+        }
     }
 
     public enum StorageFileHelperStatus

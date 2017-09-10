@@ -87,8 +87,8 @@ namespace UWPHelper.SampleApp
 #endif
 
             StorageFileHelperLoadResult<AppData> loadResult = await StorageHelper.LoadObjectAsync<AppData>(FILE_NAME, ApplicationData.Current.LocalFolder);
-            mainAppData                                     = BaseGetForCurrentView(() => loadResult.LoadedObject);
-            mainAppData.ShowLoadingError                    = loadResult.Status == StorageFileHelperStatus.Failure;
+            mainAppData                     = BaseGetForCurrentView(() => loadResult.LoadedObject);
+            mainAppData.ShowLoadingError    = loadResult.Status == StorageFileHelperStatus.Failure;
 
             MainPropertyChanged += async (sender, e) =>
             {

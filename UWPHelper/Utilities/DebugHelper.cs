@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace UWPHelper.Utilities
 {
@@ -25,6 +27,14 @@ namespace UWPHelper.Utilities
         {
             ExceptionHelper.ValidateStringNotNullOrWhiteSpace(dateTimeFormatting, nameof(dateTimeFormatting));
             return DateTime.Now.ToString(dateTimeFormatting) + " - " + message;
+        }
+        
+        public static void RegisterDebugPropertyChangedEventHandler(INotifyPropertyChanged obj)
+        {
+            obj.PropertyChanged += (sender, e) =>
+            {
+                Debug.WriteLine($"{sender.GetType().Name}: {e.PropertyName} changed to {sender.GetType().GetRuntimeProperty(e.PropertyName).GetValue(sender)}.");
+            };
         }
     }
 }
