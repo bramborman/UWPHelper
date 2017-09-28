@@ -568,7 +568,7 @@ namespace UWPHelper.UI
                 {
                     if (_windowActivatedEventHandlerHelper == null)
                     {
-                        _windowActivatedEventHandlerHelper = new OneEventHandlerHelper("Window");
+                        _windowActivatedEventHandlerHelper = new OneEventHandlerHelper();
                     }
 
                     return _windowActivatedEventHandlerHelper;
@@ -580,7 +580,7 @@ namespace UWPHelper.UI
                 {
                     if (_accentColorHelperColorChangedEventHandlerHelper == null)
                     {
-                        _accentColorHelperColorChangedEventHandlerHelper = new OneEventHandlerHelper("Accent");
+                        _accentColorHelperColorChangedEventHandlerHelper = new OneEventHandlerHelper();
                     }
 
                     return _accentColorHelperColorChangedEventHandlerHelper;
