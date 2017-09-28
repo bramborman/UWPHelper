@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -34,7 +35,7 @@ namespace UWPHelper.Utilities
                 result.Exception    = exception;
             }
 
-            DebugHelper.OperationInfo(fileName, "saving", result.Status != StorageHelperStatus.Failure);
+            Debug.WriteLine(fileName + " saving " + (result.Status != StorageHelperStatus.Failure ? "succeeded" : "failed"));
             return result;
         }
         
@@ -75,7 +76,7 @@ namespace UWPHelper.Utilities
                 loadResult.Exception    = exception;
             }
 
-            DebugHelper.OperationInfo(file.Name, "loading", loadResult.Status != StorageHelperStatus.Failure);
+            Debug.WriteLine(file.Name + " loading " + (loadResult.Status != StorageHelperStatus.Failure ? "succeeded" : "failed"));
             return loadResult;
         }
 
