@@ -47,7 +47,7 @@ namespace UWPHelper.Utilities
 
         private void TimerCallback(object state)
         {
-            Tick?.Invoke(this, new EventArgs());
+            Tick?.Invoke(this, EventArgs.Empty);
         }
 
         public void Start()

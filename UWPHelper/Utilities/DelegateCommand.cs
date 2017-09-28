@@ -35,7 +35,7 @@ namespace UWPHelper.Utilities
 
         public void InvokeCanExecuteChanged()
         {
-            CanExecuteChanged?.Invoke(this, new EventArgs());
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

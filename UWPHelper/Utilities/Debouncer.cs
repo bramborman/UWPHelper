@@ -6,7 +6,7 @@ namespace UWPHelper.Utilities
 {
     // Inspired by Rudy Huyn - http://www.rudyhuyn.com/blog/2016/03/01/delay-an-action-debounce-and-throttle/
     [DebuggerDisplay("IsRunning = {IsRunning}")]
-    public sealed class Delayer
+    public sealed class Debouncer
     {
         private DispatcherTimer timer;
 
@@ -27,14 +27,14 @@ namespace UWPHelper.Utilities
             }
         }
 
-        public event Action<Delayer> Tick;
+        public event EventHandler Tick;
 
-        public Delayer() : this(TimeSpan.Zero)
+        public Debouncer() : this(TimeSpan.Zero)
         {
 
         }
         
-        public Delayer(TimeSpan delay)
+        public Debouncer(TimeSpan delay)
         {
             timer = new DispatcherTimer();
             timer.Tick += Timer_Tick;
@@ -45,7 +45,7 @@ namespace UWPHelper.Utilities
         private void Timer_Tick(object sender, object e)
         {
             timer.Stop();
-            Tick?.Invoke(this);
+            Tick?.Invoke(this, EventArgs.Empty);
         }
 
         public void Stop()

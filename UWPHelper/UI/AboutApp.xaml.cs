@@ -171,9 +171,9 @@ App info: {AppName} {Version.Major}.{Version.Minor}.{Version.Build}.{Version.Rev
             }
             else
             {
-                ThirdPartySoftwareInfoDialogOpening?.Invoke(this, new EventArgs());
+                ThirdPartySoftwareInfoDialogOpening?.Invoke(this, EventArgs.Empty);
                 await new ThirdPartySoftwareInfoDialog(ThirdPartySoftwareInfo).ShowAsync();
-                ThirdPartySoftwareInfoDialogClosed?.Invoke(this, new EventArgs());
+                ThirdPartySoftwareInfoDialogClosed?.Invoke(this, EventArgs.Empty);
             }
         }
 

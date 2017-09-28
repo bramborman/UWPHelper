@@ -27,7 +27,7 @@ namespace UWPHelper.UI
         public event AdvancedSliderValueChangedDelayedEventHandler ValueChangedDelayed;
         
         private double oldValueDelayed;
-        private Delayer delayer;
+        private Debouncer delayer;
 
         public bool IsValueChangedDelayedEnabled
         {
@@ -48,10 +48,10 @@ namespace UWPHelper.UI
         public void ForceRaiseValueChanged()
         {
             delayer.Stop();
-            OnValueChangedDelayed(null);
+            OnValueChangedDelayed(null, null);
         }
 
-        private void OnValueChangedDelayed(Delayer obj)
+        private void OnValueChangedDelayed(object sender, EventArgs e)
         {
             ValueChangedDelayed?.Invoke(this, new AdvancedSliderValueChangedDelayedEventArgs(oldValueDelayed, Value));
             oldValueDelayed = Value;
@@ -74,7 +74,7 @@ namespace UWPHelper.UI
             if ((bool)e.NewValue)
             {
                 advancedSlider.oldValueDelayed = advancedSlider.Value;
-                advancedSlider.delayer         = new Delayer(TimeSpan.FromMilliseconds(advancedSlider.ValueChangedDelayMilliseconds));
+                advancedSlider.delayer         = new Debouncer(TimeSpan.FromMilliseconds(advancedSlider.ValueChangedDelayMilliseconds));
                 advancedSlider.delayer.Tick   += advancedSlider.OnValueChangedDelayed;
             }
             else
