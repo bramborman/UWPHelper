@@ -205,7 +205,6 @@
     <Compile Include="Utilities\ExceptionHelper.cs" />
     <Compile Include="Utilities\KeyboardHelper.cs" />
     <Compile Include="Utilities\OneEventHandlerHelper.cs" />
-    <Compile Include="Utilities\Range.cs" />
     <Compile Include="Utilities\StorageHelper.cs" />
     <Compile Include="Utilities\ThreadPoolTimer.cs" />
     <Compile Include="Utilities\ViewHelper.cs" />
