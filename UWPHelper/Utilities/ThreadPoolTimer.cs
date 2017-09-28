@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 
 namespace UWPHelper.Utilities
 {
     [DebuggerDisplay("IsEnabled = {IsEnabled}")]
     public sealed class ThreadPoolTimer : IDisposable
     {
-        private readonly TimerCallback timerCallback;
-
         private Timer timer;
         private TimeSpan _interval;
-
-        public bool IsTickInvokedOnMainViewDispatcher { get; }
-        public bool IsDisposedOnStop { get; }
+        
         public bool IsEnabled { get; private set; }
-        public CoreDispatcher Dispatcher { get; }
         public TimeSpan Interval
         {
             get { return _interval; }
@@ -29,7 +22,7 @@ namespace UWPHelper.Utilities
 
                     if (IsEnabled)
                     {
-                        SetTimerInterval();
+                        UpdateTimerInterval();
                     }
                 }
             }
@@ -42,52 +35,19 @@ namespace UWPHelper.Utilities
 
         }
         
-        public ThreadPoolTimer(TimeSpan interval) : this(interval, true, true)
+        public ThreadPoolTimer(TimeSpan interval)
         {
-            
+            Interval = interval;
         }
 
-        public ThreadPoolTimer(TimeSpan interval, bool invokeTickOnMainViewDispatcher, bool disposeOnStop) : this(interval, CoreApplication.MainView.CoreWindow.Dispatcher, invokeTickOnMainViewDispatcher, disposeOnStop)
-        {
-
-        }
-
-        public ThreadPoolTimer(TimeSpan interval, CoreDispatcher dispatcher) : this(interval, dispatcher, true, true)
-        {
-
-        }
-        
-        public ThreadPoolTimer(TimeSpan interval, CoreDispatcher dispatcher, bool invokeTickOnMainViewDispatcher, bool disposeOnStop)
-        {
-            ExceptionHelper.ValidateObjectNotNull(dispatcher, nameof(dispatcher));
-
-            Interval                            = interval;
-            Dispatcher                          = dispatcher;
-            IsTickInvokedOnMainViewDispatcher   = invokeTickOnMainViewDispatcher;
-            IsDisposedOnStop                    = disposeOnStop;
-
-            if (invokeTickOnMainViewDispatcher)
-            {
-                timerCallback = async state =>
-                {
-                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        Tick?.Invoke(this, new EventArgs());
-                    });
-                };
-            }
-            else
-            {
-                timerCallback = state =>
-                {
-                    Tick?.Invoke(this, new EventArgs());
-                };
-            }
-        }
-
-        private void SetTimerInterval()
+        private void UpdateTimerInterval()
         {
             timer.Change(TimeSpan.Zero, Interval);
+        }
+
+        private void TimerCallback(object state)
+        {
+            Tick?.Invoke(this, new EventArgs());
         }
 
         public void Start()
@@ -99,19 +59,25 @@ namespace UWPHelper.Utilities
 
             if (timer == null)
             {
-                timer = new Timer(timerCallback, null, TimeSpan.Zero, Interval);
+                timer = new Timer(TimerCallback, null, TimeSpan.Zero, Interval);
             }
             else
             {
-                SetTimerInterval();
+                UpdateTimerInterval();
             }
 
             IsEnabled = true;
         }
 
-        public void Stop()
+        public void Restart()
         {
             Stop(false);
+            Start();
+        }
+
+        public void Stop()
+        {
+            Dispose();
         }
 
         public void Dispose()
@@ -119,11 +85,11 @@ namespace UWPHelper.Utilities
             Stop(true);
         }
 
-        private void Stop(bool forceDispose)
+        private void Stop(bool dispose)
         {
             IsEnabled = false;
 
-            if (IsDisposedOnStop || forceDispose)
+            if (dispose)
             {
                 timer?.Dispose();
                 timer = null;
