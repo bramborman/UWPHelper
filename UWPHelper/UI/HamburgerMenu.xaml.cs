@@ -221,7 +221,7 @@ namespace UWPHelper.UI
             int primaryListViewMaxIndex     = primaryListView.Items.Count - 1;
             int secondaryListViewMaxIndex   = primaryListView.Items.Count + secondaryListView.Items.Count - 1;
 
-            ExceptionHelper.ValidateNumberInRange(newValue, 0, primaryListViewMaxIndex + secondaryListViewMaxIndex, nameof(SelectedIndex));
+            ExceptionHelper.ValidateIsInRange(newValue, 0, primaryListViewMaxIndex + secondaryListViewMaxIndex, nameof(SelectedIndex));
 
             if (newValue <= primaryListViewMaxIndex)
             {

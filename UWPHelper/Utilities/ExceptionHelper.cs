@@ -6,17 +6,7 @@ namespace UWPHelper.Utilities
 {
     public static class ExceptionHelper
     {
-        private const string SMALLER_FORMAT      = "Value ({0}) is out of range (smaller than {1}).";
-        private const string GREATER_FORMAT      = "Value ({0}) is out of range (greater than {1}).";
-        private const string OUT_OF_RANGE_FORMAT = "Value ({0}) is out of range ({1} - {2}).";
-
-        [Obsolete("This method is obsolete and will be removed with version 2.0. Use the 'ValidateObjectNotNull' method instead.")]
-        public static void ValidateNotNull(object obj, string parameterName)
-        {
-            ValidateObjectNotNull(obj, parameterName);
-        }
-
-        public static void ValidateObjectNotNull(object obj, string parameterName)
+        public static void ValidateObjectNotNull(object obj, string parameterName = null)
         {
             if (obj == null)
             {
@@ -24,7 +14,7 @@ namespace UWPHelper.Utilities
             }
         }
 
-        public static void ValidateIEnumerableNotEmpty<T>(IEnumerable<T> enumerable, string parameterName)
+        public static void ValidateIEnumerableNotEmpty<T>(IEnumerable<T> enumerable, string parameterName = null)
         {
             if (!enumerable.Any())
             {
@@ -32,21 +22,31 @@ namespace UWPHelper.Utilities
             }
         }
 
-        [Obsolete("This method is obsolete and will be removed with version 2.0. Use the 'ValidateStringNotNullOrWhiteSpace' method instead.")]
-        public static void ValidateNotNullOrWhiteSpace(string str, string parameterName)
+        public static void ValidateIEnumerableNotNullOrEmpty<T>(IEnumerable<T> enumerable, string parameterName = null)
         {
-            ValidateStringNotNullOrWhiteSpace(str, parameterName);
-        }
-        
-        public static void ValidateStringNotNullOrWhiteSpace(string str, string parameterName)
-        {
-            if (string.IsNullOrWhiteSpace(str))
+            if (enumerable?.Any() != true)
             {
-                throw new ArgumentException("Value cannot be white space or null.", parameterName);
+                throw new ArgumentException("Collection cannot be null or empty.", parameterName);
             }
         }
 
-        public static void ValidateEnumValueDefined(Enum enumValue, string parameterName)
+        public static void ValidateStringNotNullOrEmpty(string str, string parameterName = null)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", parameterName);
+            }
+        }
+
+        public static void ValidateStringNotNullOrWhiteSpace(string str, string parameterName = null)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                throw new ArgumentException("Value cannot be null or white space.", parameterName);
+            }
+        }
+
+        public static void ValidateEnumValueDefined(Enum enumValue, string parameterName = null)
         {
             if (!Enum.IsDefined(enumValue.GetType(), enumValue))
             {
@@ -54,108 +54,28 @@ namespace UWPHelper.Utilities
             }
         }
 
-        #region long
-        public static void ValidateNumberGreaterOrEqual(long value, long min, string parameterName)
+        public static void ValidateIsGreaterOrEqual<T>(T value, T min, string parameterName = null) where T : IComparable<T>
         {
-            if (value < min)
+            if (value.CompareTo(min) < 0)
             {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(SMALLER_FORMAT, value, min));
+                throw new ArgumentOutOfRangeException(parameterName, $"Value ({value}) is out of range (smaller than {min}).");
             }
         }
 
-        public static void ValidateNumberSmallerOrEqual(long value, long max, string parameterName)
+        public static void ValidateIsSmallerOrEqual<T>(T value, T max, string parameterName = null) where T : IComparable<T>
         {
-            if (value > max)
+            if (value.CompareTo(max) > 0)
             {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(GREATER_FORMAT, value, max));
+                throw new ArgumentOutOfRangeException(parameterName, $"Value ({value}) is out of range (greater than {max}).");
             }
         }
 
-        public static void ValidateNumberInRange(long value, long min, long max, string parameterName)
+        public static void ValidateIsInRange<T>(T value, T min, T max, string parameterName = null) where T : IComparable<T>
         {
-            if (value < min || value > max)
+            if (value.CompareTo(min) < 0 || value.CompareTo(max) > 0)
             {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(OUT_OF_RANGE_FORMAT, value, min, max));
+                throw new ArgumentOutOfRangeException(parameterName, $"Value ({value}) is out of range (smaller than {min} or greater than {max}).");
             }
         }
-        #endregion
-
-        #region ulong
-        public static void ValidateNumberGreaterOrEqual(ulong value, ulong min, string parameterName)
-        {
-            if (value < min)
-            {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(SMALLER_FORMAT, value, min));
-            }
-        }
-
-        public static void ValidateNumberSmallerOrEqual(ulong value, ulong max, string parameterName)
-        {
-            if (value > max)
-            {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(GREATER_FORMAT, value, max));
-            }
-        }
-
-        public static void ValidateNumberInRange(ulong value, ulong min, ulong max, string parameterName)
-        {
-            if (value < min || value > max)
-            {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(OUT_OF_RANGE_FORMAT, value, min, max));
-            }
-        }
-        #endregion
-
-        #region double
-        public static void ValidateNumberGreaterOrEqual(double value, double min, string parameterName)
-        {
-            if (value < min)
-            {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(SMALLER_FORMAT, value, min));
-            }
-        }
-
-        public static void ValidateNumberSmallerOrEqual(double value, double max, string parameterName)
-        {
-            if (value > max)
-            {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(GREATER_FORMAT, value, max));
-            }
-        }
-
-        public static void ValidateNumberInRange(double value, double min, double max, string parameterName)
-        {
-            if (value < min || value > max)
-            {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(OUT_OF_RANGE_FORMAT, value, min, max));
-            }
-        }
-        #endregion
-
-        #region TimeSpan
-        public static void ValidateTimeSpanGreaterOrEqual(TimeSpan value, TimeSpan min, string parameterName)
-        {
-            if (value < min)
-            {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(SMALLER_FORMAT, value, min));
-            }
-        }
-
-        public static void ValidateTimeSpanSmallerOrEqual(TimeSpan value, TimeSpan max, string parameterName)
-        {
-            if (value > max)
-            {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(GREATER_FORMAT, value, max));
-            }
-        }
-
-        public static void ValidateTimeSpanInRange(TimeSpan value, TimeSpan min, TimeSpan max, string parameterName)
-        {
-            if (value < min || value > max)
-            {
-                throw new ArgumentOutOfRangeException(parameterName, string.Format(OUT_OF_RANGE_FORMAT, value, min, max));
-            }
-        }
-        #endregion
     }
 }

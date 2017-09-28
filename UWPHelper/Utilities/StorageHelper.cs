@@ -8,18 +8,18 @@ namespace UWPHelper.Utilities
 {
     public static class StorageHelper
     {
-        public static Task<StorageFileHelperResult> SaveObjectAsync(object obj, string fileName, StorageFolder folder)
+        public static Task<StorageHelperResult> SaveObjectAsync(object obj, string fileName, StorageFolder folder)
         {
             return SaveObjectAsync(obj, fileName, folder, CreationCollisionOption.OpenIfExists);
         }
         
-        public static async Task<StorageFileHelperResult> SaveObjectAsync(object obj, string fileName, StorageFolder folder, CreationCollisionOption creationCollisionOption)
+        public static async Task<StorageHelperResult> SaveObjectAsync(object obj, string fileName, StorageFolder folder, CreationCollisionOption creationCollisionOption)
         {
             ExceptionHelper.ValidateStringNotNullOrWhiteSpace(fileName, nameof(fileName));
             ExceptionHelper.ValidateObjectNotNull(folder, nameof(folder));
             ExceptionHelper.ValidateEnumValueDefined(creationCollisionOption, nameof(creationCollisionOption));
 
-            StorageFileHelperResult result = new StorageFileHelperResult();
+            StorageHelperResult result = new StorageHelperResult();
 
             try
             {
@@ -30,15 +30,15 @@ namespace UWPHelper.Utilities
             }
             catch (Exception exception)
             {
-                result.Status       = StorageFileHelperStatus.Failure;
+                result.Status       = StorageHelperStatus.Failure;
                 result.Exception    = exception;
             }
 
-            DebugHelper.OperationInfo(fileName, "saving", result.Status != StorageFileHelperStatus.Failure);
+            DebugHelper.OperationInfo(fileName, "saving", result.Status != StorageHelperStatus.Failure);
             return result;
         }
         
-        public static async Task<StorageFileHelperLoadResult<T>> LoadObjectAsync<T>(string fileName, StorageFolder folder) where T : class, new()
+        public static async Task<StorageHelperLoadResult<T>> LoadObjectAsync<T>(string fileName, StorageFolder folder) where T : class, new()
         {
             ExceptionHelper.ValidateStringNotNullOrWhiteSpace(fileName, nameof(fileName));
             ExceptionHelper.ValidateObjectNotNull(folder, nameof(folder));
@@ -49,15 +49,15 @@ namespace UWPHelper.Utilities
             }
             else
             {
-                return new StorageFileHelperLoadResult<T>(new T(), StorageFileHelperStatus.SuccessFileNotFound, new FileNotFoundException("Unable to find the specified file.", fileName));
+                return new StorageHelperLoadResult<T>(new T(), StorageHelperStatus.SuccessFileNotFound, new FileNotFoundException("Unable to find the specified file.", fileName));
             }
         }
         
-        public static async Task<StorageFileHelperLoadResult<T>> LoadObjectAsync<T>(StorageFile file) where T : class, new()
+        public static async Task<StorageHelperLoadResult<T>> LoadObjectAsync<T>(StorageFile file) where T : class, new()
         {
             ExceptionHelper.ValidateObjectNotNull(file, nameof(file));
 
-            StorageFileHelperLoadResult<T> loadResult = new StorageFileHelperLoadResult<T>();
+            StorageHelperLoadResult<T> loadResult = new StorageHelperLoadResult<T>();
 
             // Reading from the file could fail while the file is used by another proccess
             try
@@ -71,11 +71,11 @@ namespace UWPHelper.Utilities
             }
             catch (Exception exception)
             {
-                loadResult.Status       = StorageFileHelperStatus.Failure;
+                loadResult.Status       = StorageHelperStatus.Failure;
                 loadResult.Exception    = exception;
             }
 
-            DebugHelper.OperationInfo(file.Name, "loading", loadResult.Status != StorageFileHelperStatus.Failure);
+            DebugHelper.OperationInfo(file.Name, "loading", loadResult.Status != StorageHelperStatus.Failure);
             return loadResult;
         }
 
@@ -85,24 +85,24 @@ namespace UWPHelper.Utilities
         }
     }
 
-    public enum StorageFileHelperStatus
+    public enum StorageHelperStatus
     {
         Success,
         Failure,
         SuccessFileNotFound
     }
 
-    public class StorageFileHelperResult
+    public class StorageHelperResult
     {
-        public StorageFileHelperStatus Status { get; internal set; }
+        public StorageHelperStatus Status { get; internal set; }
         public Exception Exception { get; internal set; }
 
-        internal StorageFileHelperResult()
+        internal StorageHelperResult()
         {
-            Status = StorageFileHelperStatus.Success;
+            Status = StorageHelperStatus.Success;
         }
 
-        public StorageFileHelperResult(StorageFileHelperStatus status, Exception exception)
+        public StorageHelperResult(StorageHelperStatus status, Exception exception)
         {
             ExceptionHelper.ValidateEnumValueDefined(status, nameof(status));
 
@@ -111,16 +111,16 @@ namespace UWPHelper.Utilities
         }
     }
 
-    public sealed class StorageFileHelperLoadResult<T> : StorageFileHelperResult
+    public sealed class StorageHelperLoadResult<T> : StorageHelperResult
     {
         public T LoadedObject { get; internal set; }
 
-        internal StorageFileHelperLoadResult()
+        internal StorageHelperLoadResult()
         {
 
         }
 
-        public StorageFileHelperLoadResult(T loadedObject, StorageFileHelperStatus status, Exception exception) : base(status, exception)
+        public StorageHelperLoadResult(T loadedObject, StorageHelperStatus status, Exception exception) : base(status, exception)
         {
             LoadedObject = loadedObject;
         }

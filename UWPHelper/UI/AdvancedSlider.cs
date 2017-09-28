@@ -86,7 +86,7 @@ namespace UWPHelper.UI
         
         private static void OnValueChangedDelayMillisecondsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ExceptionHelper.ValidateNumberGreaterOrEqual((double)e.NewValue, 0, nameof(ValueChangedDelayMilliseconds));
+            ExceptionHelper.ValidateIsGreaterOrEqual((double)e.NewValue, 0, nameof(ValueChangedDelayMilliseconds));
             AdvancedSlider advancedSlider = (AdvancedSlider)d;
 
             if (advancedSlider.IsValueChangedDelayedEnabled)

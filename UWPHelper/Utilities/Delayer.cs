@@ -21,7 +21,7 @@ namespace UWPHelper.Utilities
             {
                 if (timer.Interval != value)
                 {
-                    ExceptionHelper.ValidateTimeSpanGreaterOrEqual(value, TimeSpan.Zero, nameof(Delay));
+                    ExceptionHelper.ValidateIsGreaterOrEqual(value, TimeSpan.Zero, nameof(Delay));
                     timer.Interval = value;
                 }
             }
