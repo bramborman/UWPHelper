@@ -1,41 +1,31 @@
 ﻿Write-Host "`nAppVeyor-Build script executed"
 Write-Host   "=============================="
 
-# Before build
 Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildScripts/master/Scripts/Set-BuildVersion.ps1"
 .\Set-BuildVersion.ps1
 
 Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildScripts/master/Scripts/Set-PureBuildVersion.ps1"
 .\Set-PureBuildVersion.ps1
 
-# Build
-$uwpHelperProjectFolder = Get-ChildItem -Directory -Filter "UWPHelper"
+nuget restore
 
-if (!(Test-Path $uwpHelperProjectFolder))
+foreach ($platform in "x86", "x64", "ARM")
 {
-	throw "Unable to find UWPHelper project folder. `$uwpHelperProjectFolder: '$uwpHelperProjectFolder'"
-}
+    Write-Host "`n`nPlatform $platform"
+    Write-Host     "============"
+    
+    MSBuild "UWPHelper\UWPHelper.csproj" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=Release /p:Platform=$platform
+    $releaseFolder = "UWPHelper\bin\$platform\Release\"
 
-$platforms = "x86", "x64", "ARM"
+    if (!(Test-Path $releaseFolder))
+    {
+        throw "Unable to find $platform release folder. `$releaseFolder: '$releaseFolder'"
+    }
+    
+    $zipFileName = "UWPHelper_$platform.$env:APPVEYOR_BUILD_VERSION.zip"
+    7z a $zipFileName "$releaseFolder\*"
 
-foreach ($platform in $platforms)
-{
-	Write-Host "`n`nPlatform $platform"
-	Write-Host     "============"
-
-	MSBuild "$uwpHelperProjectFolder\UWPHelper.csproj" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=Release /p:Platform=$platform
-
-	$releaseFolder = Join-Path $uwpHelperProjectFolder.FullName "\bin\$platform\Release\"
-
-	if (!(Test-Path $releaseFolder))
-	{
-		throw "Unable to find $platform release folder. `$releaseFolder: '$releaseFolder'"
-	}
-
-	$zipFileName = "UWPHelper_$platform.$env:APPVEYOR_BUILD_VERSION.zip"
-	7z a $zipFileName "$releaseFolder\*"
-	
-	Push-AppveyorArtifact $zipFileName
+    Push-AppveyorArtifact $zipFileName
 }
 
 Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildScripts/master/Scripts/NuGet-Pack.ps1"
