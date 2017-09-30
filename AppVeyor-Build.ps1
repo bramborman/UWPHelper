@@ -8,8 +8,6 @@ Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildSc
 Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildScripts/master/Scripts/Set-PureBuildVersion.ps1"
 .\Set-PureBuildVersion.ps1
 
-nuget restore -source "https://api.nuget.org/v3/index.json;https://www.myget.org/F/bramborman/api/v3/index.json"
-
 # Build
 $uwpHelperProjectFolder = Get-ChildItem -Directory -Filter "UWPHelper"
 
