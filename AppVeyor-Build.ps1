@@ -8,6 +8,7 @@ Start-FileDownload "https://raw.githubusercontent.com/bramborman/AppVeyorBuildSc
 .\Set-PureBuildVersion.ps1
 
 nuget restore
+$uwpHelperProjectFolder = Get-ChildItem -Directory -Filter "UWPHelper"
 
 foreach ($platform in "x86", "x64", "ARM")
 {
@@ -15,7 +16,7 @@ foreach ($platform in "x86", "x64", "ARM")
     Write-Host     "============"
     
     MSBuild "UWPHelper\UWPHelper.csproj" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration=Release /p:Platform=$platform
-    $releaseFolder = "UWPHelper\bin\$platform\Release\"
+    $releaseFolder = Join-Path $uwpHelperProjectFolder.FullName "\bin\$platform\Release\"
 
     if (!(Test-Path $releaseFolder))
     {
