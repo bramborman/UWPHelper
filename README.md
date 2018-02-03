@@ -9,7 +9,7 @@ UWPHelper is a set of useful UWP tools such as converters, triggers, custom cont
 [1]: https://www.microsoft.com/store/apps/9nblggh4r69s
 
 ### Pre-release
-[![MyGet](https://img.shields.io/myget/bramborman/vpre/UWPHelper.svg)][MyGet]
+[![MyGet](https://img.shields.io/myget/bramborman/vpre/UWPHelper.svg?label=myget)][MyGet]
 [![Build status](https://ci.appveyor.com/api/projects/status/idk6s1k2atafjqly/branch/dev?svg=true)](https://ci.appveyor.com/project/bramborman/uwphelper/branch/dev)
 
 If you want to get updates more frequently and you don't mind about the possibility of experiencing some bugs with this library sometimes, you can download the pre-release version of UWPHelper from MyGet.org right [**here**][MyGet].
