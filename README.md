@@ -1,4 +1,6 @@
 # UWPHelper
+# This project is now deprecated and I have no intention to continue its development.
+
 [![NuGet](https://img.shields.io/nuget/v/UWPHelper.svg)](https://www.nuget.org/packages/UWPHelper/)
 [![Build status](https://ci.appveyor.com/api/projects/status/idk6s1k2atafjqly/branch/master?svg=true)](https://ci.appveyor.com/project/bramborman/uwphelper/branch/master)
 [![Issues](https://img.shields.io/github/issues/bramborman/UWPHelper.svg)](https://github.com/bramborman/UWPHelper/issues)
